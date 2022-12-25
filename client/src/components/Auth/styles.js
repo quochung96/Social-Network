@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.common.white,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -27,5 +27,18 @@ export default makeStyles((theme) => ({
   googleBtn:{
     margin: theme.spacing(1, 0 , 1),
     backgroundColor: '#03a9f4',
+  },
+  forgot_password: {
+    marginLeft: theme.spacing(2),
+    textDecoration: 'none',
+    color: '#000',
+  },
+  switch_mode: {
+    textAlign: 'center',
+    marginLeft: '-1000px',
+    fontSize: '18px',
+    fontFamily: 'Inter',
+    fontWeight: 'normal',
+    marginTop: '10px'
   }
 }));

@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, alpha} from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     appBar: {
@@ -10,8 +10,13 @@ export default makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px 50px',
+        [theme.breakpoints.down('md')]: {
+            flexDirection: 'column',
+            height: '220px',
+        },
         [theme.breakpoints.down('sm')] : {
-            flexDirection: 'column'
+            flexDirection: 'column',
+            height: '220px',
         }
     },
     heading: {
@@ -45,12 +50,18 @@ export default makeStyles((theme) => ({
         fontSize: '1em',
         fontWeight: 300,
         color: "#000042",
-        fontStyle: "bold"
+        fontStyle: "bold",
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.primary.light, 0.25)
+        }
     },
     icon: {
         marginLeft: '10px',
         marginTop: '15px',
         marginRight: '30px',
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.primary.light, 0.25)
+        }
     },
     iconText: {
         marginLeft: '35px',
