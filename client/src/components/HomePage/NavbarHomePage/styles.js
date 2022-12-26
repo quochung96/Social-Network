@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import {makeStyles, alpha} from '@material-ui/core/styles';
-=======
-import {makeStyles} from '@material-ui/core/styles';
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
 
 export default makeStyles((theme) => ({
     appBar: {
@@ -14,7 +10,6 @@ export default makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px 50px',
-<<<<<<< HEAD
         [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
             height: '220px',
@@ -22,10 +17,6 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.down('sm')] : {
             flexDirection: 'column',
             height: '220px',
-=======
-        [theme.breakpoints.down('sm')] : {
-            flexDirection: 'column'
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
         }
     },
     heading: {

@@ -15,11 +15,7 @@ export default makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-<<<<<<< HEAD
     backgroundColor: theme.palette.common.white,
-=======
-    backgroundColor: theme.palette.secondary.main,
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -31,7 +27,6 @@ export default makeStyles((theme) => ({
   googleBtn:{
     margin: theme.spacing(1, 0 , 1),
     backgroundColor: '#03a9f4',
-<<<<<<< HEAD
   },
   forgot_password: {
     marginLeft: theme.spacing(2),
@@ -45,7 +40,5 @@ export default makeStyles((theme) => ({
     fontFamily: 'Inter',
     fontWeight: 'normal',
     marginTop: '10px'
-=======
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
   }
 }));

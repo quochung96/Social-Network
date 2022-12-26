@@ -186,17 +186,6 @@ const Home = () => {
           </Container>
         </Grid>
        </Container>
-=======
-import React from 'react'
-import NavbarHomePage from './NavbarHomePage/NavbarHomePage';
-import {Grow} from '@material-ui/core';
-
-const Home = () => {
-  return (
-    <Grow in>
-        <NavbarHomePage />
-        
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
     </Grow>
   )
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {useState} from 'react';
 import useStyles from './styles.js';
 import {Link,Grow,Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core/';
@@ -92,13 +91,6 @@ const Auth = () => {
         </Grid>
       </Container>
     </Grow>
-=======
-import React from 'react'
-
-export const Auth = () => {
-  return (
-    <div>Auth</div>
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
   )
 }
 
