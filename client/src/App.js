@@ -5,6 +5,7 @@ import {BrowserRouter, Switch, Route,Redirect} from 'react-router-dom';
 import Home from './components/HomePage/Home';
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import Auth from './components/Auth/Auth';
+import PostDetail from './components/PostDetail/PostDetail';
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Switch>
           <Route path = "/" exact component = {Home} />
           <Route path = "/auth" exact component = {() => (!user ? <Auth /> : <Redirect to = "/"/>)}/>
+          <Route path = "/postDetail" exact component = {PostDetail}/>
         </Switch>
       </Container>
     </BrowserRouter>

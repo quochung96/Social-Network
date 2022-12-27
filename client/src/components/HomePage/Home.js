@@ -6,7 +6,6 @@ const Home = () => {
   return (
     <Grow in>
         <NavbarHomePage />
-        
     </Grow>
   )
 }
