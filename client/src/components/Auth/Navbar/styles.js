@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@mui/styles';
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -10,17 +10,9 @@ export default makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px 50px',
-        [theme.breakpoints.down('md')]: {
-            flexDirection: 'column',
-            height: '220px',
-        },
-        [theme.breakpoints.down('sm')] : {
-            flexDirection: 'column',
-            height: '220px',
-        }
   },
 
-  image: {
+  imageText: {
     marginLeft: '10px',
     marginTop: '5px',
   },

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import useStyles from './styles.js';
-import {Link,Grow,Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core/';
+import {Link,Grow,Avatar, Button, Paper, Grid, Typography, Container} from '@mui/material';
 import LockOutlinedIcon from '../../assets/icons/padlock 1.png';
 import Input from '../widgets/Input';
 import {GoogleLogin } from '@react-oauth/google';
@@ -20,6 +20,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent load again
+    
     
   }
   const handleChange = (e) => {
@@ -78,11 +79,13 @@ const Auth = () => {
           <GoogleLogin
             onSuccess = {googleSuccess}
             onError = {googleError}
+            auto_select
+            useOneTap
           />
         </form>
       </Paper>
     </Container>
-      <Grid container justify = "flex-end">
+      <Grid container justify = "center">
           <Grid item>
             <Button className = {classes.switch_mode} onClick = {switchMode}>
               {isSignUp ? 'Already have an account ? Sign In' : "New member? Join now"}

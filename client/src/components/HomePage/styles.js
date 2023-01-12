@@ -1,5 +1,5 @@
-import {makeStyles,alpha} from '@material-ui/core/styles';
-
+import {makeStyles} from '@mui/styles';
+import {alpha} from '@mui/material/styles';
 export default makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(2),
@@ -30,29 +30,20 @@ export default makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',
-        marginLeft: '40px',
-        width: '800px',
-        [theme.breakpoints.down('sm')] : {
-            flexDirection: 'column',
-            margin: theme.spacing(1),
-            width: '200px',
-        },
-        [theme.breakpoints.down('md')] : {
-            flexDirection: 'column',
-            margin: theme.spacing(1),
-            width: '400px',
-            
-        }
+        width: '40%',
     },
     spacing: {
         marginTop: theme.spacing(10),
         [theme.breakpoints.down('md')] : {
-            marginTop: theme.spacing(60),
+            marginTop: theme.spacing(40),
         },
         [theme.breakpoints.down('sm')] : {
             width: '100%',
             marginTop: theme.spacing(70),
         }
+    },
+    spacing_2: {
+        marginTop: theme.spacing(10),
     },
     forgot_password: {
         marginLeft: theme.spacing(2),
@@ -65,20 +56,11 @@ export default makeStyles((theme) => ({
         height: '50px',
     },
     lineBreak: {
-        margin: '0px 30px 5px 30px',
-        [theme.breakpoints.down('sm')] : {
-            flexDirection: 'row',
-            margin: theme.spacing(3),
-            width: '100px'
-        },
-        [theme.breakpoints.down('md')]: {
-            flexDirection: 'row',
-            margin: theme.spacing(2),
-            width: '100px'
-        }
+        margin: '4% 5% 1% 8%',
+        width: '35%'
     },
     breakName: {
-        fontSize: 22,
+        fontSize: '100%',
         color: '#A9A9A9'
     },
     btnGoogle: {
@@ -89,17 +71,14 @@ export default makeStyles((theme) => ({
     span_memories: {
         color: '#000000'
     },
-    img_bg_1:{
-        width: '600px 100%',
+    card_mem: {
+        width: '100%',
         height: '100%',
-        [theme.breakpoints.down('md')] : {
-            width: '500px',
-            marginLeft: theme.spacing(6),
-        },
-        [theme.breakpoints.down('sm')] : {
-            width: '200px',
-            marginLeft: theme.spacing(6),
-        }
+        marginTop: '10px',
+    },
+    img_bg_1:{
+        width: '140%',
+        height: '100%',
     },
     container_bg_3: {
         backgroundColor: "#E6E6FA",
@@ -108,15 +87,10 @@ export default makeStyles((theme) => ({
         position: 'absolute',
         width: '1750px',
         height: '700px',
-        margin: theme.spacing(6,2,2),
-        [theme.breakpoints.down('sm')] : {
-            flexDirection: 'column',
-            width: '100%',
-        },
+        margin: theme.spacing(2,0,2),
         [theme.breakpoints.down('md')] : {
             flexDirection: 'column',
             width: '100%',
-            
         }
     },
     text_bg_3: {
@@ -127,18 +101,15 @@ export default makeStyles((theme) => ({
     img_bg_3 : {
         marginLeft: '38%',
         marginTop: '10px',
-        [theme.breakpoints.down('md')]: {
-            marginLeft: '20%'
-        },
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: '25%',
-        }
+        width: '350px',
+        height: "50%"
     },
     btn_bg_3: {
-        width: '300px',
-        height: '50px',
+        width: '200px',
+        height: '60px',
         borderRadius: 60,
-        margin: theme.spacing(4,90),
+        marginLeft: '42%',
+        marginTop: '2%',
         fontSize: '18px',
         fontFamily: 'Helvetica',
     },

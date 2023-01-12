@@ -1,5 +1,5 @@
-import {makeStyles, alpha} from '@material-ui/core/styles';
-
+import {makeStyles} from '@mui/styles';
+import {alpha} from '@mui/material/styles';
 export default makeStyles((theme) => ({
     appBar: {
         borderRadius: 30,
@@ -50,25 +50,18 @@ export default makeStyles((theme) => ({
         fontSize: '1em',
         fontWeight: 300,
         color: "#000042",
-<<<<<<< HEAD
         fontStyle: "bold",
         '&:hover': {
             backgroundColor: alpha(theme.palette.primary.light, 0.25)
         }
-=======
-        fontStyle: "bold"
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
     },
     icon: {
         marginLeft: '10px',
         marginTop: '15px',
         marginRight: '30px',
-<<<<<<< HEAD
         '&:hover': {
             backgroundColor: alpha(theme.palette.primary.light, 0.25)
         }
-=======
->>>>>>> 5585eb84adb6c48445f81bd496ee808ec5a97af1
     },
     iconText: {
         marginLeft: '35px',

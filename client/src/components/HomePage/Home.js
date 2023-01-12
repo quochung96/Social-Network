@@ -1,7 +1,6 @@
-<<<<<<< HEAD
-import React,{useState} from 'react'
-import NavbarHomePage from './NavbarHomePage/NavbarHomePage';
-import {Grow,Typography,Container, Grid, Paper,Button} from '@material-ui/core';
+import React,{useState} from 'react';
+import NavBar from './Navbar/Navbar';
+import {Grow,Typography,Container, Grid, Paper,Button} from '@mui/material';
 import useStyles from './styles.js';
 import Input from '../widgets/Input';
 import CardMem from '../widgets/CardMem';
@@ -27,7 +26,7 @@ const initialState = {email: '', password: ''};
 const Home = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
-  const [formData,setFormDate] = useState(initialState);
+  const [formData,setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // Using dispatch redux the set Log in
@@ -37,7 +36,7 @@ const Home = () => {
   }
   // Split the previous fromData and add new target value into target name 
   const handleChange = (e) => { 
-    setFormDate({...formData, [e.target.name]: e.target.value}); 
+    setFormData({...formData, [e.target.name]: e.target.value}); 
   }
   //Control the show password behavior
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -58,7 +57,7 @@ const Home = () => {
   return (
     <Grow in>
        <Container component = "main" maxWidth = "xl">
-       <NavbarHomePage />
+       <NavBar />
        <Grid container spacing = {{xs: 2, md: 3}} columns ={{xs: 4, sm: 8, md: 12}}>
         <Grid item xs = {6} md = {6} sm = {3}>
         <div className = {classes.root}><span>Welcome to your memories social</span><div>media community</div></div>
@@ -75,9 +74,9 @@ const Home = () => {
                       Sign In
                     </Button>
                     <div>
-                      <img alt = "icon" className = {classes.lineBreak} src = {lineBreak} width = "310"/>
+                      <img alt = "icon" className = {classes.lineBreak} src = {lineBreak}/>
                         <span className = {classes.breakName}>Or</span>
-                      <img alt = "icon" className = {classes.lineBreak} src = {lineBreak} width = "310"/>
+                      <img alt = "icon" className = {classes.lineBreak} src = {lineBreak}/>
                     </div>
                     <div className = {classes.btnGoogle}>
                       <Paper elevation = {3}>
@@ -101,16 +100,16 @@ const Home = () => {
         <Container className = {classes.spacing}/>
         <Typography className = {classes.root} variant = "h3"><span className = {classes.span_memories}>Explore your world</span><div>with Memories</div></Typography>
         <Grid item container spacing = {3}>
-          <CardMem classes = {classes.paper} text = "Share your stories" img = {img_bg2}/>
-          <CardMem classes = {classes.paper} text = "Connect to community" img = {img_bg3}/>
-          <CardMem classes = {classes.paper} text = "Any times, any where" img = {img_bg4}/>
+          <CardMem text = "Share your stories" img = {img_bg2}/>
+          <CardMem text = "Connect to community" img = {img_bg3}/>
+          <CardMem text = "Any times, any where" img = {img_bg4}/>
         </Grid>
-        <Container className = {classes.spacing}/>
+        <Container className = {classes.spacing_2}/>
         <Container component = "main" maxWidth = 'xl'>
             <Paper className = {classes.container_bg_3}>
                   <Typography className = {`${classes.root} ${classes.text_bg_3}`} variant = "h3"><span className = {classes.span_memories}>World of </span><span>Memories</span></Typography>
                   <Typography className = {classes.text_bg_3} variant = "h6">Access from 120+ countries around the world.<div>Let's start your memories</div></Typography>
-                  <img className = {classes.img_bg_3} alt = "img_bg_3" src = {social} width = "400px" height = "400px"/>
+                  <img className = {classes.img_bg_3} alt = "img_bg_3" src = {social}/>
                   <Button className = {classes.btn_bg_3} variant = "contained" color = "primary" onClick = {()=> navigate('/auth')}>Get Started</Button>
             </Paper>
         </Container>

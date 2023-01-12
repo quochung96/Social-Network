@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@mui/styles';
 
 export default makeStyles((theme) => ({
   paper: {
@@ -34,11 +34,9 @@ export default makeStyles((theme) => ({
     color: '#000',
   },
   switch_mode: {
-    textAlign: 'center',
-    marginLeft: '-1000px',
     fontSize: '18px',
     fontFamily: 'Inter',
     fontWeight: 'normal',
-    marginTop: '10px'
+    marginTop: '10px', 
   }
 }));
