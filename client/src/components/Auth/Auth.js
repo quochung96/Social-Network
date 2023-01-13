@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import useStyles from './styles.js';
-import {Link,Grow,Avatar, Button, Paper, Grid, Typography, Container} from '@mui/material';
+import {Box,Grow,Avatar, Button, Paper, Grid, Typography, Container} from '@mui/material';
 import LockOutlinedIcon from '../../assets/icons/padlock 1.png';
 import Input from '../widgets/Input';
 import {GoogleLogin } from '@react-oauth/google';
@@ -70,28 +70,29 @@ const Auth = () => {
             <Input name = "password" label = "Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword}/>
             { isSignUp && <Input name = "confirmPassword" label = "Repeat Password" handleChange = {handleChange} type = "password"/>}
           </Grid>
-          <Link to = '/forgotPassword' className = {classes.forgot_password}>
-              <Typography variant = "h6">Forgot password?</Typography>
-          </Link>
+          <div className = {classes.forgot_password} onClick = {() => navigate('/forgotPassword')}>
+             Forgot password?
+          </div>
           <Button type = "submit" fullWidth variant = "contained" color = "primary" className = {classes.submit}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
-          <GoogleLogin
-            onSuccess = {googleSuccess}
-            onError = {googleError}
-            auto_select
-            useOneTap
-          />
+          <Box marginTop = '20px'>
+            <GoogleLogin
+              onSuccess = {googleSuccess}
+              onError = {googleError}
+              auto_select
+              useOneTap
+            />
+          </Box>
+          
         </form>
       </Paper>
     </Container>
-      <Grid container justify = "center">
-          <Grid item>
-            <Button className = {classes.switch_mode} onClick = {switchMode}>
-              {isSignUp ? 'Already have an account ? Sign In' : "New member? Join now"}
-            </Button>
-          </Grid>
-        </Grid>
+    <Box marginLeft = '-4em' display='flex' justifyContent='center' alignItems='center'>
+      <Button className = {classes.switch_mode} onClick = {switchMode}>
+            {isSignUp ? 'Already have an account ? Sign In' : "New member? Join now"}
+        </Button>
+    </Box>    
       </Container>
     </Grow>
   )

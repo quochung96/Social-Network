@@ -1,16 +1,11 @@
-import {makeStyles} from '@mui/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     appBar: {
             borderRadius: 30,
             margin: '30px 0',
             display: 'flex',
-            height: '120px',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '10px 50px',
-            boxShadow: '10 10 10'
     },
     imageText: {
         marginLeft: '10px',
@@ -30,6 +25,13 @@ export default makeStyles((theme) => ({
         marginLeft: '10px',
         marginTop: '15px',
         marginRight: '30px',
+        width: '50%',
+        height:'50%',
+        objectFit: 'cover',
+        objectPosition: 'bottom',
+        [theme.breakpoints.down('sm')]: {
+            width: '40%',
+          },
     },
     iconText: {
         textDecoration: 'none',
@@ -39,6 +41,7 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: theme.spacing(24),
+
     },
     header_option: {
         padding: theme.spacing(2,3),
@@ -55,7 +58,7 @@ export default makeStyles((theme) => ({
         marginLeft: theme.spacing(1),
     },
     header_right: {
-        marginLeft: theme.spacing(24),
+        marginLeft: theme.spacing(12),
         display: 'flex',
         alignItems: 'center'
     },

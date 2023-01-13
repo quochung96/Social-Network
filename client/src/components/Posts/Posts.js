@@ -1,20 +1,20 @@
 import React from 'react'
-import {Grow,Box,Stack} from '@mui/material';
+import {Box,Stack} from '@mui/material';
 import NavBarPost from './NavbarPost/Navbar';
 import Sidebar from './Sidebar/Sidebar';
 import Feed from './Feed/Feed';
+import Rightbar from './Rightbar/Rightbar';
 
 const Posts = () => {
   return (
-    <Grow in>
+    <Box>
       <NavBarPost />
-        <Box>
-            <Stack direction = "row" spacing = {2} justifyContent = "space-between">
-                <Sidebar />
-                <Feed />
-            </Stack>
-        </Box>
-    </Grow>
+      <Stack direction = "row" justifyContent="space-between">
+        <Sidebar />
+        <Feed />
+        <Rightbar />
+      </Stack>
+    </Box>
   )
 }
 

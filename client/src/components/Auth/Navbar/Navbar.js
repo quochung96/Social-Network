@@ -11,7 +11,7 @@ const Navbar = () => {
     <AppBar className = {classes.appBar} position="static" color="inherit">
         <Link to = "/"> 
             <img src={memoriesLogo} alt="icon" height="40px"/>
-            <img className = {classes.imageText} src = {memoriesText} alt = "icon" height = "45px" />
+            <img className = {classes.imageText} src = {memoriesText} alt = "icon" height = "40px" />
         </Link>   
     </AppBar>
   )

@@ -1,23 +1,13 @@
-import {makeStyles} from '@mui/styles';
-import {alpha} from '@mui/material/styles';
+import {makeStyles,alpha} from '@material-ui/core/styles';
+
 export default makeStyles((theme) => ({
     appBar: {
         borderRadius: 30,
         margin: '30px 0',
-        display: 'flex',
         height: '120px',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'space-between',
         padding: '10px 50px',
-        [theme.breakpoints.down('md')]: {
-            flexDirection: 'column',
-            height: '220px',
-        },
-        [theme.breakpoints.down('sm')] : {
-            flexDirection: 'column',
-            height: '220px',
-        }
     },
     heading: {
         color: theme.palette.primary.main,
@@ -26,20 +16,16 @@ export default makeStyles((theme) => ({
         fontWeight: 300,
     },
     image: {
-        marginLeft: '10px',
-        marginTop: '5px',
-        marginRight: '10px',
+        width: '90px',
+        height: 'auto'
       },
     toolbar: {
         display: 'flex',
-        justifyContent: 'flex-end',
-        width: '400px',
         [theme.breakpoints.down('sm')]: {
           width: 'auto',
         },
     },
     brandContainer: {
-        display: 'flex',
         alignItems: 'center',
     },
     menuText: {
@@ -58,20 +44,17 @@ export default makeStyles((theme) => ({
     icon: {
         marginLeft: '10px',
         marginTop: '15px',
-        marginRight: '30px',
+        maxHeight: '50px',
+        maxWidth: '40px',
+        width:'100%',
+        height: 'auto',
+    },
+    iconText: {
+        marginLeft: theme.spacing(4),
+        textDecoration: 'none',
+        width: '100%',
         '&:hover': {
             backgroundColor: alpha(theme.palette.primary.light, 0.25)
         }
     },
-    iconText: {
-        marginLeft: '35px',
-        textDecoration: 'none',
-    },
-    line: {
-        margin: '30px 50px 20px 50px'
-    },
-    btn: {
-        marginLeft: '40px',
-        borderRadius: 20, 
-    }
-}))
+}));

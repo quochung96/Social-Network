@@ -1,4 +1,4 @@
-import {makeStyles} from '@mui/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   paper: {
@@ -29,14 +29,19 @@ export default makeStyles((theme) => ({
     backgroundColor: '#03a9f4',
   },
   forgot_password: {
-    marginLeft: theme.spacing(2),
+    margin: theme.spacing(2,0),
     textDecoration: 'none',
+    fontSize: '20px',
+    fontFamily: 'Helvetica',
     color: '#000',
+    cursor: 'pointer',
   },
   switch_mode: {
     fontSize: '18px',
     fontFamily: 'Inter',
     fontWeight: 'normal',
-    marginTop: '10px', 
+    alignItems: 'center',
+    display: 'flex',
+    marginLeft: theme.spacing(20)
   }
 }));

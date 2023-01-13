@@ -17,6 +17,12 @@ export const getUserById = (id) => API.get(`/users/${id}`);
 export const deleteUserById = (id) => API.delete(`/users/${id}`);
 export const updateUserById = (user,id) => API.put(`/users/${id}`,user);
 
+//Posts
+
+//Chat
+
+//Friends
+
 //Authentication
 export const signin = (formData) => API.post('accounts/login',formData);
 export const signup = (formData) => API.post('accounts/register',formData);

@@ -1,12 +1,6 @@
 import React,{useState} from 'react';
-import NavBar from './Navbar/Navbar';
-import {Grow,Typography,Container, Grid, Paper,Button} from '@mui/material';
-import useStyles from './styles.js';
-import Input from '../widgets/Input';
-import CardMem from '../widgets/CardMem';
+import {Box,Grow,Typography,Container, Grid, Paper,Button} from '@mui/material';
 import {Link,useNavigate} from 'react-router-dom';
-import lineBreak from '../../assets/icons/Line 2.png';
-import * as actionType from '../../constants/actionTypes'; 
 import {GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
 import {useDispatch} from 'react-redux';
@@ -20,6 +14,12 @@ import writing from '../../assets/icons/writing 1.png';
 import lightBub from '../../assets/icons/light-bulb 1.png';
 import watchMovie from '../../assets/icons/watch-movie 1.png';
 import distributed from '../../assets/icons/distributed 1.png';
+import lineBreak from '../../assets/icons/Line 2.png';
+import * as actionType from '../../constants/actionTypes'; 
+import useStyles from './styles.js';
+import Input from '../widgets/Input';
+import CardMem from '../widgets/CardMem';
+import NavBar from './Navbar/Navbar';
 
 const initialState = {email: '', password: ''};
 
@@ -64,15 +64,15 @@ const Home = () => {
           <div className = {classes.container_login}>
             <Paper className = {classes.paper} elevation = {3}>
               <form className = {classes.form} onSubmit = {handleSubmit}>
-                <Grid item container spacing = {3}>
+                <Grid item container spacing = {1}>
                   <Input name = "email" label = "Enter your Email" handleChange = {handleChange} type = "email" autoFocus/>
                   <Input name = "password" label = "Enter your Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword} autoFocus/>
                     <Link to = '/forgotPassword' className = {classes.forgot_password}>
                       <Typography variant = "h6">Forgot password?</Typography>
                     </Link>
-                    <Button type = "submit" fullWidth variant = "contained" color = "primary" className = {classes.submit}>
-                      Sign In
-                    </Button>
+                      <Button type = "submit" fullWidth variant = "contained" color = "primary" className = {classes.submit}>
+                        Sign In
+                      </Button>
                     <div>
                       <img alt = "icon" className = {classes.lineBreak} src = {lineBreak}/>
                         <span className = {classes.breakName}>Or</span>
@@ -98,33 +98,42 @@ const Home = () => {
           </Grid>
         </Grid>
         <Container className = {classes.spacing}/>
-        <Typography className = {classes.root} variant = "h3"><span className = {classes.span_memories}>Explore your world</span><div>with Memories</div></Typography>
-        <Grid item container spacing = {3}>
+        <Typography className = {classes.root} variant = "h3">
+          <span className = {classes.span_memories}>
+            Explore your world
+          </span>
+          <div>
+            with Memories
+          </div>
+        </Typography>
+        <Grid item container spacing = {1}>
           <CardMem text = "Share your stories" img = {img_bg2}/>
           <CardMem text = "Connect to community" img = {img_bg3}/>
           <CardMem text = "Any times, any where" img = {img_bg4}/>
         </Grid>
         <Container className = {classes.spacing_2}/>
-        <Container component = "main" maxWidth = 'xl'>
-            <Paper className = {classes.container_bg_3}>
-                  <Typography className = {`${classes.root} ${classes.text_bg_3}`} variant = "h3"><span className = {classes.span_memories}>World of </span><span>Memories</span></Typography>
-                  <Typography className = {classes.text_bg_3} variant = "h6">Access from 120+ countries around the world.<div>Let's start your memories</div></Typography>
-                  <img className = {classes.img_bg_3} alt = "img_bg_3" src = {social}/>
-                  <Button className = {classes.btn_bg_3} variant = "contained" color = "primary" onClick = {()=> navigate('/auth')}>Get Started</Button>
-            </Paper>
+        <Container component = "main" maxWidth = 'xl'  className = {classes.container_bg_3}>
+              <Typography className = {`${classes.root} ${classes.text_bg_3}`} variant = "h3"><span className = {classes.span_memories}>World of </span><span>Memories</span></Typography>
+              <Typography className = {classes.text_bg_3} variant = "h6">Access from 120+ countries around the world.<div>Let's start your memories</div></Typography>
+              <img className = {classes.img_bg_3} alt = "img_bg_3" src = {social}/>
+              <Box marginBottom = '40px' display = 'flex' justifyContent='center' alignItems='center'>
+                <Button size = "large" variant = "contained" color = "primary" onClick = {()=> navigate('/auth')}>Get Started</Button>
+              </Box>
         </Container>
         <Container className = {classes.padding_bg_3}/>
         <Grid container spacing = {1}>
           <Grid item xs = {6}>
-            <Typography className = {classes.text_bg_4} variant = "h4">
+            <Typography noWrap className = {classes.text_bg_4} variant = "h4">
               Our process
             </Typography>
-            <Typography className = {classes.text_bg_4} variant = "h3">This is the world<div>sharing for you</div></Typography>
-            <Typography className = {classes.text_sub_bg_4} variant = "h4">This is the world where you are<div>shine if you are ready right now</div></Typography>
-            <Button className = {classes.btn_bg_4} variant = 'contained' onClick = {() => navigate('/auth')}>Discover more<img className = {classes.btn_icon_bg_4} alt = 'icon_btn_bg_4' src ={arrow}/></Button>
+            <Typography align = 'justify' className = {classes.text_bg_4} noWrap variant = "h3">This is the world<div>sharing for you</div></Typography>
+            <Typography variant = "h5" noWrap>This is the world where you are<div>shine if you are ready right now</div></Typography>
+            <Box marginTop = '20px'>
+              <Button size = 'large' variant = 'contained' color = 'secondary' onClick = {() => navigate('/auth')}>Discover more<img className = {classes.btn_icon_bg_4} alt = 'icon_btn_bg_4' src ={arrow}/></Button>
+            </Box>
           </Grid>
           <Container component = "main" maxWidth = 'sm'>
-            <Paper className = {classes.bg_img_5} >
+            <Box className = {classes.bg_img_5} >
             <Grid item xs = {6}>
             <Grid container rowSpacing= {4} spacing = {8}>
               <Grid item xs = {6} md = {8}>
@@ -181,7 +190,7 @@ const Home = () => {
               </Grid>
             </Grid>
             </Grid>
-            </Paper>
+            </Box>
           </Container>
         </Grid>
        </Container>

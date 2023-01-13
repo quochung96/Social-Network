@@ -16,7 +16,7 @@ import Emphasis from '../../../assets/icons/Line 2.png';
 import {useDispatch} from 'react-redux';
 import * as actionType from '../../../constants/actionTypes';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+//Styled
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius * 4.7,
@@ -58,6 +58,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+const StyledToolbar = styled(Toolbar)({
+  display: 'flex',
+  justifyContent: 'space-between'
+})
 const NavbarPost = () => {
   const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const dispatch = useDispatch();
@@ -83,15 +88,16 @@ const NavbarPost = () => {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
-  },[location])
+  },[location]);
 
   return (
-    <Box sx = {{flexGrow: 1}}>
-      <AppBar className = {classes.appBar} position = "static" color = "inherit">
-        <Toolbar>
-          <Link to = "/posts">
-            <img src={memoriesLogo} alt="icon" height="60px"/>
-          </Link>
+      <AppBar className = {classes.appBar} position = "sticky" color = "inherit">  
+        <StyledToolbar>
+          <Box sx={{display: {xs: 'none',sm: 'block'}}}>
+            <Link to = "/posts">
+              <img src={memoriesLogo} alt="icon" height="60px"/>
+            </Link>
+          </Box>
           <Search>
             <SearchIconWrapper>
               <SearchIcon fontSize = 'large'/>
@@ -112,7 +118,7 @@ const NavbarPost = () => {
             <div className = {classes.header_option}>
               <Link to = '/friends' className = {classes.iconText}>
                 <img className = {classes.icon} src = {Networking} alt= "icon" height = "40px" />
-                <Typography className = {classes.menuText} variant ="h6">My Network</Typography>
+                <Typography className = {classes.menuText} variant ="h6">Networking</Typography>
               </Link>
             </div>
             <div className = {classes.header_option}>
@@ -129,13 +135,16 @@ const NavbarPost = () => {
           </div>
           <div className = {classes.header_right}>
             <div className = {classes.header_info}>
-              <Box>
-                <Tooltip title = "Account">
-                  <IconButton onClick = {handleOpenUserMenu} sx = {{p: 0}}>
-                    <Avatar className = {classes.avatar} alt = {user?.result.name} src = {user?.result.picture}>
-                      {user?.result.name.charAt(0)}
-                    </Avatar>
+                <Tooltip title = {user?.result.name}>
+                  <IconButton onClick = {null}>
+                    <Avatar alt = {user?.result.name} src = {user?.result.picture} />
                   </IconButton>
+                </Tooltip>
+              <Box>
+                  <Tooltip title = "Settings">
+                    <IconButton onClick = {handleOpenUserMenu} sx = {{p: 0}}>
+                      <ArrowDropDownIcon />
+                    </IconButton>
                   </Tooltip>
                   <Menu
                       sx={{ mt: '45px' }}
@@ -153,24 +162,25 @@ const NavbarPost = () => {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
-                      {settings.map((setting) => (
-                        <MenuItem key={setting} onClick= {logout}>
-                          <Typography textAlign="center">{setting}</Typography>
+                        <MenuItem key={"Profile"} onClick = {handleCloseUserMenu}>
+                          <Typography textAlign="center">Profile</Typography>
                         </MenuItem>
-                      ))}
+                        <MenuItem key={"Settings"} onClick= {handleCloseUserMenu}>
+                          <Typography textAlign="center">Settings</Typography>
+                        </MenuItem>
+                        <MenuItem key={"Language"} onClick= {handleCloseUserMenu}>
+                          <Typography textAlign="center">Language</Typography>
+                        </MenuItem>
+                        <MenuItem key={"Sign Out"} onClick= {logout}>
+                          <Typography textAlign="center">Sign Out</Typography>
+                        </MenuItem>
                     </Menu>
               </Box>
-              <Tooltip title = "Settings">
-                <IconButton>
-                  <ArrowDropDownIcon />
-                </IconButton>
-              </Tooltip>
+              
             </div>
           </div>
-        </Toolbar>
+        </StyledToolbar>
       </AppBar>
-    </Box>
-  
   );
 }
 
