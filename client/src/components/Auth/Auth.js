@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import useStyles from './styles.js';
-import {Box,Grow,Avatar, Button, Paper, Grid, Typography, Container} from '@mui/material';
-import LockOutlinedIcon from '../../assets/icons/padlock 1.png';
-import Input from '../widgets/Input';
+import {Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core/';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Input from './Input.js';
 import {GoogleLogin } from '@react-oauth/google';
 import {useDispatch} from 'react-redux';
 import jwt_decode from 'jwt-decode';
-import {useNavigate} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import * as actionType from '../../constants/actionTypes.js';
-import Navbar from './Navbar/Navbar';
-
+import {signin,signup} from '../../actions/auth';
+import jwt from 'jsonwebtoken';
+import axios from 'axios';
 const initialState = { firstName: '', lastName: '', email: '',password: '',confirmPassword: ''};
 const Auth = () => {
   const classes = useStyles();
@@ -17,11 +18,16 @@ const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent load again
     
-    
+    if(isSignUp){
+      dispatch(signup(formData, history));
+    }
+    else{
+      dispatch(signin(formData,history));
+    }
   }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value})
@@ -33,11 +39,11 @@ const Auth = () => {
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
   const googleSuccess = async (res) => {
       const result = jwt_decode(res.credential);
-      // const token = jwt.sign({email: result?.email, id: result?.sub}, 'test', {expiresIn: "1h"});
+      const token = jwt.sign({email: result?.email, id: result?.sub}, 'test', {expiresIn: "1h"});
       try{
         console.log(result);
-        dispatch({type: actionType.AUTH, data: {result}});
-        navigate("/posts");
+        dispatch({type: actionType.AUTH, data: {result,token}});
+        history.push("/");
       }catch(e){
         console.log(e);
       }
@@ -47,13 +53,10 @@ const Auth = () => {
   }
   
   return (
-    <Grow in>
-      <Container component = "main" maxWidth = 'xl'>
-      <Navbar />
-      <Container component = "main" maxWidth = "xs">
+    <Container component = "main" maxWidth = "xs">
       <Paper className = {classes.paper} elevation = {3}>
         <Avatar className = {classes.avatar}>
-          <img alt = "pad_lock" src = {LockOutlinedIcon} width = "30px" height = "30px"/>
+          <LockOutlinedIcon />
         </Avatar>
         <Typography variant = "h5">{isSignUp ? 'Sign Up' : 'Sign In'}</Typography>
         <form className = {classes.form} onSubmit = {handleSubmit}>
@@ -70,31 +73,23 @@ const Auth = () => {
             <Input name = "password" label = "Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword}/>
             { isSignUp && <Input name = "confirmPassword" label = "Repeat Password" handleChange = {handleChange} type = "password"/>}
           </Grid>
-          <div className = {classes.forgot_password} onClick = {() => navigate('/forgotPassword')}>
-             Forgot password?
-          </div>
           <Button type = "submit" fullWidth variant = "contained" color = "primary" className = {classes.submit}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
-          <Box marginTop = '20px'>
-            <GoogleLogin
-              onSuccess = {googleSuccess}
-              onError = {googleError}
-              auto_select
-              useOneTap
-            />
-          </Box>
-          
+          <GoogleLogin
+            onSuccess = {googleSuccess}
+            onError = {googleError}
+          />
+          <Grid container justify = "flex-end">
+            <Grid item>
+              <Button onClick = {switchMode}>
+                {isSignUp ? 'Already have an account ? Sign In' : "Don't have an account ? Sign Up"}
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Paper>
     </Container>
-    <Box marginLeft = '-4em' display='flex' justifyContent='center' alignItems='center'>
-      <Button className = {classes.switch_mode} onClick = {switchMode}>
-            {isSignUp ? 'Already have an account ? Sign In' : "New member? Join now"}
-        </Button>
-    </Box>    
-      </Container>
-    </Grow>
   )
 }
 

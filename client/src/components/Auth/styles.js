@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   paper: {
@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -27,21 +27,5 @@ export default makeStyles((theme) => ({
   googleBtn:{
     margin: theme.spacing(1, 0 , 1),
     backgroundColor: '#03a9f4',
-  },
-  forgot_password: {
-    margin: theme.spacing(2,0),
-    textDecoration: 'none',
-    fontSize: '20px',
-    fontFamily: 'Helvetica',
-    color: '#000',
-    cursor: 'pointer',
-  },
-  switch_mode: {
-    fontSize: '18px',
-    fontFamily: 'Inter',
-    fontWeight: 'normal',
-    alignItems: 'center',
-    display: 'flex',
-    marginLeft: theme.spacing(20)
   }
 }));
