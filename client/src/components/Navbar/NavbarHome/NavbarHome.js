@@ -10,7 +10,7 @@ import {Icons,UserBox,StyledToolbar} from '../../widgets/Styles';
 import useStyles from './styles.js';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const NavBar = () => {
+const NavBarHome = () => {
   const classes = useStyles();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenUserMenu = (event) => {
@@ -96,4 +96,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar;
+export default NavBarHome;

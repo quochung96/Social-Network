@@ -43,10 +43,13 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   }));
   
-export const StyledToolbar = styled(Toolbar)({
+export const StyledToolbar = styled(Toolbar)(({theme}) =>({
     display: 'flex',
     justifyContent: 'space-between',
-});
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(2,4)
+    }
+}));
 export const Icons = styled(Box)(({theme}) => ({
     display: 'none',
     alignItems: 'center',

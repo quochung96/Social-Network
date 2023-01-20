@@ -5,7 +5,7 @@ import useStyles from './styles.js';
 import memoriesLogo from '../../../assets/icons/memories-Logo.png';
 import memoriesText from '../../../assets/icons/memories-Text.png';
 
-const Navbar = () => {
+const NavbarAuth = () => {
   const classes = useStyles();
   return (
     <AppBar className = {classes.appBar} position="static" color="inherit">
@@ -17,5 +17,5 @@ const Navbar = () => {
   )
 }
 
-export default Navbar;
+export default NavbarAuth;
 

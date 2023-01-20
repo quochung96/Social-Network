@@ -5,66 +5,27 @@ export default makeStyles((theme) => ({
         borderRadius: 30,
         margin: '30px 0',
         display: 'flex',
-        alignItems: 'center',
-    },
-    imageText: {
-        marginLeft: '10px',
-    },
-    menuText: {
-        display: 'flex',
-        alignItems: 'center',
-        textAlign: 'center',
-        textDecoration: 'none',
-        fontSize: '1em',
-        fontWeight: 300,
-        color: "#000042",
-        fontStyle: "bold",
-        marginLeft: '10px'
-    },
-    icon: {
-        marginLeft: '10px',
-        marginTop: '15px',
-        marginRight: '30px',
-        width: '50%',
-        height:'50%',
-        objectFit: 'cover',
-        objectPosition: 'bottom',
-        [theme.breakpoints.down('sm')]: {
-            width: '40%',
-          },
-    },
-    iconText: {
-        textDecoration: 'none',
     },
     header_middle: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: theme.spacing(24),
-
     },
     header_option: {
-        padding: theme.spacing(2,3),
+        padding: theme.spacing(3,2),
         cursor: 'pointer',
         '&:hover': {
             borderRadius: '20px',
             backgroundColor: 'whitesmoke',
-        }
-    },
-    emphasis: {
-        display: 'flex',
-        width: '60px',
-        height: '5px',
-        marginLeft: theme.spacing(1),
+        },
     },
     header_right: {
-        marginLeft: theme.spacing(12),
         display: 'flex',
         alignItems: 'center'
     },
     header_info: {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         '& .MuiAvatar-root': {
             width: '60px',
             height: '60px',

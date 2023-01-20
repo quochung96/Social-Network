@@ -1,19 +1,25 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {Container, Skeleton,Box} from '@mui/material';
 import Post from './Post/Post';
+import AddPost from './Post/AddPost';
+// import {useSelector} from 'react-redux';
+
 const Feed = () => {
   //Khi nào kết nối database và xử lý xong redux thì xài này
   // const {posts,isLoading} = useSelector((state) => state.posts);
-  const [loading,setLoading] = useState(true);
+
+  // if(!posts.length && !isLoading) {
+  //   return 'No Posts';
+  // }
+  const [isLoading,setLoading] = useState(true);
 
   setTimeout(() => {
     setLoading(false);
-  }, [2000]);
-
+  }, [1000]);
   return (
-    loading ? (
+    isLoading ? (
       <Container >
-      <Box sx={{ width: 1200 }}>
+      <Box height = 'auto' width = "100%" sx={{justifyContent: 'center', display: 'flex', flexDirection: 'column', marginLeft: '40px'}}>
           <Skeleton />
           <Skeleton animation="wave" />
           <Skeleton animation={false} />
@@ -21,31 +27,16 @@ const Feed = () => {
           <Skeleton animation="wave" />
           <Skeleton animation={false} />
           <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
       </Box>
       </Container>
     ) :
-    <Box flex = {4} p={2}>
-      {/* Nào kết nối redux của post và dùng selector thì xài này để lấy từ database
-      {posts.map((post) => (
+    <Box flex = {2} p={1} sx = {{width: '100%', height: 'auto'}}>
+      <AddPost />
+      {/* Nào kết nối redux của post và dùng selector thì xài này để lấy từ database */}
+      {/* {posts.map((post) => (
         <Post />
-      ))} */}
+      ))}
+       */}
       <Post />
       <Post />
     </Box>

@@ -1,17 +1,22 @@
 package com.example.memories.service.implement;
 
+import com.example.memories.builder.AccountBuilder;
+import com.example.memories.builder.AuthenticationResponse;
+import com.example.memories.config.JwtService;
 import com.example.memories.entity.AccountsEntity;
 import com.example.memories.entity.RolesEntity;
 import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.Accounts;
+import com.example.memories.repository.AccountBuilderRepository;
 import com.example.memories.repository.AccountsRepository;
 import com.example.memories.repository.RolesRepository;
 import com.example.memories.repository.UsersRepository;
 import com.example.memories.service.interfaces.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,46 +25,80 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountServiceImpl implements AccountService {
-    private AccountsRepository accountsRepository;
-//    @Autowired
-    private RolesRepository rolesRepository;
-
-    private UsersRepository usersRepository;
-    private PasswordEncoder passwordEncoder;
+@RequiredArgsConstructor
+public class AccountServiceImpl implements AccountService{
+    private final AccountsRepository accountsRepository;
+    private final RolesRepository rolesRepository;
+    private final UsersRepository usersRepository;
+    private final AccountBuilderRepository accountBuilderRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     //Constructor
-    public AccountServiceImpl(AccountsRepository accountsRepository,UsersRepository usersRepository, RolesRepository rolesRepository, PasswordEncoder passwordEncoder){
-        this.accountsRepository = accountsRepository;
-        this.usersRepository = usersRepository;
-        this.rolesRepository = rolesRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
     @Override
-    public Accounts createAccount(Accounts account) {
-
-        //Create new account entity
+    public AuthenticationResponse createAccount(Accounts account) throws Exception {
+        //Tạo một Account Entity Constructor
         AccountsEntity accountsEntity = new AccountsEntity();
-        //Copy all the properties accountEntity assigned to account model
-        //Set all the parameters from front-end login by the USER ROLE
+        //Kiểm tra account có trong database hay k ? Nếu có thì throw exception
+        if(accountsRepository.findByEmail(account.getEmail()).isPresent()){
+            throw new Exception("User exists");
+        }
+        // Set all the parameters from front-end login by the USER ROLE
         // Hashed Password when create new account
         String encodedPassword= passwordEncoder.encode(account.getHashPassword());
         account.setHashPassword(encodedPassword);
+        // Default set
         account.setCreateAt(new Date());
         account.setUpdateAt(new Date());
         RolesEntity roles = rolesRepository.findByRoleName("USER").get();
         account.setRoles(roles);
+        account.setIsArchieved(0);
         //Khi tạo 1 Entity mới cần phải lưu vào DB trước khi flush -> Gen user trc khi tạo foreign key trong Account
         UsersEntity users = new UsersEntity(account.getUserName());
         usersRepository.save(users);
         account.setUsers(users);
-
-        account.setIsArchieved(0);
+        //Copy tất cả những thuộc tính còn lại qua account Entity --> Save vào database
         BeanUtils.copyProperties(account, accountsEntity);
         accountsRepository.save(accountsEntity);
-        return account;
+        //Tạo một Builder mới dùng để tạo token xác thực
+        var user = AccountBuilder.builder()
+                .name(account.getUserName())
+                .email(account.getEmail())
+                .hashPassword(encodedPassword)
+                .isArchieved(0)
+                .roles(roles)
+                .users(users)
+                .createAt(new Date())
+                .updateAt(new Date())
+                .build();
+        // Tạo token
+        var jwtToken = jwtService.generateToken(user);
+        // Trả về token và builder result account khi tạo 1 user mới xong
+        return AuthenticationResponse.builder().token(jwtToken)
+                .result(user)
+                .build();
     }
 
+    @Override
+    public AuthenticationResponse authenticate(Accounts account) {
+        // Khi token được gen từ front-end -> qua lớp authentication manager
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        account.getEmail(),
+                        account.getHashPassword()
+                )
+        );
+        // Tìm xem account có email đó hay chưa --> Nếu chưa có thì throw exception
+        AccountBuilder user = accountBuilderRepository.findByEmail(account.getEmail())
+                .orElseThrow();
+        //Gen token ra
+        var jwtToken = jwtService.generateToken(user);
+
+        return AuthenticationResponse.builder().token(jwtToken).
+                result(user).
+                build();
+    }
 
     @Override
     public List<Accounts> getAllAccounts() {
@@ -117,6 +156,7 @@ public class AccountServiceImpl implements AccountService {
         accountsEntity.setPhone_number(account.getPhone_number());
         accountsEntity.setEmail(account.getEmail());
         accountsEntity.setUpdateAt(new Date());
+        accountsRepository.save(accountsEntity);
         return account;
     }
 }

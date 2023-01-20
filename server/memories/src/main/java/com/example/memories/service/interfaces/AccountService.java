@@ -1,12 +1,14 @@
 package com.example.memories.service.interfaces;
 
+import com.example.memories.builder.AuthenticationResponse;
 import com.example.memories.model.Accounts;
 
 import java.util.List;
 
 public interface AccountService {
-    Accounts createAccount(Accounts account);
+    AuthenticationResponse createAccount(Accounts account) throws Exception; //Done
 
+    AuthenticationResponse authenticate(Accounts account);
 
     List<Accounts> getAllAccounts();
 

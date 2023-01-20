@@ -93,10 +93,12 @@ public class UserServiceImpl implements UserService {
         usersEntity.setBirth_day(user.getBirth_day());
         usersEntity.setAddress(user.getAddress());
         usersEntity.setRelationship(user.getRelationship());
+        usersEntity.setFollower(user.getFollower());
         usersEntity.setGender(user.getGender());
         usersEntity.setCover_url(user.getCover_url());
         usersEntity.setAvatar_url(user.getAvatar_url());
         usersEntity.setUpdateAt(new Date());
+        usersRepository.save(usersEntity);
         return user;
     }
 }

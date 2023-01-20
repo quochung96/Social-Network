@@ -6,6 +6,10 @@ import Home from './components/HomePage/Home';
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import Auth from './components/Auth/Auth';
 import Posts from './components/Posts/Posts';
+import Profile from './components/Profile/Profile';
+import Message from './components/Message/Message';
+import Friends from './components/Friends/Friends';
+import ForgotPassword from './components/Auth/ForgotPassword';
 
 const App = () => {
   
@@ -16,6 +20,10 @@ const App = () => {
           <Container maxWidth = "xl">
             <Routes>
               <Route path = "/" element = {<Home/>} />
+              <Route path = "/profile" element = {<Profile />}/>
+              <Route path = "/forgotPassword" element = {<ForgotPassword />}/>
+              <Route path = "/message" element = {<Message />}/>
+              <Route path = "/friends" element = {<Friends />}/>
               <Route path = "/auth" element = {<Auth />}/>
               <Route path = "/posts" element = {<Posts/>} />
             </Routes>

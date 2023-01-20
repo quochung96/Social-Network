@@ -8,9 +8,17 @@ import {useDispatch} from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import {useNavigate} from 'react-router-dom';
 import * as actionType from '../../constants/actionTypes.js';
-import Navbar from './Navbar/Navbar';
+import NavbarAuth from '../Navbar/NavbarAuth/NavbarAuth';
+import {signin,signup} from '../../actions/auth';
 
-const initialState = { firstName: '', lastName: '', email: '',password: '',confirmPassword: ''};
+// import jwt from 'jsonwebtoken';
+
+const initialState = { 
+ userName : "",
+ hashPassword: "",
+ confirmPassword: "",
+ email: ""
+};
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
@@ -20,8 +28,14 @@ const Auth = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent load again
+    console.log(formData);
     
-    
+    if(isSignUp){
+      dispatch(signup(formData,navigate));
+    }
+    else{
+      dispatch(signin(formData,navigate));
+    }
   }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value})
@@ -35,7 +49,7 @@ const Auth = () => {
       const result = jwt_decode(res.credential);
       // const token = jwt.sign({email: result?.email, id: result?.sub}, 'test', {expiresIn: "1h"});
       try{
-        console.log(result);
+        console.log(jwt_decode(res.credential));
         dispatch({type: actionType.AUTH, data: {result}});
         navigate("/posts");
       }catch(e){
@@ -49,7 +63,7 @@ const Auth = () => {
   return (
     <Grow in>
       <Container component = "main" maxWidth = 'xl'>
-      <Navbar />
+      <NavbarAuth />
       <Container component = "main" maxWidth = "xs">
       <Paper className = {classes.paper} elevation = {3}>
         <Avatar className = {classes.avatar}>
@@ -61,13 +75,12 @@ const Auth = () => {
             {
               isSignUp &&(
                 <>
-                    <Input name = "firstName" label = "First Name" handleChange = {handleChange} autoFocus half/>
-                    <Input name = "lastName" label = "Last Name" handleChange = {handleChange} half/>
+                    <Input name = "userName" label = "User Name" handleChange = {handleChange} autoFocus/>
                 </>
               )
             }
             <Input name = "email" label = "Email Address" handleChange = {handleChange} type = "email"/>
-            <Input name = "password" label = "Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword}/>
+            <Input name = "hashPassword" label = "Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword}/>
             { isSignUp && <Input name = "confirmPassword" label = "Repeat Password" handleChange = {handleChange} type = "password"/>}
           </Grid>
           <div className = {classes.forgot_password} onClick = {() => navigate('/forgotPassword')}>

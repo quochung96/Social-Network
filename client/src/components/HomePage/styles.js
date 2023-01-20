@@ -121,9 +121,9 @@ export default makeStyles((theme) => ({
         height: '50px',
     },
     bg_img_5: {
-        marginLeft: '10%',
+        marginLeft: '300px',
         marginTop: '15%',
-        width: '700px',
+        width: '150%',
         height: '200px',
         backgroundColor: '#8F5849',
         opacity: '95%'
@@ -165,5 +165,5 @@ export default makeStyles((theme) => ({
         textAlign: 'center',
         fontWeight: '500',
         color: '#8F5849',
-    }
+    },
 }));

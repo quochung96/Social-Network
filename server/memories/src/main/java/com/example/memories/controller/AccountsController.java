@@ -1,6 +1,7 @@
 package com.example.memories.controller;
 
 
+import com.example.memories.builder.AuthenticationResponse;
 import com.example.memories.model.Accounts;
 import com.example.memories.service.interfaces.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,16 @@ public class AccountsController {
     @PostMapping("/accounts/signup")
     //Perform create a new account -> Gen new id
     //We need a handle token as well
-    public ResponseEntity<Accounts> createAccount(@RequestBody Accounts account){
+    public ResponseEntity<AuthenticationResponse> createAccount(@RequestBody Accounts account) throws Exception {
         return ResponseEntity.ok(
                 accountService.createAccount(account)
         );
+    }
+
+    //SIGN IN
+    @PostMapping("/accounts/signin")
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody Accounts account){
+        return ResponseEntity.ok(accountService.authenticate(account));
     }
     @GetMapping("/accounts")
     public List<Accounts> getAllAccounts() {

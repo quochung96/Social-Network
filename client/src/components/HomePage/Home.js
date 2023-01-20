@@ -19,7 +19,8 @@ import * as actionType from '../../constants/actionTypes';
 import useStyles from './styles.js';
 import Input from '../widgets/Input';
 import CardMem from '../widgets/CardMem';
-import NavBar from './Navbar/Navbar';
+import NavBarHome from '../Navbar/NavbarHome/NavbarHome';
+// import jwt from 'jsonwebtoken';
 
 const initialState = {email: '', password: ''};
 
@@ -57,7 +58,7 @@ const Home = () => {
   return (
     <Grow in>
        <Container component = "main" maxWidth = "xl">
-       <NavBar />
+       <NavBarHome />
        <Grid container spacing = {{xs: 2, md: 3}} columns ={{xs: 4, sm: 8, md: 12}}>
         <Grid item xs = {6} md = {6} sm = {3}>
         <div className = {classes.root}><span>Welcome to your memories social</span><div>media community</div></div>
@@ -121,8 +122,8 @@ const Home = () => {
               </Box>
         </Container>
         <Container className = {classes.padding_bg_3}/>
-        <Grid container spacing = {1}>
-          <Grid item xs = {6}>
+        <Grid container spacing = {4}>
+          <Grid item xs = {4}>
             <Typography noWrap className = {classes.text_bg_4} variant = "h4">
               Our process
             </Typography>

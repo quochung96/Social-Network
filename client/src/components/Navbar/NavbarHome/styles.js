@@ -4,7 +4,8 @@ export default makeStyles((theme) => ({
     appBar: {
         borderRadius: 30,
         margin: '30px 0',
-        height: '120px',
+        // height: '120px',
+        display: 'flex',
         flexDirection: 'row',
         alignItems: 'space-between',
         padding: '10px 50px',
