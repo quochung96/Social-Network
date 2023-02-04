@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="RELATIONSHIPS")
-public class Relationships {
+public class RelationshipsEntity {
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT")
     private Date createAt;
@@ -20,7 +20,7 @@ public class Relationships {
     private Date updateAt;
 
     @Id
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "USER1_ID")
     private UsersEntity users1;
 
