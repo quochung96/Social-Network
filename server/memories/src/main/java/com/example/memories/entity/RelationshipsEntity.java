@@ -20,7 +20,7 @@ public class RelationshipsEntity {
     private Date updateAt;
 
     @Id
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "USER1_ID")
     private UsersEntity users1;
 
