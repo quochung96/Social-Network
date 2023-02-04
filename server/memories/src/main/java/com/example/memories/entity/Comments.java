@@ -10,4 +10,6 @@ public class Comments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CMT_ID", nullable = false)
     private Long cmt_id;
+
+
 }
