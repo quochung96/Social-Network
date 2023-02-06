@@ -42,10 +42,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Posts createPost(Posts post) {
+    public Posts createPost(long userID, Posts post) {
         PostsEntity newPost = new PostsEntity();
         post.setCreateAt(new Date());
         post.setUpdateAt(new Date());
+        post.setUser(userRepository.findById(userID).get());
         BeanUtils.copyProperties(post, newPost);
         postsRepository.save(newPost);
         return post;
@@ -56,17 +57,18 @@ public class PostServiceImpl implements PostService {
         PostsEntity newPost = postsRepository.findById(id).get();
         newPost.setContent(post.getContent());
         newPost.setPermission(post.getPermission());
-        newPost.setUser(post.getUser());
         newPost.setUpdateAt(new Date());
         postsRepository.save(newPost);
-        return post;
+
+        Posts updatePostResponse = new Posts();
+        BeanUtils.copyProperties(newPost, updatePostResponse);
+        return updatePostResponse;
     }
 
     @Override
     public Posts getPostById(long id) {
         PostsEntity postsEntity = postsRepository.findById(id).get();
         Posts post = new Posts();
-        // Assign all the properties USERProperties to users
         BeanUtils.copyProperties(postsEntity, post);
         return post;
     }

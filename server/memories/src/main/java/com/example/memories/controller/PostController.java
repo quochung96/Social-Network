@@ -22,9 +22,9 @@ public class PostController {
     public ResponseEntity getPostById(@PathVariable Integer id){
         return ResponseEntity.ok().body(postService.getPostById(id));
     }
-    @PostMapping("/posts")
-    public ResponseEntity createPost(@RequestBody Posts post){
-        return ResponseEntity.ok().body(postService.createPost(post));
+    @PostMapping("/{userId}/posts")
+    public ResponseEntity createPost(@PathVariable Integer userId, @RequestBody Posts post){
+        return ResponseEntity.ok().body(postService.createPost(userId, post));
     }
     @PutMapping("/posts/{id}")
     public ResponseEntity updatePost(@PathVariable Integer id, @RequestBody Posts post){
