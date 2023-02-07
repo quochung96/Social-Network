@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import {Box,Avatar,IconButton,Typography} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {StyledInputBase} from '../../../widgets/Styles';
@@ -7,10 +7,10 @@ import Player from '../../../../assets/icons/player.png';
 import Calendar from '../../../../assets/icons/calendar.png';
 
 
-const AddPost = () => {
-  const [user] = useState(JSON.parse(localStorage.getItem('profile')));
+const AddPost = ({user,userProfile}) => {
+
   const navigate = useNavigate();
-  const openProfile = () => {navigate("/profile")};
+  const openProfile = () => {navigate(`/profile/${user?.result.acc_id || user?.result.sub}`)};
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -19,7 +19,7 @@ const AddPost = () => {
     <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '90%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
         <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {openProfile}>
-              <Avatar alt = {user?.result.name} src = {user?.result.picture}/>
+              <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url}/>
             </IconButton>
             <Box marginTop = '10px' width = '100%' sx = {{borderRadius: '30px'}}>
             <StyledInputBase

@@ -10,12 +10,12 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
-//Profile
-export const saveUser = (user) => API.post('/users',user);
-export const getUsers = () => API.get('/users');
-export const getUserById = (id) => API.get(`/users/${id}`);
-export const deleteUserById = (id) => API.delete(`/users/${id}`);
-export const updateUserById = (user,id) => API.put(`/users/${id}`,user);
+//User
+export const createUser = (user) => API.post('/users',user);
+export const fetchUsers = () => API.get('/users');
+export const fetchUser = (id) => API.get(`/users/${id}`);
+export const deleteUser = (id) => API.delete(`/users/${id}`);
+export const updateUser = (user,id) => API.put(`/users/${id}`,user);
 
 //Posts
 export const fetchPost = (id) => API.get(`/posts/${id}`);
@@ -26,6 +26,7 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`, {value});
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
 export const deletePost = (id) => API.delete(`/posts/${id}`);
+
 //Chat
 
 //Friends

@@ -47,9 +47,9 @@ public class AccountBuilder implements UserDetails {
     @ToString.Exclude
     private RolesEntity roles;
 
-    @OneToOne //Đánh dấu quan hệ 1-1 với User
-    @JoinColumn(name = "USER_ID") // Liên kết với nhau qua khóa ngoại USER_ID
-    private UsersEntity users;
+//    @OneToOne //Đánh dấu quan hệ 1-1 với User
+//    @JoinColumn(name = "USER_ID") // Liên kết với nhau qua khóa ngoại USER_ID
+//    private UsersEntity users;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT")

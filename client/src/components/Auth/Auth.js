@@ -93,7 +93,6 @@ const Auth = () => {
             <GoogleLogin
               onSuccess = {googleSuccess}
               onError = {googleError}
-              auto_select
               useOneTap
             />
           </Box>

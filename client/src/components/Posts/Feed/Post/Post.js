@@ -11,7 +11,7 @@ import moment from 'moment';
 // import {commentPost} from '../../../../actions/posts';
 
 const intialComment = {comment: ''};
-const Post = ({post,setCurrentId}) => {
+const Post = ({user,userProfile}) => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   // const dispatch = useDispatch();
@@ -19,7 +19,6 @@ const Post = ({post,setCurrentId}) => {
   // const [comments,setComments] = useState(posts?.comments);
   //Set one comment in the post
   const [comment, setComment] = useState(intialComment);
-  const [user] = useState(JSON.parse(localStorage.getItem('profile')));
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -112,7 +111,7 @@ const Post = ({post,setCurrentId}) => {
           <Box display = 'flex' flexDirection = 'row'>
             <Tooltip title = {user?.result.name}>
                 <IconButton onClick = {() => navigate('/profile')}>
-                  <Avatar alt = {user?.result.name || "No Avatar"} src = {user?.result.picture || user?.result.users.avatar_url || <AvatarIcon />} />
+                  <Avatar alt = {user?.result.name || "No Avatar"} src = {user?.result.picture || userProfile?.avatar_url || <AvatarIcon />} />
                 </IconButton>
             </Tooltip>
             <Box marginTop = '10px' width = '900px'>

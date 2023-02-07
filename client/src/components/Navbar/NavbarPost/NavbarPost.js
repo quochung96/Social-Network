@@ -12,13 +12,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import AvatarIcon from '../../../assets/icons/user.png';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import {useDispatch} from 'react-redux';
 import * as actionType from '../../../constants/actionTypes';
 
-const NavbarPost = ({user}) => {
-  const [setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+const NavbarPost = ({user,setUser,userProfile}) => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -100,8 +99,8 @@ const NavbarPost = ({user}) => {
               </IconButton>
               <Box sx = {{display: {xs: 'none', md: 'block'}}}>
                 <Tooltip title = {user?.result.name}>
-                  <IconButton onClick = {() => navigate('/profile')}>
-                    <Avatar alt = {user?.result.name} src = {user?.result.picture || <AvatarIcon />} />
+                  <IconButton onClick = {() => navigate(`/profile/${user?.result.acc_id || user?.result.sub}`)}>
+                    <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url} />
                   </IconButton>
                 </Tooltip>
               </Box>        

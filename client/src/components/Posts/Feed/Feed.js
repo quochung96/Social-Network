@@ -4,7 +4,7 @@ import Post from './Post/Post';
 import AddPost from './Post/AddPost';
 // import {useSelector} from 'react-redux';
 
-const Feed = () => {
+const Feed = ({user, userProfile}) => {
   //Khi nào kết nối database và xử lý xong redux thì xài này
   // const {posts,isLoading} = useSelector((state) => state.posts);
 
@@ -30,15 +30,15 @@ const Feed = () => {
       </Box>
       </Container>
     ) :
-    <Box flex = {2} p={1} sx = {{width: '100%', height: 'auto'}}>
-      <AddPost />
+    <Box flex = {3} p={1} sx = {{width: '100%', height: 'auto'}}>
+      <AddPost user = {user} userProfile = {userProfile} />
       {/* Nào kết nối redux của post và dùng selector thì xài này để lấy từ database */}
       {/* {posts.map((post) => (
         <Post />
       ))}
        */}
-      <Post />
-      <Post />
+      <Post user = {user} userProfile = {userProfile} />
+      <Post user = {user} userProfile = {userProfile} />
     </Box>
   )
 }

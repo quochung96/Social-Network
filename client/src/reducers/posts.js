@@ -1,6 +1,6 @@
 import * as actionType from '../constants/actionTypes';
 
-const reducer = (state = {isLoading: true, posts: []}, action)=>{
+const postReducer = (state = {isLoading: true, posts: []}, action)=>{
     switch (action.type) {
         case actionType.START_LOADING :
             return {
@@ -20,7 +20,7 @@ const reducer = (state = {isLoading: true, posts: []}, action)=>{
         case actionType.FETCH_POST:
             return {
                 ...state,
-                posts: action.payload.post
+                post: action.payload.post
             };
         case actionType.LIKE:
             return {
@@ -38,7 +38,7 @@ const reducer = (state = {isLoading: true, posts: []}, action)=>{
         case actionType.UPDATE:
             return {
                 ...state,
-                posts: state.posts.map((post) => (post.id === action.payload.id ? action.payload : post : post ))
+                posts: state.posts.map((post) => (post.id === action.payload.id ? action.payload : post ))
             };
         case actionType.DELETE:
             return {
@@ -50,4 +50,4 @@ const reducer = (state = {isLoading: true, posts: []}, action)=>{
     }
 }
 
-export default reducer;
+export default postReducer;
