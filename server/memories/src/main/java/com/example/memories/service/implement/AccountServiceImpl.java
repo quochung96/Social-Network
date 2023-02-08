@@ -68,7 +68,6 @@ public class AccountServiceImpl implements AccountService{
                 .hashPassword(encodedPassword)
                 .isArchieved(0)
                 .roles(roles)
-                .users(users)
                 .createAt(new Date())
                 .updateAt(new Date())
                 .build();
@@ -92,11 +91,14 @@ public class AccountServiceImpl implements AccountService{
         // Tìm xem account có email đó hay chưa --> Nếu chưa có thì throw exception
         AccountBuilder user = accountBuilderRepository.findByEmail(account.getEmail())
                 .orElseThrow();
+
+        Long user_id = accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id();
         //Gen token ra
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder().token(jwtToken).
                 result(user).
+                user_id(user_id).
                 build();
     }
 

@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
         zIndex: 10,
         minHeight:'300px',
         width: '100%',
-        height: 'auto', 
+        height: '220px', 
         cursor: 'pointer',
         display: 'flex',
         justifyContent: 'center',
@@ -14,6 +14,20 @@ export default makeStyles((theme) => ({
         borderTopLeftRadius: '20px',
         borderTopRightRadius: '20px'
   },
+  cover_url_img: {
+    zIndex: 10,
+    minHeight:'300px',
+    width: '950px',
+    height: '220px', 
+    objectFit: 'cover',
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopLeftRadius: '20px',
+    borderTopRightRadius: '20px',
+    boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.4)'
+},
   btn_cover: {
     display: 'flex',
     flexDirection: 'row',

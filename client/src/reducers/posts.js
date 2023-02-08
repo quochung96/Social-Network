@@ -1,33 +1,31 @@
-import * as actionType from '../constants/actionTypes';
-
-const reducer = (state = {isLoading: true, posts: []}, action)=>{
+import { FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE} from "../constants/actionTypes";
+const postReducer = (state = {isLoading: true, posts: []}, action)=>{
     switch (action.type) {
-        case actionType.START_LOADING :
+        case 'START_LOADING' :
             return {
                 ...state,isLoading: true
             };
-        case actionType.END_LOADING:
+        case 'END_LOADING':
             return {
                 ...state,
                 isLoading: false
             };
-        case actionType.FETCH_ALL:
-        case actionType.FETCH_BY_SEARCH:
+        case FETCH_ALL:
             return {
                 ...state,
-                posts: action.payload.data
+                posts: action.payload
             };
-        case actionType.FETCH_POST:
+        case FETCH_POST:
             return {
                 ...state,
-                posts: action.payload.post
+                post: action.payload.post
             };
-        case actionType.LIKE:
+        case LIKE:
             return {
                 ...state,
                 posts: state.posts.map((post) => (post.id === action.payload.id ? action.payload : post))
             };
-        case actionType.CREATE:
+        case CREATE:
             return {
                 ...state,
                 posts: [
@@ -35,12 +33,12 @@ const reducer = (state = {isLoading: true, posts: []}, action)=>{
                     action.payload
                 ]
             };
-        case actionType.UPDATE:
+        case UPDATE:
             return {
                 ...state,
-                posts: state.posts.map((post) => (post.id === action.payload.id ? action.payload : post : post ))
+                posts: state.posts.map((post) => (post.id === action.payload.id ? action.payload : post ))
             };
-        case actionType.DELETE:
+        case DELETE:
             return {
                 ...state,
                 posts: state.posts.filter((post) => post.id !== action.payload)
@@ -50,4 +48,4 @@ const reducer = (state = {isLoading: true, posts: []}, action)=>{
     }
 }
 
-export default reducer;
+export default postReducer;
