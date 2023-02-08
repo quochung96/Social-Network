@@ -19,7 +19,7 @@ public class SearchRecentsController {
     public ResponseEntity getSearchRecentById(@PathVariable Long id){
         return ResponseEntity.ok().body(searchRecentService.getSearchById(id));
     }
-    @PutMapping("/{userId}/searchrecents")
+    @PostMapping("/{userId}/searchrecents")
     public ResponseEntity createSearch(@PathVariable Long userId, @RequestBody SearchRecents searchRecents)
     {
         return ResponseEntity.ok().body(searchRecentService.createSearch(userId, searchRecents));
@@ -29,5 +29,9 @@ public class SearchRecentsController {
     public ResponseEntity deleteSearch(@PathVariable Long id)
     {
         return ResponseEntity.ok().body(searchRecentService.deleteSearchRecents(id));
+    }
+    @PutMapping("/searchrecents/{id}")
+    public ResponseEntity updateSearchRecent(@PathVariable Long id, @RequestBody SearchRecents searchRecents){
+        return ResponseEntity.ok().body(searchRecentService.updateSearch(id, searchRecents));
     }
 }
