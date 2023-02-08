@@ -21,8 +21,12 @@ import Input from '../widgets/Input';
 import CardMem from '../widgets/CardMem';
 import NavBarHome from '../Navbar/NavbarHome/NavbarHome';
 // import jwt from 'jsonwebtoken';
+import {signin} from '../../actions/auth';
 
-const initialState = {email: '', password: ''};
+const initialState = { 
+  hashPassword: "",
+  email: ""
+ };
 
 const Home = () => {
   const classes = useStyles();
@@ -33,6 +37,9 @@ const Home = () => {
   // Using dispatch redux the set Log in
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
+
+    dispatch(signin(formData,navigate));
   
   }
   // Split the previous fromData and add new target value into target name 
@@ -67,7 +74,7 @@ const Home = () => {
               <form className = {classes.form} onSubmit = {handleSubmit}>
                 <Grid item container spacing = {1}>
                   <Input name = "email" label = "Enter your Email" handleChange = {handleChange} type = "email" autoFocus/>
-                  <Input name = "password" label = "Enter your Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword} autoFocus/>
+                  <Input name = "hashPassword" label = "Enter your Password" handleChange = {handleChange} type = {showPassword ? "text" : "password"} handleShowPassword = {handleShowPassword} autoFocus/>
                     <Link to = '/forgotPassword' className = {classes.forgot_password}>
                       <Typography variant = "h6">Forgot password?</Typography>
                     </Link>

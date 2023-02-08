@@ -12,11 +12,11 @@ import LogoutIcon from '../../../assets/icons/logout.png';
 import {useDispatch} from 'react-redux';
 import * as actionType from '../../../constants/actionTypes';
 
-const Sidebar = ({mode,setMode, user}) => {
-  const [setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+const Sidebar = ({mode,setMode, user,setUser, userProfile}) => {
+
   const classes = useStyles();
   const navigate = useNavigate();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
   const dispatch = useDispatch();
   const logout = () => {
     dispatch({type: actionType.LOGOUT});
@@ -26,6 +26,7 @@ const Sidebar = ({mode,setMode, user}) => {
     setUser(null);
   }
   const handleExpandClick = () => {
+    console.log(userProfile);
     setExpanded(!expanded);
   };
   return (
@@ -35,16 +36,16 @@ const Sidebar = ({mode,setMode, user}) => {
         <div className = {classes.inner_container}>
             <Tooltip title = {user?.result.name}>
               <div className = {classes.profile}>
-                <IconButton onClick = {() => navigate('/profile')}>
-                <Avatar alt = {user?.result.name} src = {user?.result.picture || user?.result.users.avatar_url} sx = {{width: 60,height: 60}}/>
+                <IconButton onClick = {() => navigate(`/profile/${user?.result.acc_id || user?.result.sub}`)}>
+                 <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url} sx = {{width: 60,height: 60}}/>
                 </IconButton>
               </div>
             </Tooltip>     
         </div>
         <Box flexDirection ='column' display = 'flex' alignItems='center' justifyContent = 'center' marginTop = '28px'>
-          <Typography variant = 'h6' fontSize = '22px' fontWeight = '400' fontFamily = 'Helvetica'>{user?.result.users.userName}</Typography>
-          <Typography variant = 'h6' fontSize = '17px' fontWeight = '300' fontFamily = 'Helvetica'>{user?.result.name || "No Name"}</Typography>
-          <Typography variant = 'h6' fontSize = '15px' fontWeight = '300' fontFamily = 'Helvetica' color = "grey">{Number(user?.result.users.follower) > 1000 ? String(Number(user?.result.users.follower / 1000)).replace('.',',') : user?.result.users.follower || 0} bạn bè</Typography>
+          <Typography variant = 'h6' fontSize = '22px' fontWeight = '400' fontFamily = 'Helvetica'>{user?.result.name}</Typography>
+          <Typography variant = 'h6' fontSize = '17px' fontWeight = '300' fontFamily = 'Helvetica'>{user?.result.given_name || userProfile?.userName || "No Name"}</Typography>
+          <Typography variant = 'h6' fontSize = '15px' fontWeight = '300' fontFamily = 'Helvetica' color = "grey">{Number(userProfile?.follower) > 1000 ? String(Number(userProfile?.follower / 1000)).replace('.',',') : userProfile?.follower || 0} bạn bè</Typography>
           <img alt = "icon" className = {classes.lineBreak} src = {lineBreak}/>
         </Box>
         <List>

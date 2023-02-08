@@ -12,7 +12,6 @@ const Input = ({name,handleChange, label ,half,autoFocus,type,handleShowPassword
         onChange = {handleChange}
         variant = "outlined"
         color = "primary"
-        required 
         fullWidth
         label = {label}
         autoFocus = {autoFocus}
