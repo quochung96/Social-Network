@@ -11,7 +11,7 @@ import moment from 'moment';
 // import {commentPost} from '../../../../actions/posts';
 
 const intialComment = {comment: ''};
-const Post = ({user,userProfile}) => {
+const Post = ({post,setCurrentId,user,userProfile}) => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   // const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Post = ({user,userProfile}) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const finalComment = `${user.result.name}: ${comment}`;
+    const finalComment = `${userProfile?.userName}: ${comment}`;
     /*const newComments = await dispatch(commentPost(finalComment));
      setComments(newComments); */
     console.log(finalComment);

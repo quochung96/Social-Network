@@ -1,5 +1,6 @@
 import {styled, alpha} from '@mui/material/styles';
-import {IconButton,Box,InputBase,Toolbar,Switch} from '@mui/material/';
+import {IconButton,Box,Toolbar,Switch} from '@mui/material/';
+import { Button } from '@material-ui/core';
 //Styled
 export const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -26,7 +27,7 @@ export const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
   }));
   
-export const StyledInputBase = styled(InputBase)(({ theme }) => ({
+export const StyledInputBase = styled(Button)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 15, 1),

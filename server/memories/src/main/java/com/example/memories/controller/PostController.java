@@ -19,20 +19,20 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity getPostById(@PathVariable Integer id){
+    public ResponseEntity getPostById(@PathVariable Long id){
         return ResponseEntity.ok().body(postService.getPostById(id));
     }
     @PostMapping("/{userId}/posts")
-    public ResponseEntity createPost(@PathVariable Integer userId, @RequestBody Posts post){
+    public ResponseEntity createPost(@PathVariable Long userId, @RequestBody Posts post){
         return ResponseEntity.ok().body(postService.createPost(userId, post));
     }
     @PutMapping("/posts/{id}")
-    public ResponseEntity updatePost(@PathVariable Integer id, @RequestBody Posts post){
+    public ResponseEntity updatePost(@PathVariable Long id, @RequestBody Posts post){
         return ResponseEntity.ok().body(postService.updatePost(id, post));
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity deletePost(@PathVariable Integer id){
+    public ResponseEntity deletePost(@PathVariable Long id){
         return ResponseEntity.ok().body(postService.deletePostById(id));
     }
 

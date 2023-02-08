@@ -5,6 +5,7 @@ import Sidebar from './Sidebar/Sidebar';
 import Feed from './Feed/Feed';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
+import { getPosts } from '../../actions/posts';
 
 
 const Posts = ({user,setUser, userProfile}) => {
@@ -14,6 +15,7 @@ const Posts = ({user,setUser, userProfile}) => {
 
   useEffect(() => {
     dispatch(getUser(user?.user_id))
+    dispatch(getPosts())
   }, [dispatch, user?.user_id]);
   const darkTheme = createTheme({
     palette: {

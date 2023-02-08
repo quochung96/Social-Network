@@ -30,7 +30,7 @@ const NavbarPost = ({user,setUser,userProfile}) => {
     setAnchorElUser(null);
   };
   const openProfile = () => {
-    navigate("/profile");
+    navigate(`/profile/${user?.result.acc_id || user?.result.sub}`);
   }
   const openFriendPage = () => {
     navigate("/friends")
@@ -99,7 +99,7 @@ const NavbarPost = ({user,setUser,userProfile}) => {
               </IconButton>
               <Box sx = {{display: {xs: 'none', md: 'block'}}}>
                 <Tooltip title = {user?.result.name}>
-                  <IconButton onClick = {() => navigate(`/profile/${user?.result.acc_id || user?.result.sub}`)}>
+                  <IconButton onClick = {openProfile}>
                     <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url} />
                   </IconButton>
                 </Tooltip>

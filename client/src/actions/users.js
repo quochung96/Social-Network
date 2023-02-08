@@ -1,6 +1,8 @@
 import { START_LOADING, END_LOADING,FETCH_ALL_USER,FETCH_USER,CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 import * as api from '../api/index.js';
 
+
+//OK
 //Get detail of user by id
 export const getUser = (id) => async (dispatch) => {
     try{
