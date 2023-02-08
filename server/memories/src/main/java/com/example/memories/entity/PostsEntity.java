@@ -30,6 +30,10 @@ public class PostsEntity {
     @JoinColumn(name="USER_ID")
     private UsersEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "PHOTOINPOSTS_ID")
+    private PhotoInPostEntity photoInPost;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT")
     private Date createAt;

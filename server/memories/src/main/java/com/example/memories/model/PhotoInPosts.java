@@ -13,5 +13,4 @@ public class PhotoInPosts {
     private String photoUrl;
     private Date createAt;
     private Date updateAt;
-    private PostsEntity post;
 }

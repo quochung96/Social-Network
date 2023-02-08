@@ -33,7 +33,4 @@ public class PhotoInPostEntity {
     @Column(name = "UPDATE_AT", nullable = true)
     private Date updateAt;
 
-    @ManyToOne
-    @JoinColumn(name = "POST_ID")
-    private PostsEntity post;
 }

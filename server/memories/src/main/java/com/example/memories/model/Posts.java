@@ -1,5 +1,6 @@
 package com.example.memories.model;
 
+import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.entity.UsersEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class Posts {
     private long permission;
 
     private UsersEntity user;
+    private PhotoInPostEntity photoInPost;
 
     private Date createAt;
 

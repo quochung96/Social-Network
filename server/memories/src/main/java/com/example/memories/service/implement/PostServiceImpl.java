@@ -33,6 +33,7 @@ public class PostServiceImpl implements PostService {
                         post.getContent(),
                         post.getPermission(),
                         post.getUser(),
+                        post.getPhotoInPost(),
                         post.getCreateAt(),
                         post.getUpdateAt(),
                         post.getIsArchieved()

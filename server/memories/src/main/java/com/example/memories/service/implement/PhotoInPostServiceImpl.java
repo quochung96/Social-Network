@@ -33,8 +33,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
                         photoinpost.getIsHighlight(),
                         photoinpost.getPhotoUrl(),
                         photoinpost.getCreateAt(),
-                        photoinpost.getUpdateAt(),
-                        photoinpost.getPost()
+                        photoinpost.getUpdateAt()
                 )
         ).collect(Collectors.toList());
         return photoinposts;
@@ -45,7 +44,6 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
         PhotoInPostEntity newPhotoInPost = new PhotoInPostEntity();
         photoInPosts.setCreateAt(new Date());
         photoInPosts.setUpdateAt(new Date());
-        photoInPosts.setPost(postsRepository.findById(postId).get());
         BeanUtils.copyProperties(photoInPosts, newPhotoInPost);
         return photoInPosts;
     }
