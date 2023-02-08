@@ -40,27 +40,24 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
       <CardHeader
         avatar={
           <IconButton onClick = {null}>
-            <Avatar sx = {{width: '60px',height:'60px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 8px'}} alt = 'avatar-test' src = {'https://i.pinimg.com/564x/05/ed/aa/05edaa3a35fb01d6aef7b4af984784f3.jpg'}/>
+            <Avatar sx = {{width: '60px',height:'60px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 8px'}} alt = 'avatar-test' src = {post?.user.avatar_url}/>
           </IconButton>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={null}>
             <MoreVert />
           </IconButton>
         }
         title={
-            <Typography variant = 'h6' fontSize = '18px' fontWeight = '500'>Đam mê ngôn tình</Typography>
+            <Typography variant = 'h6' fontSize = '18px' fontWeight = '500'>{post?.user.userName}</Typography>
         }
         subheader={
-            <Typography color = 'grey'>{moment(new Date()).format('LLLL')} .</Typography>
+            <Typography color = 'grey'>{moment(post?.createAt).format('LLLL')} .</Typography>
         }
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-            Bíu lên một chút thì có sao. Trông càng đáng iu hơn thôi
-            <div>Tác giả: 西风八爪</div>
-            <div>Dịch: -Cá-</div>
-            <div>#cute #adorable</div>
+            {post?.content}
         </Typography>
       </CardContent>
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}}>

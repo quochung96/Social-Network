@@ -14,9 +14,11 @@ const Posts = ({user,setUser, userProfile}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser(user?.user_id))
-    dispatch(getPosts())
+    dispatch(getUser(user?.user_id));
   }, [dispatch, user?.user_id]);
+  useEffect(() => {
+    dispatch(getPosts());
+  },[dispatch]);
   const darkTheme = createTheme({
     palette: {
       mode: mode

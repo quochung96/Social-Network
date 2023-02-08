@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Container, Skeleton,Box} from '@mui/material';
 import Post from './Post/Post';
 import AddPost from './Post/AddPost';
-// import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Feed = ({user, userProfile}) => {
   //Khi nào kết nối database và xử lý xong redux thì xài này
-  // const {posts,isLoading} = useSelector((state) => state.posts);
-
+  const {posts} = useSelector((state) => state.posts);
   // if(!posts.length && !isLoading) {
   //   return 'No Posts';
   // }
@@ -16,6 +15,10 @@ const Feed = ({user, userProfile}) => {
   setTimeout(() => {
     setLoading(false);
   }, [1000]);
+  useEffect(() => {
+    console.log(posts);
+  });
+
   return (
     isLoading ? (
       <Container >
@@ -34,11 +37,10 @@ const Feed = ({user, userProfile}) => {
       <AddPost user = {user} userProfile = {userProfile} />
       {/* Nào kết nối redux của post và dùng selector thì xài này để lấy từ database */}
       {/* {posts.map((post) => (
-        <Post />
-      ))}
-       */}
-      <Post user = {user} userProfile = {userProfile} />
-      <Post user = {user} userProfile = {userProfile} />
+        <Post post = {post} user = {user} userProfile = {userProfile}/>
+      ))} */}
+      <Post user = {user} userProfile = {userProfile}/>
+      <Post user = {user} userProfile = {userProfile}/>
     </Box>
   )
 }
