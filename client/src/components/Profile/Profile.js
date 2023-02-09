@@ -6,6 +6,7 @@ import Feed from '../Posts/Feed/Feed';
 import EditProfile from './EditProfile/EditProfile';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
+import { getPosts } from '../../actions/posts';
 
 const Profile = ({user,userProfile, id}) => {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ const Profile = ({user,userProfile, id}) => {
   useEffect(() => {
     dispatch(getUser(user?.user_id))
   }, [dispatch, user?.user_id]);
+  useEffect(() => {
+    dispatch(getPosts());
+  },[dispatch]);
   return (
     <ThemeProvider theme = {darkTheme}>
       <Box>

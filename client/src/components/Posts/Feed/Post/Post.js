@@ -7,9 +7,6 @@ import AuthorIcon from '../../../../assets/icons/author.png';
 import AvatarIcon from '../../../../assets/icons/user.png';
 import moment from 'moment';
 
-// import {useDispatch} from 'react-redux';
-// import {commentPost} from '../../../../actions/posts';
-
 const intialComment = {comment: ''};
 const Post = ({post,setCurrentId,user,userProfile}) => {
   const [expanded, setExpanded] = useState(false);
@@ -23,6 +20,9 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const handleOpenProfile = () => {
+    navigate(`/profile/${post?.user.user_id}`)
+  }
   const handleChange = (e) => {
     setComment({ ...comment, [e.target.name]: e.target.value});
   };
@@ -39,12 +39,12 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
     <Card sx={{ margin: 4, borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
       <CardHeader
         avatar={
-          <IconButton onClick = {null}>
+          <IconButton onClick = {handleOpenProfile}>
             <Avatar sx = {{width: '60px',height:'60px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 8px'}} alt = 'avatar-test' src = {post?.user.avatar_url}/>
           </IconButton>
         }
         action={
-          <IconButton aria-label="settings" onClick={null}>
+          <IconButton aria-label="settings" onClick={() => setCurrentId(post.postId)}>
             <MoreVert />
           </IconButton>
         }
@@ -60,14 +60,16 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
             {post?.content}
         </Typography>
       </CardContent>
-      <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}}>
+      {post.photoInPost && 
+      <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}}>  
         <CardMedia
               sx = {{width: '100%', height: '100%', objectFit: 'fill'}}
               component="img"
-              image="https://images.unsplash.com/photo-1575535468632-345892291673?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+              image = {post?.photoInPost.photoUrl}
               alt="img-post"
           />
-        <Box flexDirection='row' display = 'flex' gap = "5px" marginTop = '5px'>
+          {/**Multiple photos */}
+        {/* <Box flexDirection='row' display = 'flex' gap = "5px" marginTop = '5px'>
           <CardMedia
               sx = {{width: '33%', height: '30%'}}
               component="img"
@@ -86,8 +88,9 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
               image="https://images.unsplash.com/photo-1614369575919-8c030d97ceae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
               alt="img-post"
           />
-        </Box>
+        </Box> */}
       </ButtonBase>
+      }
       <CardActions sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <IconButton aria-label="add to favorites">
           <Checkbox

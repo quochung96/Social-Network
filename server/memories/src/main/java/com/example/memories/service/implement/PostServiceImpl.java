@@ -25,8 +25,9 @@ public class PostServiceImpl implements PostService {
     UsersRepository userRepository;
     @Override
     public List<Posts> getAllPosts() {
-        List<PostsEntity> postsEntities = postsRepository.findAll();
+        List<PostsEntity> postsEntities = postsRepository.findAll(); // List all post in database
 
+        //List All the post mapping to Posts model
         List<Posts> posts = postsEntities.stream().map(
                 post -> new Posts(
                         post.getPostId(),
@@ -39,6 +40,7 @@ public class PostServiceImpl implements PostService {
                         post.getIsArchieved()
                 )
         ).collect(Collectors.toList());
+
         return posts;
     }
 

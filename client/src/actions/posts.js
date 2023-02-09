@@ -18,7 +18,7 @@ export const getPost = (id) => async (dispatch) => {
 export const getPosts = () => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING });
-      const { data: {data} } = await api.fetchPosts();
+      const { data } = await api.fetchPosts();
   
       dispatch({ type: FETCH_ALL, payload: {data}});
       dispatch({ type: END_LOADING });
@@ -39,6 +39,7 @@ export const getPosts = () => async (dispatch) => {
 //     }
 // };
 
+//Done
 export const createPost = (user_id, post) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
@@ -49,6 +50,8 @@ export const createPost = (user_id, post) => async (dispatch) => {
     console.log(error);
   }
 };
+
+//To-do
 export const updatePost = (id, post) => async (dispatch) => {
   try {
     const { data } = await api.updatePost(id, post);
@@ -59,6 +62,7 @@ export const updatePost = (id, post) => async (dispatch) => {
   }
 };
 
+//To-do
 export const likePost = (id) => async (dispatch) => {
   const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -71,6 +75,7 @@ export const likePost = (id) => async (dispatch) => {
   }
 };
 
+//To-do
 export const deletePost = (id) => async (dispatch) => {
   try {
     await api.deletePost(id);
@@ -81,6 +86,7 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 
+//To-do
 export const commentPost = (value, id) => async (dispatch) => {
   try{
     const {data} = await api.comment(value,id);

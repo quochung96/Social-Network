@@ -19,7 +19,7 @@ export const getUser = (id) => async (dispatch) => {
 export const getUsers = () => async (dispatch) => {
     try{
         dispatch({type: START_LOADING});
-        const {data: {data}} = await api.fetchUsers();
+        const {data} = await api.fetchUsers();
 
         dispatch({type: FETCH_ALL_USER, payload: {data}});
         dispatch({type: END_LOADING});

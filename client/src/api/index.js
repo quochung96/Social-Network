@@ -19,7 +19,7 @@ export const updateUser = (user,id) => API.put(`/users/${id}`,user); // OK
 
 //Posts
 export const fetchPost = (id) => API.get(`/posts/${id}`); // OK
-export const fetchPosts = () => API.get(`/posts`); // OK
+export const fetchPosts = () => API.get("/posts"); // OK
 // export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`); // To-do
 export const createPost = (user_id, newPost) => API.post(`/${user_id}/posts`, newPost); // OK
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`); // To-do
