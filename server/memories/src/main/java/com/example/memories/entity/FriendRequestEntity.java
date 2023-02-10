@@ -13,23 +13,23 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="FRIENDREQUEST")
-public class FriendRequest {
+public class FriendRequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REQ_ID", nullable = false)
     private Long reqId;
-
-    @Column(name = "MUTAL_COUNT")
-    private int mutalCount;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "SEND_USER_ID")
     private UsersEntity sendUser;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "RECEIVE_USER_ID")
     private UsersEntity receiveUser;
 
+    @Column(name = "IS_ACCEPTED")
+    private int isAccepted;
+    @Column(name = "IS_ARCHIEVED")
+    private int isArchived;
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT")
     private Date createAt;

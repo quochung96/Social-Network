@@ -5,9 +5,13 @@ import Sidebar from '../Posts/Sidebar/Sidebar';
 import EditProfile from './EditProfile/EditProfile';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
+<<<<<<< HEAD
 import { getPostByUserId } from '../../actions/posts';
 import FeedProfile from './FeedProfile';
 import { useParams } from 'react-router-dom';
+=======
+import { getPosts } from '../../actions/posts';
+>>>>>>> 1cdb347cddf709261f43732bac204529641486cb
 
 const Profile = ({user,userProfile}) => {
   const dispatch = useDispatch();
@@ -19,11 +23,19 @@ const Profile = ({user,userProfile}) => {
     }
   });
   useEffect(() => {
+<<<<<<< HEAD
     dispatch(getPostByUserId(id));
   },[dispatch, id]);
   useEffect(() => {
     dispatch(getUser(id));
   }, [dispatch, id]);
+=======
+    dispatch(getUser(user?.user_id))
+  }, [dispatch, user?.user_id]);
+  useEffect(() => {
+    dispatch(getPosts());
+  },[dispatch]);
+>>>>>>> 1cdb347cddf709261f43732bac204529641486cb
   return (
     <ThemeProvider theme = {darkTheme}>
       <Box>
