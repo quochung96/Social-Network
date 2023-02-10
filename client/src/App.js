@@ -23,16 +23,12 @@ const App = () => {
           <Container maxWidth = "xl">
             <Routes>
               <Route path = "/" element = {<Home/>} />
-              <Route path = "/profile/:id" element = {<Profile user = {user} userProfile = {
-                userProfile
-              } />}/>
+              <Route path = "/profile/:id" element = {<Profile user = {user} userProfile = {userProfile} />}/>
               <Route path = "/forgotPassword" element = {<ForgotPassword />}/>
               <Route path = "/message" element = {<Message />}/>
-              <Route path = "/friends" element = {<Friends />}/>
+              <Route path = "/friends" element = {<Friends user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
               <Route path = "/auth" element = {!user ? <Auth /> : <Navigate to = "/posts"/>}/>
-              <Route path = "/posts" element = {!user ? <Navigate to = "/auth"/> : <Posts user = {user} setUser = {setUser} userProfile = {
-                userProfile
-              }/>} />
+              <Route path = "/posts" element = {!user ? <Navigate to = "/auth"/> : <Posts user = {user} setUser = {setUser} userProfile = {userProfile}/>} />
             </Routes>
           </Container>
         </BrowserRouter>

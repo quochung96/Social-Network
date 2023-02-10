@@ -25,10 +25,7 @@ const Sidebar = ({mode,setMode, user,setUser, userProfile}) => {
 
     setUser(null);
   }
-  const handleExpandClick = () => {
-    console.log(userProfile);
-    setExpanded(!expanded);
-  };
+  const handleExpandClick = () => setExpanded(!expanded);
   return (
     <Box flex={1} p={2} sx={{display: {xs: 'none',md: 'block', marginLeft: '-20px'}}}>
       <Box position = 'fixed' width = '220px'>

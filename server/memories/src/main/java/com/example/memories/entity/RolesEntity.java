@@ -9,6 +9,12 @@ import java.util.Date;
 @Getter
 @Table(name = "ACC_ROLES")
 public class RolesEntity {
+    public RolesEntity() {}
+    public RolesEntity(String roleName){
+        this.roleName = roleName;
+        this.createAt = new Date();
+        this.updateAt = new Date();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ROLE_ID", nullable = false)

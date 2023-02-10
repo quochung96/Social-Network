@@ -31,9 +31,9 @@ const AddPost = ({user,userProfile}) => {
   };
   const getFiles = (files) => {
     setImg(files);
+    setFormPost({ ...formPost, photoInPost: {photoUrl: files.base64}});
   }
-  const handleSubmit = (e) => {
-    e.prevenDefault();
+  const handleSubmit = () => {
     console.log(formPost);
 
     dispatch(createPost(user?.user_id,formPost)); //OK

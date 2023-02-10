@@ -16,16 +16,16 @@ public class PhotoInPostController {
         return ResponseEntity.ok().body(photoInPostService.getAllPhoto());
     }
     @GetMapping("/photoinposts/{id}")
-    public ResponseEntity getPhotobyid(@PathVariable Long id, @RequestBody PhotoInPosts photoInPosts){
+    public ResponseEntity getPhotoById(@PathVariable Long id){
         return ResponseEntity.ok().body(photoInPostService.getPhotoById(id));
     }
     @PutMapping("/photoinposts/{id}")
     public ResponseEntity updatePhoto(@PathVariable Long id, @RequestBody PhotoInPosts photoInPosts){
         return ResponseEntity.ok().body(photoInPostService.updatePhoto(id, photoInPosts));
     }
-    @PostMapping("/{postId}/photoinposts")
-    public ResponseEntity createPhotoinposts(@PathVariable Long postId, @RequestBody PhotoInPosts photoInPosts){
-        return ResponseEntity.ok().body(photoInPostService.createPhotoInPost(postId, photoInPosts));
+    @PostMapping("/photoinposts")
+    public ResponseEntity createPhotoInposts(@RequestBody PhotoInPosts photoInPosts){
+        return ResponseEntity.ok().body(photoInPostService.createPhotoInPost(photoInPosts));
     }
     @DeleteMapping("/photoinposts/{id}")
     public ResponseEntity deletePhoto(@PathVariable Long id){

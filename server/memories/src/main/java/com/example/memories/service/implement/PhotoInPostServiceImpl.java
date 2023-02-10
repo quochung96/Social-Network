@@ -40,11 +40,13 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     }
 
     @Override
-    public PhotoInPosts createPhotoInPost(Long postId, PhotoInPosts photoInPosts) {
+    public PhotoInPosts createPhotoInPost(PhotoInPosts photoInPosts) {
         PhotoInPostEntity newPhotoInPost = new PhotoInPostEntity();
+        photoInPosts.setIsHighLight(0);
         photoInPosts.setCreateAt(new Date());
         photoInPosts.setUpdateAt(new Date());
         BeanUtils.copyProperties(photoInPosts, newPhotoInPost);
+        photoInPostRepository.save(newPhotoInPost);
         return photoInPosts;
     }
 

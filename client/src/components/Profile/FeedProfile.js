@@ -1,12 +1,12 @@
 import React from 'react';
 import {Grid,Container, Skeleton,Box} from '@mui/material';
-import Post from './Post/Post';
-import AddPost from './Post/AddPost';
 import { useSelector } from 'react-redux';
+import AddPost from '../Posts/Feed/Post/AddPost';
+import Post from '../Posts/Feed/Post/Post';
 
-const Feed = ({user, userProfile}) => {
+const FeedProfile = ({user, userProfile}) => {
   //Khi nào kết nối database và xử lý xong redux thì xài này
-  const {isLoading,posts} = useSelector((state) => state.posts);
+  const {isLoading,postUser} = useSelector((state) => state.posts);
 
   return (
     isLoading ? (
@@ -26,7 +26,7 @@ const Feed = ({user, userProfile}) => {
       <AddPost user = {user} userProfile = {userProfile} />
       {/* Nào kết nối redux của post và dùng selector thì xài này để lấy từ database */}
       
-      {posts.map((post) => (
+      {postUser.map((post) => (
         <Grid key={post.postId} item xs={12} sm={12} md={6} lg= {3}>
           <Post post = {post} user = {user} userProfile = {userProfile}/>
         </Grid>
@@ -34,4 +34,4 @@ const Feed = ({user, userProfile}) => {
     </Box>
   )
 }
-export default Feed;
+export default FeedProfile;

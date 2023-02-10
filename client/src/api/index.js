@@ -18,6 +18,7 @@ export const deleteUser = (id) => API.delete(`/users/${id}`); // OK
 export const updateUser = (user,id) => API.put(`/users/${id}`,user); // OK
 
 //Posts
+export const fetchPostByUserId = (userId) => API.get(`/${userId}/posts`);
 export const fetchPost = (id) => API.get(`/posts/${id}`); // OK
 export const fetchPosts = () => API.get(`/posts`); // OK
 // export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`); // To-do

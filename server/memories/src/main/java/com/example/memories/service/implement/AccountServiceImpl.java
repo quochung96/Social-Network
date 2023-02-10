@@ -51,6 +51,11 @@ public class AccountServiceImpl implements AccountService{
         // Default set
         account.setCreateAt(new Date());
         account.setUpdateAt(new Date());
+        //IF the database doesn't exist -> Insert a new
+        if(!rolesRepository.findByRoleName("USER").isPresent()){
+            RolesEntity roles = new RolesEntity("USER");
+            rolesRepository.save(roles);
+        }
         RolesEntity roles = rolesRepository.findByRoleName("USER").get();
         account.setRoles(roles);
         account.setIsArchieved(0);

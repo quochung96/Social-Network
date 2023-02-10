@@ -10,6 +10,8 @@ export const START_LOADING = 'START_LOADING';
 export const COMMENT = 'COMMENT';
 export const FETCH_POST = 'FETCH_POST';
 export const LIKE = 'LIKE';
+export const FETCH_POST_USER = 'FETCH_POST_USER';
+
 //AUTH
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';

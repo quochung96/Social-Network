@@ -7,15 +7,12 @@ import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
 import { getPosts } from '../../actions/posts';
 
-
 const Posts = ({user,setUser, userProfile}) => {
-
   const [mode,setMode] = useState('light');
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getUser(user?.user_id));
-  }, [dispatch, user?.user_id]);
+  }, [dispatch,user?.user_id]);
   useEffect(() => {
     dispatch(getPosts());
   },[dispatch]);
