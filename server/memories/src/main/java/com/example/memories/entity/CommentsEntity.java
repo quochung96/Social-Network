@@ -1,8 +1,5 @@
 package com.example.memories.entity;
 
-public class CommentsEntity {
-}
-=======
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
