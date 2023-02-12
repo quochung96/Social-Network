@@ -1,7 +1,7 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_POST, CREATE, COMMENT, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { START_LOADING,FETCH_POST_USER, END_LOADING, FETCH_ALL, FETCH_POST, CREATE, COMMENT, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-//In progress
+//OK
 //Get detail post by post_id
 export const getPost = (id) => async (dispatch) => {
     try {
@@ -14,11 +14,25 @@ export const getPost = (id) => async (dispatch) => {
       console.log(error);
     }
 };
+export const getPostByUserId = (userId) => async(dispatch) => {
+  try{
+    dispatch({type: START_LOADING});
+
+    const {data} = await api.fetchPostByUserId(userId);
+
+    dispatch({ type: FETCH_POST_USER, payload: {postUser: data}});
+    dispatch({type: END_LOADING});
+
+  }catch(e){
+    console.log(e);
+  }
+}
+//OK
 //List all posts when access in feed
 export const getPosts = () => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING });
-      const { data } = await api.fetchPosts();
+      const {data } = await api.fetchPosts();
   
       dispatch({ type: FETCH_ALL, payload: {data}});
       dispatch({ type: END_LOADING });
@@ -39,7 +53,7 @@ export const getPosts = () => async (dispatch) => {
 //     }
 // };
 
-//Done
+//OK
 export const createPost = (user_id, post) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
@@ -50,8 +64,7 @@ export const createPost = (user_id, post) => async (dispatch) => {
     console.log(error);
   }
 };
-
-//To-do
+//TO-DO: implement update post
 export const updatePost = (id, post) => async (dispatch) => {
   try {
     const { data } = await api.updatePost(id, post);

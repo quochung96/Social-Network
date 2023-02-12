@@ -1,17 +1,21 @@
 package com.example.memories.service.implement;
 
+import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.entity.PostsEntity;
 import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.Posts;
 import com.example.memories.model.Users;
+import com.example.memories.repository.PhotoInPostRepository;
 import com.example.memories.repository.PostsRepository;
 import com.example.memories.repository.UsersRepository;
 import com.example.memories.service.interfaces.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +27,9 @@ public class PostServiceImpl implements PostService {
     PostsRepository postsRepository;
     @Autowired
     UsersRepository userRepository;
+
+    @Autowired
+    PhotoInPostRepository photoInPostRepository;
     @Override
     public List<Posts> getAllPosts() {
         List<PostsEntity> postsEntities = postsRepository.findAll(); // List all post in database
@@ -43,10 +50,35 @@ public class PostServiceImpl implements PostService {
 
         return posts;
     }
+    @Override
+    public List<Posts> getPostByUserId(long userId){
+        List<PostsEntity> postsEntity = postsRepository.findAll();
+
+        List<Posts> posts = postsEntity.stream().
+                filter(post -> post.getUser().getUser_id() == userId).
+                map(
+                post -> new Posts(
+                        post.getPostId(),
+                        post.getContent(),
+                        post.getPermission(),
+                        post.getUser(),
+                        post.getPhotoInPost(),
+                        post.getCreateAt(),
+                        post.getUpdateAt(),
+                        post.getIsArchieved()
+                )
+        ).collect(Collectors.toList());
+        return posts;
+    }
 
     @Override
     public Posts createPost(long userID, Posts post) {
         PostsEntity newPost = new PostsEntity();
+        //When create a post have an image save to the database
+        PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
+        photoInPostRepository.save(photoInPostEntity);
+        post.setPhotoInPost(photoInPostEntity);
+
         post.setCreateAt(new Date());
         post.setUpdateAt(new Date());
         post.setUser(userRepository.findById(userID).get());

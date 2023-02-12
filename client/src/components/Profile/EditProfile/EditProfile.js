@@ -49,10 +49,11 @@ const EditProfile = ({user, userProfile}) => {
   }
   return (
     <>
-        <ProfileDetails user = {user} userProfile = {userProfile} />
+        <ProfileDetails handleCoverImage = {handleClickOpen} user = {user} userProfile = {userProfile} />
         <Box p = {1} flex = {1}>
         <Box display = 'flex' flexDirection = 'column' sx = {{borderRadius: '20px',background :"#FFF", width :'100%', height: 'auto', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
         <List>
+            {(userProfile?.user_id === user?.user_id) &&
             <ListItem>
             <ListItemIcon>
                 <EditIcon />
@@ -103,6 +104,7 @@ const EditProfile = ({user, userProfile}) => {
                 </Dialog>
                 </div>
             </ListItem>
+            }
             <ListItem>
                 <ListItemIcon>
                     <PersonIcon />

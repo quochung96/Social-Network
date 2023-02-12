@@ -1,6 +1,6 @@
-import { FETCH_ALL_USER, CREATE, UPDATE, DELETE, FETCH_USER } from "../constants/actionTypes";
+import { FETCH_REQUEST_USER, CREATE, UPDATE, DELETE, FETCH_ALL_REQUEST } from "../constants/actionTypes";
 
-const userReducer = (state = {isLoading: true, users: []}, action) => {
+const requestReducer = (state = {isLoading: true, requests: []}, action) => {
     switch(action.type){
         case 'START_LOADING':
             return {
@@ -10,36 +10,37 @@ const userReducer = (state = {isLoading: true, users: []}, action) => {
             return {
                 ...state, isLoading: false
             };
-        case FETCH_ALL_USER:
+        case FETCH_ALL_REQUEST:
             return {
                 ...state,
-                users: action.payload.data
+                requests: action.payload.data
             };
-        case FETCH_USER:
+        case FETCH_REQUEST_USER:
             return {
                 ...state,
-                user: action.payload.user
+                request: action.payload.request
             };
+        
         case CREATE:
             return {
                 ...state,
-                users: [
-                    ...state.users,
+                requests: [
+                    ...state.requests,
                     action.payload
                 ]
             };
         case UPDATE:
             return {
                 ...state,
-                users: state.users.map((user) => (user.id === action.payload.id ? action.payload : user))
+                requests: state.requests.map((request) => (request.id === action.payload.id ? action.payload : request))
             };
         case DELETE:
             return {
                 ...state,
-                users: state.users.filter((user) => user.id !== action.payload)
+                requests: state.requests.filter((request) => request.id !== action.payload)
             };
         default:
             return state;
     }
 }
-export default userReducer;
+export default requestReducer;

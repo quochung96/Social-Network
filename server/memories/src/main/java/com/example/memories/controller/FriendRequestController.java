@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class FriendRequestController {
     @Autowired
     FriendRequestService friendRequestService;
@@ -30,7 +31,7 @@ public class FriendRequestController {
         return ResponseEntity.ok().body(friendRequestService.createFriendRequest(userId, friendRequests));
     }
 
-    @PutMapping("/friendRquest/{id}")
+    @PutMapping("/friendrequest/{id}")
     public ResponseEntity updateFriendRequest(@PathVariable long id,@RequestBody FriendRequests friendRequest){
         return ResponseEntity.ok().body(friendRequestService.updateFriendRequest(id, friendRequest));
     }

@@ -21,15 +21,15 @@ public class RolesController {
         this.roleService = roleService;
     }
     @PostMapping("/role")
-    public Roles createAccount(@RequestBody Roles role){
+    public Roles createRole(@RequestBody Roles role){
         return roleService.createRole(role);
     }
     @GetMapping("/role")
-    public List<Roles> getAllAccounts() {
+    public List<Roles> getAllRoles() {
         return roleService.getAllRoles();
     }
     @DeleteMapping("/role/{id}")
-    public ResponseEntity<Map<String,Boolean>> deleteAccount(@PathVariable Long id){
+    public ResponseEntity<Map<String,Boolean>> deleteRole(@PathVariable Long id){
         boolean deleted = false;
         deleted = roleService.deleteRole(id);
         Map<String,Boolean> response = new HashMap<>();
@@ -37,12 +37,12 @@ public class RolesController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/role/{id}")
-    public ResponseEntity<Roles> getAccountById(@PathVariable Long id){
+    public ResponseEntity<Roles> getRoleById(@PathVariable Long id){
         Roles role = roleService.getRoleById(id);
         return ResponseEntity.ok(role);
     }
     @PutMapping("/role/{id}")
-    public ResponseEntity<Roles> updateAccount(@PathVariable Long id, @RequestBody Roles role){
+    public ResponseEntity<Roles> updateRole(@PathVariable Long id, @RequestBody Roles role){
         role = roleService.updateRole(id, role);
         return ResponseEntity.ok(role);
     }

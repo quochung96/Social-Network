@@ -6,19 +6,16 @@ import Feed from './Feed/Feed';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
 import { getPosts } from '../../actions/posts';
-
+import {getRequestByUserId} from '../../actions/friendRequest';
 
 const Posts = ({user,setUser, userProfile}) => {
-
   const [mode,setMode] = useState('light');
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUser(user?.user_id));
-  }, [dispatch, user?.user_id]);
   useEffect(() => {
     dispatch(getPosts());
-  },[dispatch]);
+    dispatch(getUser(user?.user_id));
+    dispatch(getRequestByUserId(user?.user_id));
+  }, [dispatch,user?.user_id]);
   const darkTheme = createTheme({
     palette: {
       mode: mode

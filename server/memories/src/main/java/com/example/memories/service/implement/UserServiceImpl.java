@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
         //Create new role entity
         UsersEntity usersEntity = new UsersEntity();
         //Copy all the properties RoleEntity assigned to Role model
+        user.setFollower(0L);
         user.setCreateAt(new Date());
         user.setUpdatedAt(new Date());
 
@@ -97,6 +98,15 @@ public class UserServiceImpl implements UserService {
         usersEntity.setGender(user.getGender());
         usersEntity.setCover_url(user.getCover_url());
         usersEntity.setAvatar_url(user.getAvatar_url());
+        usersEntity.setUpdateAt(new Date());
+        usersRepository.save(usersEntity);
+        return user;
+    }
+
+    @Override
+    public Users updateFollowerUser(Long id, Users user) {
+        UsersEntity usersEntity = usersRepository.findById(id).get();
+        usersEntity.setFollower(user.getFollower() + 1);
         usersEntity.setUpdateAt(new Date());
         usersRepository.save(usersEntity);
         return user;

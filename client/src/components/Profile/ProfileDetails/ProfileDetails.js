@@ -1,14 +1,12 @@
 import React from 'react';
-import {Box,IconButton} from '@mui/material';
+import {Box,IconButton,ButtonBase,Typography} from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import useStyles from './styles';
 import ProfileCard from '../../widgets/ProfileCard';
-
-const ProfileDetails = ({user, userProfile}) => {
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+const ProfileDetails = ({handleCoverImage,user, userProfile}) => {
     const classes = useStyles();
-    const handleCoverImage = () => {
-        console.log('Click cover image');
-    }
     return (
         <Box flex = {4} p={2}>
         <Box className = {classes.cover_url} onClick = {handleCoverImage}>
@@ -18,6 +16,7 @@ const ProfileDetails = ({user, userProfile}) => {
                 </div>
             :  
             <>
+            {userProfile?.user_id === user?.user_id && <>
                 <Box sx = {{display: {xs: 'none', md: 'block'}}}>
                     <div className = {classes.btn_cover}>
                         <PhotoCameraIcon />
@@ -31,10 +30,25 @@ const ProfileDetails = ({user, userProfile}) => {
                         </IconButton>
                     </Box>
                 </Box>
+            </>}
             </>
             }
         </Box>
-        <ProfileCard avatarUrl = {user?.result.picture || userProfile?.avatar_url} marginTop = "-143px" />
+        <ProfileCard handleAvatarImage = {handleCoverImage} avatarUrl = {user?.result.picture || userProfile?.avatar_url} marginTop = "-143px" />
+        <Box display = 'flex' flexDirection = 'row' gap = '20px'>
+        <ButtonBase onClick = {null} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+            <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                <PersonAddAlt1Icon fontSize = "large"/>
+                <Typography fontWeight = 'bold'>Respond</Typography>
+            </Box>
+        </ButtonBase>
+        <ButtonBase onClick = {null} sx = {{display: 'flex',background: '#E4E6EB', borderRadius: 2, width: 130, height: 40, color: 'black'}}>
+            <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                <MailOutlineIcon fontSize = "large"/>
+                <Typography fontWeight = 'bold'>Message</Typography>
+            </Box>
+        </ButtonBase>
+        </Box>
     </Box>
     )
 }

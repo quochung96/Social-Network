@@ -63,7 +63,7 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
       {post.photoInPost && 
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}}>  
         <CardMedia
-              sx = {{width: '100%', height: '100%', objectFit: 'fill'}}
+              sx = {{width: '100%',minWidth: 1040, height: 1200, objectFit: 'cover'}}
               component="img"
               image = {post?.photoInPost.photoUrl}
               alt="img-post"
