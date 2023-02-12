@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-//import com.example.memories.utils.FileUploadUtil;
+import com.example.memories.utils.FileUploadUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
