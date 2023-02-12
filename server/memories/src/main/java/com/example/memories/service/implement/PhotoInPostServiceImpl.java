@@ -10,7 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.memories.utils.FileUploadUtil;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +32,10 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     private final PhotoInPostRepository photoInPostRepository;
     @Autowired
     private final PostsRepository postsRepository;
+
+    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+
+
     @Override
     public List<PhotoInPosts> getAllPhoto() {
         List<PhotoInPostEntity> photoInPostEntities = photoInPostRepository.findAll();
@@ -40,13 +52,19 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     }
 
     @Override
-    public PhotoInPosts createPhotoInPost(PhotoInPosts photoInPosts) {
+    public PhotoInPosts createPhotoInPost(Long postId, PhotoInPosts photoInPosts, MultipartFile multipartFile) throws IOException{
         PhotoInPostEntity newPhotoInPost = new PhotoInPostEntity();
-        photoInPosts.setIsHighLight(0);
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        photoInPosts.setPhotoUrl(fileName);
         photoInPosts.setCreateAt(new Date());
-        photoInPosts.setUpdateAt(new Date());
+        photoInPosts.setUpdateAt(new Date());;
         BeanUtils.copyProperties(photoInPosts, newPhotoInPost);
-        photoInPostRepository.save(newPhotoInPost);
+
+        //photoInPostRepository.save(newPhotoInPost);
+
+        String uploadDir = "post-photos/" + photoInPosts.getPhotoId();
+        System.out.println(Files.exists(CURRENT_FOLDER.resolve(Paths.get("static")).resolve(Paths.get("images"))));
+        //FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return photoInPosts;
     }
 
