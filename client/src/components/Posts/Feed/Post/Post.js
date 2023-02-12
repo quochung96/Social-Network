@@ -63,13 +63,13 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
       {post.photoInPost && 
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}}>  
         <CardMedia
-              sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
+              sx = {{width: '100%',minWidth: 1040, height: 1200, objectFit: 'cover'}}
               component="img"
               image = {post?.photoInPost.photoUrl}
               alt="img-post"
           />
           {/**Multiple photos */}
-        <Box flexDirection='row' display = 'flex' gap = "5px" marginTop = '5px'>
+        {/* <Box flexDirection='row' display = 'flex' gap = "5px" marginTop = '5px'>
           <CardMedia
               sx = {{width: '33%', height: '30%'}}
               component="img"
@@ -88,7 +88,7 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
               image="https://images.unsplash.com/photo-1614369575919-8c030d97ceae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
               alt="img-post"
           />
-        </Box>}
+        </Box> */}
       </ButtonBase>
       }
       <CardActions sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>

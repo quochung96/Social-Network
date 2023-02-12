@@ -10,6 +10,9 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+//FriendRequests
+export const fetchUserFriendRequest = (userId) => API.get(`/user/${userId}/friendrequests`);
+export const acceptUserFriendRequest = (id) => API.put(`/friendrequest/${id}/accept`) 
 //User
 export const createUser = (user) => API.post('/users',user); // OK
 export const fetchUsers = () => API.get('/users'); // OK

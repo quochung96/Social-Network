@@ -1,12 +1,35 @@
-import { Box } from '@mui/system'
+import { Box,Grid, Container, Skeleton } from '@mui/material';
 import React from 'react'
-import FriendCard from './FriendCard';
+import FriendCard from '../components/FriendCard';
+import {useSelector} from 'react-redux';
+const FriendFeeds = ({user,userProfile}) => {
+  const {isLoading,request} = useSelector((state) => state.requests);
 
-const FriendFeeds = () => {
   return (
-    <Box flex = {3} p={1} sx = {{width: '100%', height: 'auto', background: 'white', marginLeft: '20px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '10px'}}>
-        <FriendCard />
-    </Box>
+    isLoading ? (
+      <Container >
+      <Box height = 'auto' width = "100%" sx={{justifyContent: 'center', display: 'flex', flexDirection: 'column', marginLeft: '40px'}}>
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <Skeleton />
+      </Box>
+      </Container>
+    ) :
+    (
+      <Box sx = {{flexGrow: 1,width: '100%', height: 600,minWidth: 1200, background: 'white', marginLeft: '20px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '10px'}}>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2 }}>
+          {request.map((userRequest) => (
+              <Grid key={userRequest.reqId} item xs={2}>
+                  <FriendCard userRequest={userRequest}/>
+              </Grid>
+          ))}
+        </Grid>
+      </Box>
+    )
   )
 }
 

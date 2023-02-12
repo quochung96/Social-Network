@@ -6,6 +6,7 @@ import EditProfile from './EditProfile/EditProfile';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
 import { getPostByUserId } from '../../actions/posts';
+import {getRequestByUserId} from '../../actions/friendRequest';
 import FeedProfile from './FeedProfile';
 import { useParams } from 'react-router-dom';
 
@@ -20,10 +21,10 @@ const Profile = ({user,userProfile}) => {
   });
   useEffect(() => {
     dispatch(getPostByUserId(id));
-  },[dispatch, id]);
-  useEffect(() => {
     dispatch(getUser(id));
-  }, [dispatch, id]);
+    dispatch(getRequestByUserId(id));
+  },[dispatch, id]);
+
   return (
     <ThemeProvider theme = {darkTheme}>
       <Box>

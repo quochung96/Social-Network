@@ -7,7 +7,7 @@ import GroupIcon from '../../../assets/icons/friend.png';
 
 const SidebarFriend = () => {
   return (
-    <Box flex={0.5} p={2} sx={{display: {xs: 'none',md: 'block', marginLeft: '-20px', background: 'white', borderRadius: '10px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', height: 'auto', width: '100%', minHeight: '400px'}}}>
+    <Box flex={0.5} p={2} sx={{display: {xs: 'none',md: 'block', marginLeft: '-20px', background: 'white', borderRadius: '10px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', height: '300px', width: '100%'}}}>
         <List>
             <ListItem>
                 <ListItemButton component = {Link} to = '/friends'>

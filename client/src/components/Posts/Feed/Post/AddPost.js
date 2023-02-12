@@ -20,7 +20,7 @@ const AddPost = ({user,userProfile}) => {
   const [formPost, setFormPost] = useState({content: ''});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const openProfile = () => {navigate(`/profile/${user?.result.acc_id || user?.result.sub}`)};
+  const openProfile = () => {navigate(`/profile/${userProfile?.user_id || user?.result.sub}`)};
   const handleChange = (e) => {
     setFormPost({...formPost, [e.target.name]: e.target.value}); 
   }

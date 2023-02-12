@@ -19,3 +19,7 @@ export const LOGOUT = 'LOGOUT';
 //USERS
 export const FETCH_USER = 'FETCH_USER';
 export const FETCH_ALL_USER = 'FETCH_ALL_USER';
+
+//FriendRequest
+export const FETCH_REQUEST_USER = 'FETCH_REQUEST_USER';
+export const FETCH_ALL_REQUEST = 'FETCH_ALL_REQUEST';

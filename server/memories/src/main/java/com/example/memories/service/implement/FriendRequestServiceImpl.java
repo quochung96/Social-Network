@@ -29,6 +29,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
+                        data.getMutalCount(),
                         data.getSendUser(),
                         data.getReceiveUser(),
                         data.getIsAccepted(),
@@ -59,6 +60,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
+                        data.getMutalCount(),
                         data.getSendUser(),
                         data.getReceiveUser(),
                         data.getIsAccepted(),
