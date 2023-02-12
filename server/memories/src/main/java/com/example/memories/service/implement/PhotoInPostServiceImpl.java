@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.memories.utils.FileUploadUtil;
+//import com.example.memories.utils.FileUploadUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,6 +65,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
         String uploadDir = "post-photos/" + photoInPosts.getPhotoId();
         System.out.println(Files.exists(CURRENT_FOLDER.resolve(Paths.get("static")).resolve(Paths.get("images"))));
         //FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
         return photoInPosts;
     }
 
