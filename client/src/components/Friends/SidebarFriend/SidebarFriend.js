@@ -18,7 +18,7 @@ const SidebarFriend = () => {
                 </ListItemButton>
             </ListItem>
             <ListItem>
-                <ListItemButton component = {Link} to = '/friends'>
+                <ListItemButton component = {Link} to = '/friendRequest'>
                 <ListItemIcon>
                     <img alt = 'icon' src ={GroupIcon} width = '40px'/>
                 </ListItemIcon>

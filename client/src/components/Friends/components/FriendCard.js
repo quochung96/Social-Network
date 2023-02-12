@@ -3,13 +3,16 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Avatar from '../../../assets/icons/user.png';
 import { acceptUserFriendRequest } from '../../../actions/friendRequest';
+import {updateUserFollower} from '../../../actions/users';
 const FriendCard = ({userRequest}) => {
   const [formData] = useState({
-    reqId: userRequest?.reqId,
+    reqId: userRequest?.reqId
   });
   const dispatch = useDispatch();
   const handleSubmit = () => {
     dispatch(acceptUserFriendRequest(formData.reqId));
+    dispatch(updateUserFollower(userRequest?.sendUser.user_id,{follower: userRequest?.sendUser.follower}));
+    dispatch(updateUserFollower(userRequest?.receiveUser.user_id,{follower: userRequest?.receiveUser.follower}));
   }
   return (
     <>

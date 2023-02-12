@@ -17,6 +17,7 @@ public class UsersEntity {
     public UsersEntity(String userName){
         // Constructor with parameters
         this.userName = userName;
+        this.follower = 0L;
         this.createAt = new Date();
         this.updateAt = new Date();
     }

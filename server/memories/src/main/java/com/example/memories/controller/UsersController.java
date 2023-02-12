@@ -44,8 +44,13 @@ public class UsersController {
         return ResponseEntity.ok(user);
     }
     @PutMapping("/users/{id}")
-    public ResponseEntity<Users> updateAccount(@PathVariable Long id, @RequestBody Users user){
+    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users user){
         user = userService.updateUser(id, user);
+        return ResponseEntity.ok(user);
+    }
+    @PutMapping("/users/{id}/follower")
+    public ResponseEntity<Users> updateFollowerUser(@PathVariable Long id, @RequestBody Users user){
+        user = userService.updateFollowerUser(id,user);
         return ResponseEntity.ok(user);
     }
 }

@@ -9,6 +9,7 @@ import Posts from './components/Posts/Posts';
 import Profile from './components/Profile/Profile';
 import Message from './components/Message/Message';
 import Friends from './components/Friends/Friends';
+import FriendRequests from './components/Friends/FriendRequests';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import {useSelector} from 'react-redux';
 
@@ -26,6 +27,7 @@ const App = () => {
               <Route path = "/forgotPassword" element = {<ForgotPassword />}/>
               <Route path = "/message" element = {<Message />}/>
               <Route path = "/friends" element = {<Friends user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
+              <Route path = "/friendRequest" element = {<FriendRequests user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
               <Route path = "/auth" element = {!user ? <Auth /> : <Navigate to = "/posts"/>}/>
               <Route path = "/posts" element = {!user ? <Navigate to = "/auth"/> : <Posts user = {user} setUser = {setUser} userProfile = {userProfile}/>} />
             </Routes>

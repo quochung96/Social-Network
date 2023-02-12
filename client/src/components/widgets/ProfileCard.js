@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, CardContent, CardMedia,ButtonBase} from '@mui/material';
 
-const ProfileCard = ({avatarUrl,marginTop}) => {
+const ProfileCard = ({handleAvatarImage,avatarUrl,marginTop}) => {
   return (
     <Box sx = {{
             boxShadow:'none',
@@ -14,7 +14,7 @@ const ProfileCard = ({avatarUrl,marginTop}) => {
             margin:'auto',
             marginTop: marginTop,
     }}>
-      <ButtonBase onClick = {() => {}}>
+      <ButtonBase onClick = {handleAvatarImage}>
         <CardContent sx = {{display: 'flex', justifyContent: 'center', color: '#fff', objectFit: 'cover'}}>
           <CardMedia image = {avatarUrl || "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_960_720.png"}
             alt = "Profile Card"

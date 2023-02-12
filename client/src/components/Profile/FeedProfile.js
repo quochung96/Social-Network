@@ -5,7 +5,6 @@ import AddPost from '../Posts/Feed/Post/AddPost';
 import Post from '../Posts/Feed/Post/Post';
 
 const FeedProfile = ({user, userProfile}) => {
-  //Khi nào kết nối database và xử lý xong redux thì xài này
   const {isLoading,postUser} = useSelector((state) => state.posts);
 
   return (
@@ -23,9 +22,7 @@ const FeedProfile = ({user, userProfile}) => {
       </Container>
     ) :
     <Box flex = {3} p={1} sx = {{width: '100%', height: 'auto'}}>
-      <AddPost user = {user} userProfile = {userProfile} />
-      {/* Nào kết nối redux của post và dùng selector thì xài này để lấy từ database */}
-      
+      <AddPost user = {user} userProfile = {userProfile} /> 
       {postUser.map((post) => (
         <Grid key={post.postId} item xs={12} sm={12} md={6} lg= {3}>
           <Post post = {post} user = {user} userProfile = {userProfile}/>
