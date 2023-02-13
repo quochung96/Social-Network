@@ -12,6 +12,7 @@ public class PhotoInPosts {
     private Long photoId;
     private Integer isHighLight;
     private String photoUrl;
+    private PostsEntity post;
     private Date createAt;
     private Date updateAt;
 }

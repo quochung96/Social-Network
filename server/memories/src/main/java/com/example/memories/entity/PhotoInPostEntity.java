@@ -26,6 +26,9 @@ public class PhotoInPostEntity {
     @Column(name = "PHOTO_URL", nullable = false)
     private String photoUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "POST_ID")
+    private PostsEntity post;
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT", nullable = true)
     private Date createAt;
