@@ -57,7 +57,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
         photoInPosts.setCreateAt(new Date());
         photoInPosts.setUpdateAt(new Date());;
         photoInPosts.setPost(postsRepository.findById(postId).get());
-        String uploadDir = Paths.get("server\\memories\\src\\main\\resources\\static")
+        String uploadDir = Paths.get("server/memories/src/main/resources/static")
                                         .resolve(Paths.get("post-img"))
                                         .resolve(Paths.get(String.valueOf(postId))).toString();
         System.out.println(uploadDir);
