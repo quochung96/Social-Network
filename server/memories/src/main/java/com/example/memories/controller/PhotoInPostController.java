@@ -2,12 +2,14 @@ package com.example.memories.controller;
 import com.example.memories.model.PhotoInPosts;
 import com.example.memories.service.interfaces.PhotoInPostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.apache.commons.io.IOUtils;
 import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -35,4 +37,12 @@ public class PhotoInPostController {
     public ResponseEntity deletePhoto(@PathVariable Long id){
         return ResponseEntity.ok().body(photoInPostService.deletePhotoInPost(id));
     }
+
+    @GetMapping(value = "/get-image-with-media-type",produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public @ResponseBody byte[] getImageWithMediaType() throws IOException {
+        InputStream in = getClass().getResourceAsStream("/static/Post-img/1000/flower2.png");
+        return IOUtils.toByteArray(in);
+    }
+
 }
