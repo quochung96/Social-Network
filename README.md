@@ -56,3 +56,159 @@ Send the request to different users, make a new follower or friend to update new
 
 ![Friend](https://user-images.githubusercontent.com/114813626/219270098-c865298a-1038-4723-8cfe-715e20c3b3f4.png)
 
+# PROJECT-STRUCTURE
+``````bash
+├───Social-Network/
+├───.idea/
+├───client/       (Client directory)			                                                      
+│   ├───public/
+│   ├───src/
+│   │   ├───actions/
+│   │   ├───api/
+│   │   ├───assets/
+│   │   ├───components/
+│   │   │   ├───Auth/
+│   │   │   ├───Friends/
+│   │   │   ├───HomePage/
+│   │   │   ├───Message/
+│   │   │   ├───Navbar/
+│   │   │   ├───Posts/
+│   │   │   ├───Profile/
+│   │   │   └───widgets/
+│   │   ├───constants/
+│   │   ├───reducers/
+│   │   ├───App.js
+│   │   ├───index.css
+│   │   ├───index.js
+│   │   └───theme.js
+│   ├───.gitignore
+│   ├───package-lock.json
+│   ├───package.json
+│   └───README.md
+├───server/
+│   ├───.idea/
+│   │   ├───libraries/
+│   └───memories/
+│       ├───.mvn/
+│       │   └───wrapper/
+│       │       ├───maven-wrapper.jar
+│       │       └───maven-wrapper.properties
+│       ├───src/
+│       │   ├───main/
+│       │   │   ├───java/
+│       │   │   │   └───com/
+│       │   │   │       └───example/
+│       │   │   │           └───memories/
+│       │   │   │               ├───builder/				
+│       │   │   │               │   ├───AccountBuilder.java
+│       │   │   │               │   └───AuthenticationResponse.java
+│       │   │   │               ├───config/       (Contains config files)
+│       │   │   │               │   ├───ApplicationConfig.java
+│       │   │   │               │   ├───JwtAuthenticationFilter.java
+│       │   │   │               │   ├───JwtService.java
+│       │   │   │               │   ├───MvcConfiguration.java
+│       │   │   │               │   └───SecurityConfiguration.java
+│       │   │   │               ├───controller/       (Folder for cotaining Controller)
+│       │   │   │               │   ├───AccountsController.java
+│       │   │   │               │   ├───CommentsController.java
+│       │   │   │               │   ├───DashboardController.java
+│       │   │   │               │   ├───FriendRecommendController.java
+│       │   │   │               │   ├───FriendRequestController.java
+│       │   │   │               │   ├───NotificationsController.java
+│       │   │   │               │   ├───PhotoInPostController.java
+│       │   │   │               │   ├───PostController.java
+│       │   │   │               │   ├───ReactionsController.java
+│       │   │   │               │   ├───ReactionTagController.java
+│       │   │   │               │   ├───RelationshipsController.java
+│       │   │   │               │   ├───RolesController.java
+│       │   │   │               │   ├───SearchRecentsController.java
+│       │   │   │               │   └───UsersController.java
+│       │   │   │               ├───entity/       (Consists of Entity access classes)
+│       │   │   │               │   ├───AccountsEntity.java
+│       │   │   │               │   ├───CommentsEntity.java
+│       │   │   │               │   ├───FriendRecommend.java
+│       │   │   │               │   ├───FriendRequestEntity.java
+│       │   │   │               │   ├───NotificationsEntity.java
+│       │   │   │               │   ├───PhotoInPostEntity.java
+│       │   │   │               │   ├───PostsEntity.java
+│       │   │   │               │   ├───ReactionsEntity.java
+│       │   │   │               │   ├───ReactionTagEntity.java
+│       │   │   │               │   ├───RelationshipsEntity.java
+│       │   │   │               │   ├───RolesEntity.java
+│       │   │   │               │   ├───SearchRecentsEntity.java
+│       │   │   │               │   └───UsersEntity.java
+│       │   │   │               ├───model/        (Contain classes for connecting to database)
+│       │   │   │               │   ├───Accounts.java
+│       │   │   │               │   ├───Comments.java
+│       │   │   │               │   ├───FriendRequests.java
+│       │   │   │               │   ├───Notifications.java
+│       │   │   │               │   ├───PhotoInPosts.java
+│       │   │   │               │   ├───Posts.java
+│       │   │   │               │   ├───Reactions.java
+│       │   │   │               │   ├───ReactionTags.java
+│       │   │   │               │   ├───Roles.java
+│       │   │   │               │   ├───SearchRecents.java
+│       │   │   │               │   └───Users.java
+│       │   │   │               ├───repository/       (Contain repository files)	
+│       │   │   │               │   ├───AccountBuilderRepository.java
+│       │   │   │               │   ├───AccountsRepository.java
+│       │   │   │               │   ├───CommentsRepository.java
+│       │   │   │               │   ├───FriendRecommendRepository.java
+│       │   │   │               │   ├───FriendRequestRepository.java
+│       │   │   │               │   ├───NotificationsRepository.java
+│       │   │   │               │   ├───PhotoInPostRepository.java
+│       │   │   │               │   ├───PostsRepository.java
+│       │   │   │               │   ├───ReactionRepository.java
+│       │   │   │               │   ├───ReactionTagRepository.java
+│       │   │   │               │   ├───RelationshipsRepository.java
+│       │   │   │               │   ├───RolesRepository.java
+│       │   │   │               │   ├───SearchRecentsRepository.java
+│       │   │   │               │   └───UsersRepository.java
+│       │   │   │               ├───service/        (Handle logic for controller)
+│       │   │   │               │   ├───implement/
+│       │   │   │               │   │   ├───AccountServiceImpl.java
+│       │   │   │               │   │   ├───CommentServiceImpl.java
+│       │   │   │               │   │   ├───FriendRecommendServiceImpl.java
+│       │   │   │               │   │   ├───FriendRequestServiceImpl.java
+│       │   │   │               │   │   ├───NotificationServiceImpl.java
+│       │   │   │               │   │   ├───PhotoInPostServiceImpl.java
+│       │   │   │               │   │   ├───PostServiceImpl.java
+│       │   │   │               │   │   ├───ReactionServiceImpl.java
+│       │   │   │               │   │   ├───ReactionTagServiceImpl.java
+│       │   │   │               │   │   ├───RelationshipServiceImpl.java
+│       │   │   │               │   │   ├───RoleServiceImpl.java
+│       │   │   │               │   │   ├───SearchRecentServiceImpl.java
+│       │   │   │               │   │   └───UserServiceImpl.java
+│       │   │   │               │   └───interfaces/
+│       │   │   │               │       ├───AccountService.java
+│       │   │   │               │       ├───CommentService.java
+│       │   │   │               │       ├───FriendRecommendService.java
+│       │   │   │               │       ├───FriendRequestService.java
+│       │   │   │               │       ├───NotificationService.java
+│       │   │   │               │       ├───PhotoInPostService.java
+│       │   │   │               │       ├───PostService.java
+│       │   │   │               │       ├───ReactionService.java
+│       │   │   │               │       ├───ReactionTagService.java
+│       │   │   │               │       ├───RelationshipService.java
+│       │   │   │               │       ├───RoleService.java
+│       │   │   │               │       ├───SearchRecentService.java
+│       │   │   │               │       └───UserService.java
+│       │   │   │               ├───utils/
+│       │   │   │               │   └───FileUploadUtil.java
+│       │   │   │               └───MemoriesApplication.java
+│       │   │   └───resources/        (Contain thymeleaf-webadmin)
+│       │   │       ├───static/
+│       │   │       │   ├───css/
+│       │   │       │   ├───images/
+│       │   │       ├───templates/
+│       │   │       └───application.properties
+│       │   └───test/									
+│       │       └───java/
+│       │           └───com/
+│       │               └───example/
+│       │                   └───memories/						
+│       │                       └───MemoriesApplicationTests.java			
+│       └───pom.xml       (Acronym for Project Object Model)
+├───README.md
+└───Script_Auth.sql       (Generate the logical backup of the Oracle database)
+
