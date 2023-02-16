@@ -30,4 +30,29 @@
 4. Open IntelliJ and wait for Maven download setup dependencies
 5. Setup Apache Tomcat
 
+Hit first sight, the homepage represents the functionalities of the memories website. We are on the trait to developing the website's full functionalities including sharing posts, updating the newest daily life, chatting and making small societies into a website. Inspired by Facebook, Linkedln, and many former do, we cover the best experience from those and make our own.
+
+![1](https://user-images.githubusercontent.com/114813626/219269630-50007e23-9df4-4a46-9c8e-a35d273b5076.png)
+
+The logging/ signup page consists of two types, one for the gmail, and account password validation withing request to backend and return back a token validation for sign in/sign up. During the token valid, the user can freely do anything until its expired
+
+![2](https://user-images.githubusercontent.com/114813626/219269716-f3edc666-d560-408e-8411-3e7690c8401a.png)
+![3](https://user-images.githubusercontent.com/114813626/219269742-3043f95b-2964-4d6c-b971-8767d883543a.png)
+
+The post when logged in its sorted by time published, from the newest to lastest. Post are displayed whenever the user are following the user or the group interested in.
+
+![4](https://user-images.githubusercontent.com/114813626/219269806-1c1e455b-7df9-4c81-ac38-62f9a9a9ffc7.png)
+
+Create a new post
+
+![5](https://user-images.githubusercontent.com/114813626/219269861-dc7d56ec-de0c-4a27-9da0-1c7753920a35.png)
+
+Display own profile, to customize or post a new feed
+
+![6](https://user-images.githubusercontent.com/114813626/219269922-3bce0014-6459-4a78-bd39-bb4c54e6f1aa.png)
+![7](https://user-images.githubusercontent.com/114813626/219269987-c32a64f1-bcca-4707-99d9-09abfb177c55.png)
+
+Send the request to different users, make a new follower or friend to update new feed from another. Sharing in the communities with own stories
+
+![Friend](https://user-images.githubusercontent.com/114813626/219270098-c865298a-1038-4723-8cfe-715e20c3b3f4.png)
 
