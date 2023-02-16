@@ -40,14 +40,24 @@ Projects including 4 members
 Tutorial how to run Social-Network
 
 https://github.com/quochung96/Social-Network/tree/main/server : Back-end folder 
+
 https://github.com/quochung96/Social-Network/tree/main/serve/memories/src/main/: main run folder
 To use MemoriesApplication, please run
 --> https://github.com/quochung96/Social-Network/blob/main/server/memories/src/main/java/com/example/memories/MemoriesApplication.java
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/builder :
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/config :
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/controller : 
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/entity :
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/model : 
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/repository : Script about using JPA to connect between Java and Database (Oracle)
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/service : Script about the implement and interface
+
 https://github.com/quochung96/Social-Network/tree/main/server/memories/src/main/java/com/example/memories/utils : Script upload init picture
+
