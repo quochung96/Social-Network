@@ -1,4 +1,4 @@
-package com.example.memories.repository;
+package com.example.memories.repository.repositoryJPA;
 
 import com.example.memories.entity.RelationshipsEntity;
 import org.aspectj.asm.internal.Relationship;

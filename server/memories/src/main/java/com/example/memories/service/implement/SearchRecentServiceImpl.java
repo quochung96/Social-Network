@@ -2,12 +2,11 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.SearchRecentsEntity;
 import com.example.memories.model.SearchRecents;
-import com.example.memories.repository.SearchRecentsRepository;
-import com.example.memories.repository.UsersRepository;
+import com.example.memories.repository.repositoryJPA.SearchRecentsRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.SearchRecentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

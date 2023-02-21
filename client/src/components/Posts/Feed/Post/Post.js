@@ -135,7 +135,7 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
           </form>
           <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {null}>
-              <Avatar alt = 'avatar-test' src = {'https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/302427777_398139745838273_6720531277240145428_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=0RDtr0m6RX4AX9UouHK&tn=r3tZJhtLXKQelXtx&_nc_ht=scontent.fsgn5-14.fna&oh=00_AfCTuWSbwbgdY62BD3bKxvBvO_foz1X3X73IMgfSumN2mA&oe=63C758FD'}/>
+              <Avatar alt = 'avatar-test' src = {userProfile?.avatar_url}/>
             </IconButton>
             <Box backgroundColor = 'rgba(239, 239, 240, 1)' marginTop = '10px' marginBottom = '15px' borderRadius = '40px' display ='flex' flexDirection='column' width = '40%' height = 'auto'>
               <Box marginLeft = '30px' marginTop = '15px' fontFamily = 'Inter' marginBottom = '15px'>
@@ -148,7 +148,7 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
           </Box>
           <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {null}>
-              <Avatar alt = 'avatar-test' src = {'https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/302427777_398139745838273_6720531277240145428_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=0RDtr0m6RX4AX9UouHK&tn=r3tZJhtLXKQelXtx&_nc_ht=scontent.fsgn5-14.fna&oh=00_AfCTuWSbwbgdY62BD3bKxvBvO_foz1X3X73IMgfSumN2mA&oe=63C758FD'}/>
+              <Avatar alt = 'avatar-test' src = {userProfile?.avatar_url}/>
             </IconButton>
             <Box backgroundColor = 'rgba(239, 239, 240, 1)' marginTop = '10px' marginBottom = '15px' borderRadius = '40px' display ='flex' flexDirection='column' width = '40%' height = 'auto'>
               <Box marginLeft = '30px' marginTop = '15px' fontFamily = 'Inter' marginBottom = '15px'>
@@ -161,7 +161,7 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
           </Box>
           <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {null}>
-              <Avatar alt = 'avatar-test' src = {'https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-6/302427777_398139745838273_6720531277240145428_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=0RDtr0m6RX4AX9UouHK&tn=r3tZJhtLXKQelXtx&_nc_ht=scontent.fsgn5-14.fna&oh=00_AfCTuWSbwbgdY62BD3bKxvBvO_foz1X3X73IMgfSumN2mA&oe=63C758FD'}/>
+              <Avatar alt = 'avatar-test' src = {userProfile?.avatar_url}/>
             </IconButton>
             <Box backgroundColor = 'rgba(239, 239, 240, 1)' marginTop = '10px' marginBottom = '15px' borderRadius = '40px' display ='flex' flexDirection='column' width = '40%' height = 'auto'>
               <Box marginLeft = '30px' marginTop = '15px' fontFamily = 'Inter' marginBottom = '15px'>

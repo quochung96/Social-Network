@@ -33,7 +33,7 @@ const Sidebar = ({mode,setMode, user,setUser, userProfile}) => {
         <div className = {classes.inner_container}>
             <Tooltip title = {user?.result.name}>
               <div className = {classes.profile}>
-                <IconButton onClick = {() => navigate(`/profile/${user?.result.acc_id || user?.result.sub}`)}>
+                <IconButton onClick = {() => navigate(`/profile/${user?.user_id || user?.result.sub}`)}>
                  <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url} sx = {{width: 60,height: 60}}/>
                 </IconButton>
               </div>
@@ -101,7 +101,7 @@ const Sidebar = ({mode,setMode, user,setUser, userProfile}) => {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton onClick = {(e)=>setMode(mode === 'light' ? 'dark' : 'light')} >
+            <ListItemButton onClick = {()=>setMode(mode === 'light' ? 'dark' : 'light')} >
               <FormControlLabel
                   control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
                   label="Theme"

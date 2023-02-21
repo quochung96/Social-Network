@@ -7,10 +7,10 @@ import com.example.memories.entity.AccountsEntity;
 import com.example.memories.entity.RolesEntity;
 import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.Accounts;
-import com.example.memories.repository.AccountBuilderRepository;
-import com.example.memories.repository.AccountsRepository;
-import com.example.memories.repository.RolesRepository;
-import com.example.memories.repository.UsersRepository;
+import com.example.memories.repository.repositoryJPA.AccountBuilderRepository;
+import com.example.memories.repository.repositoryJPA.AccountsRepository;
+import com.example.memories.repository.repositoryJPA.RolesRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -78,8 +78,10 @@ public class AccountServiceImpl implements AccountService{
                 .build();
         // Tạo token
         var jwtToken = jwtService.generateToken(user);
+        Long user_id = accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id();
         // Trả về token và builder result account khi tạo 1 user mới xong
         return AuthenticationResponse.builder().token(jwtToken)
+                .user_id(user_id)
                 .result(user)
                 .build();
     }
@@ -135,6 +137,8 @@ public class AccountServiceImpl implements AccountService{
         //SELECT * from ACCOUNTS
         //WHERE ACC_ID = id;
         AccountsEntity account = accountsRepository.findById(id).get();
+//        account.setIsArchieved(1);
+//        accountsRepository.save(account);
         //DELETE FROM ACCOUNTS
         //WHERE ACC_ID = id;
         accountsRepository.delete(account);

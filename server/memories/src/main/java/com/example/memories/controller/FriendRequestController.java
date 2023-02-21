@@ -1,6 +1,5 @@
 package com.example.memories.controller;
 import com.example.memories.model.FriendRequests;
-import com.example.memories.repository.FriendRequestRepository;
 import com.example.memories.service.interfaces.FriendRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

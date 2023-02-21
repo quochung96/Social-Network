@@ -2,7 +2,7 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.CommentsEntity;
 import com.example.memories.model.Comments;
-import com.example.memories.repository.CommentsRepository;
+import com.example.memories.repository.repositoryJPA.CommentsRepository;
 import com.example.memories.service.interfaces.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -18,10 +18,6 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentsRepository commentsRepository;
-    public CommentServiceImpl(CommentsRepository commentsRepository){
-
-        this.commentsRepository = commentsRepository;
-    }
     @Override
     public Comments createComment(Comments comments){
         CommentsEntity commentsEntity = new CommentsEntity();

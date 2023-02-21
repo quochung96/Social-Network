@@ -1,4 +1,4 @@
-package com.example.memories.repository;
+package com.example.memories.repository.repositoryJPA;
 
 import com.example.memories.entity.UsersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

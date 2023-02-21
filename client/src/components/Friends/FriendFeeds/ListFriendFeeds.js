@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import { Box,Grid, Container, Skeleton } from '@mui/material';
 const ListFriendFeeds = () => {
   const {isLoading,request} = useSelector((state) => state.requests);
+  if(isLoading && !request) return 'No friends found';
   return (
     isLoading ? (
         <Container >

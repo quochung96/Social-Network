@@ -2,20 +2,17 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.NotificationsEntity;
 import com.example.memories.model.Notifications;
-import com.example.memories.repository.NotificationsRepository;
-import com.example.memories.repository.PostsRepository;
-import com.example.memories.repository.UsersRepository;
+import com.example.memories.repository.repositoryJPA.NotificationsRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.NotificationService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 

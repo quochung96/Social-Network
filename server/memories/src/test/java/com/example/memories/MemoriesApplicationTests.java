@@ -8,6 +8,7 @@ class MemoriesApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

@@ -1,11 +1,10 @@
 package com.example.memories.service.implement;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.example.memories.entity.FriendRequestEntity;
 import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.FriendRequests;
-import com.example.memories.repository.FriendRequestRepository;
-import com.example.memories.repository.UsersRepository;
+import com.example.memories.repository.repositoryJPA.FriendRequestRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.FriendRequestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

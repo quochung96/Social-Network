@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const Feed = ({setCurrentId,user, userProfile}) => {
   //Khi nào kết nối database và xử lý xong redux thì xài này
   const {isLoading,posts} = useSelector((state) => state.posts);
-
+  if(!posts && isLoading) return "No posts found";
   return (
     isLoading ? (
       <Container >

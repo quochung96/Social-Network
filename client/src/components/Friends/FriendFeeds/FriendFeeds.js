@@ -4,7 +4,7 @@ import FriendCard from '../components/FriendCard';
 import {useSelector} from 'react-redux';
 const FriendFeeds = ({user,userProfile}) => {
   const {isLoading,request} = useSelector((state) => state.requests);
-
+  if(isLoading && !request) return 'No friends request found';
   return (
     isLoading ? (
       <Container >

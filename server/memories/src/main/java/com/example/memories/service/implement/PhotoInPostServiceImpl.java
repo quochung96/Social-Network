@@ -2,19 +2,17 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.model.PhotoInPosts;
-import com.example.memories.repository.PhotoInPostRepository;
-import com.example.memories.repository.PostsRepository;
-import com.example.memories.repository.UsersRepository;
+import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.PhotoInPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.memories.utils.FileUploadUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

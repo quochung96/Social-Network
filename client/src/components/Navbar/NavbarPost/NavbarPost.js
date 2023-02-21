@@ -30,7 +30,7 @@ const NavbarPost = ({user,setUser,userProfile}) => {
     setAnchorElUser(null);
   };
   const openProfile = () => {
-    navigate(`/profile/${user?.result.acc_id || user?.result.sub}`);
+    navigate(`/profile/${user?.user_id || user?.result.sub}`);
   }
   const openFriendPage = () => {
     navigate("/friends")

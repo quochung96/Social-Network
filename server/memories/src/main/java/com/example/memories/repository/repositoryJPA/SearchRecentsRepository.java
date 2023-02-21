@@ -1,4 +1,4 @@
-package com.example.memories.repository;
+package com.example.memories.repository.repositoryJPA;
 import com.example.memories.entity.SearchRecentsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

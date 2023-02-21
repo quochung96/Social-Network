@@ -16,13 +16,9 @@ export const getPost = (id) => async (dispatch) => {
 };
 export const getPostByUserId = (userId) => async(dispatch) => {
   try{
-    dispatch({type: START_LOADING});
-
     const {data} = await api.fetchPostByUserId(userId);
 
     dispatch({ type: FETCH_POST_USER, payload: {postUser: data}});
-    dispatch({type: END_LOADING});
-
   }catch(e){
     console.log(e);
   }

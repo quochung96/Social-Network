@@ -2,20 +2,16 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.entity.PostsEntity;
-import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.Posts;
-import com.example.memories.model.Users;
-import com.example.memories.repository.PhotoInPostRepository;
-import com.example.memories.repository.PostsRepository;
-import com.example.memories.repository.UsersRepository;
+import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +20,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
     @Autowired
-    PostsRepository postsRepository;
+    private PostsRepository postsRepository;
     @Autowired
-    UsersRepository userRepository;
+    private UsersRepository userRepository;
 
     @Autowired
-    PhotoInPostRepository photoInPostRepository;
+    private PhotoInPostRepository photoInPostRepository;
     @Override
     public List<Posts> getAllPosts() {
         List<PostsEntity> postsEntities = postsRepository.findAll(); // List all post in database

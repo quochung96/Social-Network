@@ -2,12 +2,11 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.RolesEntity;
 import com.example.memories.model.Roles;
-import com.example.memories.repository.RolesRepository;
+import com.example.memories.repository.repositoryJPA.RolesRepository;
 import com.example.memories.service.interfaces.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

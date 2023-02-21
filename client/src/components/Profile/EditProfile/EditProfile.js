@@ -8,7 +8,7 @@ import ManIcon from '@mui/icons-material/Man';
 import BusinessIcon from '@mui/icons-material/Business';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import {useDispatch } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 
 import {updateUser} from '../../../actions/users';
 import Input from '../../widgets/Input';
@@ -19,8 +19,6 @@ import { useParams } from 'react-router-dom';
 const EditProfile = ({user, userProfile}) => {
   const dispatch = useDispatch();
   const {id} = useParams();
-  const [open, setOpen] = useState(false);
-  
   const [formData, setFormData] = useState({
     user_id: id,
     userName: "",
@@ -32,7 +30,11 @@ const EditProfile = ({user, userProfile}) => {
     cover_url: null,
     avatar_url: null
 });
-
+  const [open, setOpen] = useState(false);
+  const {request} = useSelector((state) => state.requests);
+  if(!request) return 'no request';
+  
+  const userRequest = request.filter(rs => Number(rs.receiveUser.user_id) === Number(id));
   const handleClickOpen = () => {
     setOpen(true);
   }
@@ -49,7 +51,7 @@ const EditProfile = ({user, userProfile}) => {
   }
   return (
     <>
-        <ProfileDetails handleCoverImage = {handleClickOpen} user = {user} userProfile = {userProfile} />
+        <ProfileDetails handleCoverImage = {handleClickOpen} user = {user} userProfile = {userProfile} userRequest = {userRequest}/>
         <Box p = {1} flex = {1}>
         <Box display = 'flex' flexDirection = 'column' sx = {{borderRadius: '20px',background :"#FFF", width :'100%', height: 'auto', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
         <List>
@@ -74,11 +76,11 @@ const EditProfile = ({user, userProfile}) => {
                             <div style={{marginBottom: '20px'}}>Details you select will be public</div>
                         </DialogContentText>
                         <Box style={{gap: '10px', display: 'flex', flexDirection: 'column',width: '500px'}}>
-                            <Input name = "userName" label = "User Name" handleChange = {handleChange} autoFocus/>
-                            <Input name = "birth_day" label = "Birth Day" handleChange = {handleChange} autoFocus/>
-                            <Input name = "gender" label = "Gender" handleChange = {handleChange} autoFocus/>
-                            <Input name = "address" label = "Address" handleChange = {handleChange} autoFocus/>
-                            <Input name = "relationship" label = "Relationships" handleChange = {handleChange} autoFocus/>
+                            <Input name = "userName" defaultValue={userProfile?.userName} label = "User Name"  handleChange = {handleChange} autoFocus/>
+                            <Input name = "birth_day" defaultValue={userProfile?.birth_day} label = "Birth Day" handleChange = {handleChange} autoFocus/>
+                            <Input name = "gender" defaultValue={userProfile?.gender} label = "Gender" handleChange = {handleChange} autoFocus/>
+                            <Input name = "address" defaultValue={userProfile?.address} label = "Address" handleChange = {handleChange} autoFocus/>
+                            <Input name = "relationship" defaultValue={userProfile?.relationship} label = "Relationships" handleChange = {handleChange} autoFocus/>
                             <div>
                                 <Typography>Change Cover Image</Typography>
                                 <FileBase 

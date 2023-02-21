@@ -1,4 +1,4 @@
-package com.example.memories.repository;
+package com.example.memories.repository.repositoryJPA;
 import org.springframework.stereotype.Repository;
 
 @Repository

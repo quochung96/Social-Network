@@ -20,10 +20,10 @@ const Profile = ({user,userProfile}) => {
     }
   });
   useEffect(() => {
-    dispatch(getPostByUserId(id));
     dispatch(getUser(id));
-    dispatch(getRequestByUserId(id));
-  },[dispatch, id]);
+    dispatch(getRequestByUserId(user?.user_id));
+    dispatch(getPostByUserId(id));
+  },[dispatch, id, user?.user_id]);
 
   return (
     <ThemeProvider theme = {darkTheme}>
