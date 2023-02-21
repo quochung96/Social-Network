@@ -21,8 +21,6 @@ public class Posts {
     private long permission;
 
     private UsersEntity user;
-    private PhotoInPostEntity photoInPost;
-
     private Date createAt;
 
     private Date updateAt;

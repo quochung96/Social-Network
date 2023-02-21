@@ -6,6 +6,7 @@ import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
 import com.example.memories.repository.repositoryJPA.PostsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.PhotoInPostService;
+import com.example.memories.utils.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,6 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     @Autowired
     private final PostsRepository postsRepository;
 
-    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
-
 
     @Override
     public List<PhotoInPosts> getAllPhoto() {
@@ -42,6 +41,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
                         photoinpost.getPhotoId(),
                         photoinpost.getIsHighlight(),
                         photoinpost.getPhotoUrl(),
+                        photoinpost.getPost(),
                         photoinpost.getCreateAt(),
                         photoinpost.getUpdateAt()
                 )
@@ -53,16 +53,18 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     public PhotoInPosts createPhotoInPost(Long postId, PhotoInPosts photoInPosts, MultipartFile multipartFile) throws IOException{
         PhotoInPostEntity newPhotoInPost = new PhotoInPostEntity();
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        photoInPosts.setPhotoUrl(fileName);
         photoInPosts.setCreateAt(new Date());
         photoInPosts.setUpdateAt(new Date());;
+        photoInPosts.setPost(postsRepository.findById(postId).get());
+        String uploadDir = Paths.get("server/memories/src/main/resources/static")
+                                        .resolve(Paths.get("post-img"))
+                                        .resolve(Paths.get(String.valueOf(postId))).toString();
+        System.out.println(uploadDir);
+        String photoUrl = FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        photoInPosts.setPhotoUrl(photoUrl);
+
         BeanUtils.copyProperties(photoInPosts, newPhotoInPost);
-
-        //photoInPostRepository.save(newPhotoInPost);
-
-        String uploadDir = "post-photos/" + photoInPosts.getPhotoId();
-        System.out.println(Files.exists(CURRENT_FOLDER.resolve(Paths.get("static")).resolve(Paths.get("images"))));
-        //FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        photoInPostRepository.save(newPhotoInPost);
 
         return photoInPosts;
     }

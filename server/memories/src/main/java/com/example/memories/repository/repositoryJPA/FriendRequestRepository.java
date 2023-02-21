@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequestEntity, Long> {
     Optional<List<FriendRequestEntity>> findAllBySendUser(UsersEntity user);
+    Optional<List<FriendRequestEntity>> findAllByReceiveUser(UsersEntity user);
+
 }

@@ -37,7 +37,6 @@ public class PostServiceImpl implements PostService {
                         post.getContent(),
                         post.getPermission(),
                         post.getUser(),
-                        post.getPhotoInPost(),
                         post.getCreateAt(),
                         post.getUpdateAt(),
                         post.getIsArchieved()
@@ -58,7 +57,6 @@ public class PostServiceImpl implements PostService {
                         post.getContent(),
                         post.getPermission(),
                         post.getUser(),
-                        post.getPhotoInPost(),
                         post.getCreateAt(),
                         post.getUpdateAt(),
                         post.getIsArchieved()
@@ -71,9 +69,9 @@ public class PostServiceImpl implements PostService {
     public Posts createPost(long userID, Posts post) {
         PostsEntity newPost = new PostsEntity();
         //When create a post have an image save to the database
-        PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
-        photoInPostRepository.save(photoInPostEntity);
-        post.setPhotoInPost(photoInPostEntity);
+//        ??PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
+//        photoInPostRepository.save(photoInPostEntity);
+//        post.setPhotoInPost(photoInPostEntity);
 
         post.setCreateAt(new Date());
         post.setUpdateAt(new Date());
