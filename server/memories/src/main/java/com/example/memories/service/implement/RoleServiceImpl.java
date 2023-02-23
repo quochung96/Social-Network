@@ -4,6 +4,8 @@ import com.example.memories.entity.RolesEntity;
 import com.example.memories.model.Roles;
 import com.example.memories.repository.repositoryJPA.RolesRepository;
 import com.example.memories.service.interfaces.RoleService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackOn = Exception.class)
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     //Constructor
     private RolesRepository rolesRepository;
-    public RoleServiceImpl(RolesRepository rolesRepository){
-        this.rolesRepository = rolesRepository;
-    }
-
     @Override
     public Roles createRole(Roles role) {
         //Create new role entity

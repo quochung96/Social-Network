@@ -4,6 +4,7 @@ import com.example.memories.entity.CommentsEntity;
 import com.example.memories.model.Comments;
 import com.example.memories.repository.repositoryJPA.CommentsRepository;
 import com.example.memories.service.interfaces.CommentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackOn = Exception.class)
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentsRepository commentsRepository;

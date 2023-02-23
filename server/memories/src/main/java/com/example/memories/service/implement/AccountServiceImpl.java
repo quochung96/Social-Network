@@ -38,52 +38,57 @@ public class AccountServiceImpl implements AccountService{
     //Constructor
     @Override
     public AuthenticationResponse createAccount(Accounts account) throws Exception {
-        //Tạo một Account Entity Constructor
-        AccountsEntity accountsEntity = new AccountsEntity();
-        //Kiểm tra account có trong database hay k ? Nếu có thì throw exception
-        if(accountsRepository.findByEmail(account.getEmail()).isPresent()){
-            throw new Exception("User exists");
+        try {
+            //Tạo một Account Entity Constructor
+            AccountsEntity accountsEntity = new AccountsEntity();
+            //Kiểm tra account có trong database hay k ? Nếu có thì throw exception
+            if (accountsRepository.findByEmail(account.getEmail()).isPresent()) {
+                throw new Exception("User exists");
+            }
+            // Set all the parameters from front-end login by the USER ROLE
+            // Hashed Password when create new account
+            String encodedPassword = passwordEncoder.encode(account.getHashPassword());
+            account.setHashPassword(encodedPassword);
+            // Default set
+            account.setCreateAt(new Date());
+            account.setUpdateAt(new Date());
+            //IF the database doesn't exist -> Insert a new
+            if (!rolesRepository.findByRoleName("USER").isPresent()) {
+                RolesEntity roles = new RolesEntity("USER");
+                rolesRepository.save(roles);
+            }
+            RolesEntity roles = rolesRepository.findByRoleName("USER").get();
+            account.setRoles(roles);
+            account.setIsArchieved(0);
+            //Khi tạo 1 Entity mới cần phải lưu vào DB trước khi flush -> Gen user trc khi tạo foreign key trong Account
+            UsersEntity users = new UsersEntity(account.getUserName());
+            usersRepository.save(users);
+            account.setUsers(users);
+            //Copy tất cả những thuộc tính còn lại qua account Entity --> Save vào database
+            BeanUtils.copyProperties(account, accountsEntity);
+            accountsRepository.save(accountsEntity);
+            //Tạo một Builder mới dùng để tạo token xác thực
+            var user = AccountBuilder.builder()
+                    .name(account.getUserName())
+                    .email(account.getEmail())
+                    .hashPassword(encodedPassword)
+                    .isArchieved(0)
+                    .roles(roles)
+                    .createAt(new Date())
+                    .updateAt(new Date())
+                    .build();
+            // Tạo token
+            var jwtToken = jwtService.generateToken(user);
+            Long user_id = accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id();
+            // Trả về token và builder result account khi tạo 1 user mới xong
+            return AuthenticationResponse.builder().token(jwtToken)
+                    .user_id(user_id)
+                    .result(user)
+                    .build();
         }
-        // Set all the parameters from front-end login by the USER ROLE
-        // Hashed Password when create new account
-        String encodedPassword= passwordEncoder.encode(account.getHashPassword());
-        account.setHashPassword(encodedPassword);
-        // Default set
-        account.setCreateAt(new Date());
-        account.setUpdateAt(new Date());
-        //IF the database doesn't exist -> Insert a new
-        if(!rolesRepository.findByRoleName("USER").isPresent()){
-            RolesEntity roles = new RolesEntity("USER");
-            rolesRepository.save(roles);
+        catch (Exception e){
+            throw new Exception(e.getMessage());
         }
-        RolesEntity roles = rolesRepository.findByRoleName("USER").get();
-        account.setRoles(roles);
-        account.setIsArchieved(0);
-        //Khi tạo 1 Entity mới cần phải lưu vào DB trước khi flush -> Gen user trc khi tạo foreign key trong Account
-        UsersEntity users = new UsersEntity(account.getUserName());
-        usersRepository.save(users);
-        account.setUsers(users);
-        //Copy tất cả những thuộc tính còn lại qua account Entity --> Save vào database
-        BeanUtils.copyProperties(account, accountsEntity);
-        accountsRepository.save(accountsEntity);
-        //Tạo một Builder mới dùng để tạo token xác thực
-        var user = AccountBuilder.builder()
-                .name(account.getUserName())
-                .email(account.getEmail())
-                .hashPassword(encodedPassword)
-                .isArchieved(0)
-                .roles(roles)
-                .createAt(new Date())
-                .updateAt(new Date())
-                .build();
-        // Tạo token
-        var jwtToken = jwtService.generateToken(user);
-        Long user_id = accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id();
-        // Trả về token và builder result account khi tạo 1 user mới xong
-        return AuthenticationResponse.builder().token(jwtToken)
-                .user_id(user_id)
-                .result(user)
-                .build();
     }
 
     @Override

@@ -3,9 +3,10 @@ package com.example.memories.service.implement;
 import com.example.memories.entity.NotificationsEntity;
 import com.example.memories.model.Notifications;
 import com.example.memories.repository.repositoryJPA.NotificationsRepository;
-import com.example.memories.repository.repositoryJPA.PostsRepository;
+import com.example.memories.repository.repositoryPaging.PostsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.NotificationService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
     @Autowired

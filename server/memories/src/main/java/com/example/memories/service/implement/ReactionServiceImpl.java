@@ -4,6 +4,7 @@ import com.example.memories.entity.ReactionsEntity;
 import com.example.memories.model.Reactions;
 import com.example.memories.repository.repositoryJPA.ReactionRepository;
 import com.example.memories.service.interfaces.ReactionService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class ReactionServiceImpl implements ReactionService {
     @Autowired

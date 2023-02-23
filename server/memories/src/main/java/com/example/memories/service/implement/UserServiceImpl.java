@@ -4,6 +4,8 @@ import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.Users;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.UserService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackOn = Exception.class)
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UsersRepository usersRepository;
-    public UserServiceImpl(UsersRepository usersRepository){
-        this.usersRepository = usersRepository;
-    }
-
     @Override
     public Users createUser(Users user) {
         //Create new role entity

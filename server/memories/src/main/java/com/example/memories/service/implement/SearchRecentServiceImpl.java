@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+
 public class SearchRecentServiceImpl implements SearchRecentService {
     @Autowired
     private final SearchRecentsRepository searchRecentsRepository;

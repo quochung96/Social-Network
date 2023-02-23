@@ -1,5 +1,6 @@
 package com.example.memories.controller;
 import com.example.memories.entity.PostsEntity;
+import com.example.memories.exeption.PostNotFoundException;
 import com.example.memories.model.Posts;
 import com.example.memories.service.interfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/posts")
-    public ResponseEntity getPostByUserId(@PathVariable Long userId){
+    public ResponseEntity getPostByUserId(@PathVariable Long userId) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.getPostByUserId(userId));
     }
     @GetMapping("/posts/{id}")
-    public ResponseEntity getPostById(@PathVariable Long id){
+    public ResponseEntity getPostById(@PathVariable Long id) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.getPostById(id));
     }
     @PostMapping("/{userId}/posts")
@@ -31,12 +32,12 @@ public class PostController {
         return ResponseEntity.ok().body(postService.createPost(userId, post));
     }
     @PutMapping("/posts/{id}")
-    public ResponseEntity updatePost(@PathVariable Long id, @RequestBody Posts post){
+    public ResponseEntity updatePost(@PathVariable Long id, @RequestBody Posts post) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.updatePost(id, post));
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity deletePost(@PathVariable Long id){
+    public ResponseEntity deletePost(@PathVariable Long id) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.deletePostById(id));
     }
 

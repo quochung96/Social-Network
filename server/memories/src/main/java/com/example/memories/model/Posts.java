@@ -26,4 +26,6 @@ public class Posts {
     private Date updateAt;
 
     private int isArchieved;
+
+    private PhotoInPostEntity photoInPost;
 }

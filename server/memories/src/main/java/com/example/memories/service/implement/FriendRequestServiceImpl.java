@@ -6,6 +6,8 @@ import com.example.memories.model.FriendRequests;
 import com.example.memories.repository.repositoryJPA.FriendRequestRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.FriendRequestService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackOn = Exception.class)
+@RequiredArgsConstructor
 public class FriendRequestServiceImpl implements FriendRequestService {
     @Autowired
     FriendRequestRepository friendRequestRepository;

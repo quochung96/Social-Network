@@ -5,4 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Profile is not found")
 public class ProfileNotFound extends Exception{
+    public ProfileNotFound(String message){
+        super(message);
+    }
 }
