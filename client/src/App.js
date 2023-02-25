@@ -12,6 +12,7 @@ import Friends from './components/Friends/Friends';
 import FriendRequests from './components/Friends/FriendRequests';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import {useSelector} from 'react-redux';
+import PostDetail from './components/PostDetail/PostDetail';
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -26,6 +27,7 @@ const App = () => {
               <Route path = "/profile/:id" element = {<Profile user = {user} userProfile = {userProfile} />}/>
               <Route path = "/forgotPassword" element = {<ForgotPassword />}/>
               <Route path = "/message" element = {<Message />}/>
+              <Route path = "/posts/:id" element = {<PostDetail user = {user} setUser = {setUser} userProfile = {userProfile}/>}/>
               <Route path = "/friends" element = {<Friends user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
               <Route path = "/friendRequest" element = {<FriendRequests user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
               <Route path = "/auth" element = {!user ? <Auth /> : <Navigate to = "/posts"/>}/>

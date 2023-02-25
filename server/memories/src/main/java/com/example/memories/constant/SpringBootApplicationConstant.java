@@ -1,5 +1,8 @@
 package com.example.memories.constant;
 
+/*
+    @author Anh Dung
+ */
 public class SpringBootApplicationConstant {
     public static final int POSTS_PER_PAGE = 10;
     public static final int ACCOUNTS_PER_PAGE = 5;

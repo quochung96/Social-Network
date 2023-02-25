@@ -38,9 +38,8 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-
     dispatch(signin(formData,navigate));
-  
+    window.location.reload(false);
   }
   // Split the previous fromData and add new target value into target name 
   const handleChange = (e) => { 

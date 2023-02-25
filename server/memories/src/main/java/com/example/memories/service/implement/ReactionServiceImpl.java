@@ -43,8 +43,7 @@ public class ReactionServiceImpl implements ReactionService {
                         react.getUpdateAt(),
                         react.getPostId(),
                         react.getUserId(),
-                        react.getCmtId(),
-                        react.getTagId()
+                        react.getCmtId()
                 )
         ).collect(Collectors.toList());
         return reactions;
@@ -62,7 +61,6 @@ public class ReactionServiceImpl implements ReactionService {
     public Reactions updateReaction(Long id, Reactions reactions) {
         ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
         reactionsEntity.setUpdateAt(new Date());
-        reactionsEntity.setTagId(reactions.getTagId().getTagId());
         reactionRepository.save(reactionsEntity);
         return reactions;
     }

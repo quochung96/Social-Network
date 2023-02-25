@@ -3,16 +3,19 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Avatar from '../../../assets/icons/user.png';
 import { acceptUserFriendRequest } from '../../../actions/friendRequest';
-import {updateUserFollower} from '../../../actions/users';
+import { deleteFriendRequest } from '../../../actions/friendRequest';
 const FriendCard = ({userRequest}) => {
   const [formData] = useState({
     reqId: userRequest?.reqId
   });
   const dispatch = useDispatch();
-  const handleSubmit = () => {
+  const handleAcceptRequest = () => {
     dispatch(acceptUserFriendRequest(formData.reqId));
-    dispatch(updateUserFollower(userRequest?.sendUser.user_id,{follower: userRequest?.sendUser.follower}));
-    dispatch(updateUserFollower(userRequest?.receiveUser.user_id,{follower: userRequest?.receiveUser.follower}));
+    window.location.reload(false);
+  }
+  const handleDeleteRequest = () => {
+    dispatch(deleteFriendRequest(formData.reqId));
+    window.location.reload(false);
   }
   return (
     <>
@@ -23,8 +26,8 @@ const FriendCard = ({userRequest}) => {
                 image = {userRequest?.receiveUser.avatar_url || Avatar}
             />
             <Typography variant="h7" fontFamily="Helvetica" paddingLeft = '2px'>{userRequest?.receiveUser.userName}</Typography>
-            <Button variant = "contained" fullWidth onClick = {handleSubmit} sx = {{borderRadius: 20, marginTop: '20px'}}>Confirm</Button>
-            <Button variant = "outlined" fullWidth onClick = {handleSubmit} sx = {{borderRadius: 20, marginTop: '5px'}}>Delete</Button>
+            <Button variant = "contained" fullWidth onClick = {handleAcceptRequest} sx = {{borderRadius: 20, marginTop: '20px'}}>Confirm</Button>
+            <Button variant = "outlined" fullWidth onClick = {handleDeleteRequest} sx = {{borderRadius: 20, marginTop: '5px'}}>Delete</Button>
         </Card>
     ) : null
     }

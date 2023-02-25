@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-
+/*
+    @author Anh Dung
+ */
 @Setter
 @Getter
 @Entity

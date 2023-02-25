@@ -18,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 
+/*
+    @author Anh Dung
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {

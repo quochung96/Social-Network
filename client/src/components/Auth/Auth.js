@@ -36,6 +36,7 @@ const Auth = () => {
     else{
       dispatch(signin(formData,navigate));
     }
+    window.location.reload(false);
   }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value})

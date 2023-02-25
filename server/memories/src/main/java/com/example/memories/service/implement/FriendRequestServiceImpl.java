@@ -32,7 +32,6 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
-                        data.getMutalCount(),
                         data.getSendUser(),
                         data.getReceiveUser(),
                         data.getIsAccepted(),
@@ -58,12 +57,11 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public List<FriendRequests> getFriendRequestsByUserId(long userId) {
         UsersEntity user = usersRepository.findById(userId).get();
-        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllByReceiveUser(user).get();
+        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllBySendUser(user).get();
 
         List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
-                        data.getMutalCount(),
                         data.getSendUser(),
                         data.getReceiveUser(),
                         data.getIsAccepted(),
@@ -80,7 +78,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         FriendRequestEntity friendRequestEntity= new FriendRequestEntity();
         request.setCreateAt(new Date());
         request.setUpdateAt(new Date());
-        request.setSendUser(usersRepository.findById(userId).get());
+        request.setReceiveUser(usersRepository.findById(userId).get());
         BeanUtils.copyProperties(request, friendRequestEntity);
         friendRequestRepository.save(friendRequestEntity);
         return request;
@@ -119,8 +117,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public boolean cancelFriendRequest(long id) {
         FriendRequestEntity friendRequestEntity= friendRequestRepository.findById(id).get();
-        friendRequestEntity.setIsAccepted(1);
-        friendRequestEntity.setIsArchived(1);
+        friendRequestEntity.setIsAccepted(0);
         friendRequestRepository.save(friendRequestEntity);
         return true;
     }

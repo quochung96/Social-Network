@@ -39,8 +39,5 @@ public class ReactionsEntity {
     @JoinColumn(name = "CMT_ID")
     private CommentsEntity cmtId;
 
-    @ManyToOne
-    @JoinColumn(name = "TAG_ID")
-    private ReactionTagEntity tagId;
 }
 

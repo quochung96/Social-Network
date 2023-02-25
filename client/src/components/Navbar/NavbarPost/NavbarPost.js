@@ -105,7 +105,7 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
                 <NotificationsNoneIcon fontSize="medium" />
               </Badge>
             </IconButton>
-            <IconButton>
+            <IconButton onClick = {() => navigate("/friendRequest")}>
               <Badge badgeContent={2} color="error">
                 <PeopleAltIcon fontSize="medium" />
               </Badge>

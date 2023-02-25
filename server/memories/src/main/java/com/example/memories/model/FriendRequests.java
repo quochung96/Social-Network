@@ -10,8 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class FriendRequests {
     private Long reqId;
-
-    private Long mutalCount;
     private UsersEntity sendUser;
     private UsersEntity receiveUser;
     private int isAccepted;

@@ -19,8 +19,6 @@ public class FriendRequestEntity {
     @Column(name = "REQ_ID", nullable = false)
     private Long reqId;
 
-    @Column(name = "MUTAL_COUNT")
-    private Long mutalCount;
     @ManyToOne
     @JoinColumn(name = "SEND_USER_ID")
     private UsersEntity sendUser;

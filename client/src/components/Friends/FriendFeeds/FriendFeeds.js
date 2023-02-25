@@ -1,9 +1,12 @@
 import { Box,Grid, Container, Skeleton } from '@mui/material';
-import React from 'react'
+import React,{useEffect} from 'react'
 import FriendCard from '../components/FriendCard';
 import {useSelector} from 'react-redux';
-const FriendFeeds = ({user,userProfile}) => {
+const FriendFeeds = () => {
   const {isLoading,request} = useSelector((state) => state.requests);
+  useEffect(() => {
+    console.log(request);
+  });
   if(isLoading && !request) return 'No friends request found';
   return (
     isLoading ? (

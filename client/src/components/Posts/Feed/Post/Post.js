@@ -34,6 +34,7 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
     console.log(finalComment);
     // setComment('');
   }
+  const openDetailPost = () => navigate(`/posts/${post.postId}`);
   
   return (
     <Card sx={{ margin: 4, borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
@@ -61,34 +62,13 @@ const Post = ({post,setCurrentId,user,userProfile}) => {
         </Typography>
       </CardContent>
       {post.photoInPost && 
-      <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}}>  
+      <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
               sx = {{width: '100%',minWidth: 1040, height: 1200, objectFit: 'cover'}}
               component="img"
               image = {post?.photoInPost.photoUrl}
               alt="img-post"
           />
-          {/**Multiple photos */}
-        {/* <Box flexDirection='row' display = 'flex' gap = "5px" marginTop = '5px'>
-          <CardMedia
-              sx = {{width: '33%', height: '30%'}}
-              component="img"
-              image="https://images.unsplash.com/photo-1567225591450-06036b3392a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-              alt="img-post"
-          />
-          <CardMedia
-              sx = {{width: '33%', height: '30%'}}
-              component="img"
-              image="https://images.unsplash.com/photo-1567225591450-06036b3392a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-              alt="img-post"
-          />
-          <CardMedia
-              sx = {{width: '33%', height: '30%'}}
-              component="img"
-              image="https://images.unsplash.com/photo-1614369575919-8c030d97ceae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-              alt="img-post"
-          />
-        </Box> */}
       </ButtonBase>
       }
       <CardActions sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>

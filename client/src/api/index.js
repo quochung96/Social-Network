@@ -12,14 +12,16 @@ API.interceptors.request.use((req) => {
 
 //FriendRequests
 export const fetchUserFriendRequest = (userId) => API.get(`/user/${userId}/friendrequests`);
-export const acceptUserFriendRequest = (id) => API.put(`/friendrequest/${id}/accept`) 
+export const acceptUserFriendRequest = (id) => API.put(`/friendrequest/${id}/accept`); 
+export const deleteFriendRequest = (id) => API.delete(`/friendrequest/${id}`);
+export const createFriendRequest = (userId,formData) => API.post(`user/${userId}/friendrequests`,formData);
+
 //User
 export const createUser = (user) => API.post('/users',user); // OK
 export const fetchUsers = () => API.get('/users'); // OK
 export const fetchUser = (id) => API.get(`/users/${id}`); // OK
 export const deleteUser = (id) => API.delete(`/users/${id}`); // OK
 export const updateUser = (user,id) => API.put(`/users/${id}`,user); // OK
-export const updateUserFollower = (id, user) => API.put(`/users/${id}/follower`,user);
 //Posts
 export const fetchPostByUserId = (userId) => API.get(`/${userId}/posts`);
 export const fetchPost = (id) => API.get(`/posts/${id}`); // OK
@@ -33,7 +35,6 @@ export const deletePost = (id) => API.delete(`/posts/${id}`); // OK
 
 //Chat
 
-//Friends
 
 //Authentication
 export const signin = (formData) => API.post('accounts/signin',formData); // OK

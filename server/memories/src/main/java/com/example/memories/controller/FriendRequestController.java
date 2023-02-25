@@ -36,7 +36,7 @@ public class FriendRequestController {
     }
 
     @DeleteMapping("/friendrequest/{id}")
-    public ResponseEntity updateFriendRequest(@PathVariable long id){
+    public ResponseEntity deleteFriendRequest(@PathVariable long id){
         return ResponseEntity.ok().body(friendRequestService.deleteFriendRequest(id));
     }
 
@@ -45,7 +45,7 @@ public class FriendRequestController {
         return ResponseEntity.ok().body(friendRequestService.acceptFriendRequest(id));
     }
 
-    @PutMapping("/friendrequest/{id}/cancel")
+    @PutMapping("/friendrequest/{id}/unfriend")
     public ResponseEntity cancelFriendRequest(@PathVariable long id){
         return ResponseEntity.ok().body(friendRequestService.cancelFriendRequest(id));
     }

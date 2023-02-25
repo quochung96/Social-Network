@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
+/*
+    @author Anh Dung
+ */
 @Service
 public class JwtService {
     //Validate JWT

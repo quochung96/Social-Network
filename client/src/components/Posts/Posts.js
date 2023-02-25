@@ -4,18 +4,20 @@ import NavBarPost from '../Navbar/NavbarPost/NavbarPost';
 import Sidebar from './Sidebar/Sidebar';
 import Feed from './Feed/Feed';
 import { useDispatch } from 'react-redux';
+import {useLocation} from 'react-router-dom';
 import { getUser } from '../../actions/users';
 import { getPosts } from '../../actions/posts';
 import {getRequestByUserId} from '../../actions/friendRequest';
 
 const Posts = ({user,setUser, userProfile}) => {
   const [mode,setMode] = useState('light');
+  const location = useLocation();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
     dispatch(getUser(user?.user_id));
     dispatch(getRequestByUserId(user?.user_id));
-  }, [dispatch,user?.user_id]);
+  }, [dispatch,user?.user_id,location]);
   const darkTheme = createTheme({
     palette: {
       mode: mode

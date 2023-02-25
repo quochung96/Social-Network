@@ -17,8 +17,4 @@ public class Reactions {
     private PostsEntity postId;
     private UsersEntity userId;
     private CommentsEntity cmtId;
-    private ReactionsEntity tagId;
-
-    public Reactions(Long reactId, Date createAt, Date updateAt, PostsEntity postId, UsersEntity userId, CommentsEntity cmtId, ReactionTagEntity tagId) {
-    }
 }

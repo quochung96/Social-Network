@@ -1,9 +1,12 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import ListFriends from '../components/ListFriends';
 import {useSelector} from 'react-redux';
 import { Box,Grid, Container, Skeleton } from '@mui/material';
 const ListFriendFeeds = () => {
   const {isLoading,request} = useSelector((state) => state.requests);
+  useEffect(() => {
+    console.log(request);
+  });
   if(isLoading && !request) return 'No friends found';
   return (
     isLoading ? (

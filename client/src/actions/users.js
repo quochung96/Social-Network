@@ -52,15 +52,6 @@ export const updateUser = (id,user) => async(dispatch) => {
         console.log(e);
     }
 }
-export const updateUserFollower = (id, user) => async(dispatch) => {
-    try{
-        const {data} = await api.updateUserFollower(id,user);
-
-        dispatch({type: UPDATE, payload: data});
-    }catch(e){
-        console.log(e);
-    }
-}
 
 //Delete user by an id
 export const deleteUser = (id) => async(dispatch) => {

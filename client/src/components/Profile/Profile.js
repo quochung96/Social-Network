@@ -9,10 +9,12 @@ import { getPostByUserId } from '../../actions/posts';
 import {getRequestByUserId} from '../../actions/friendRequest';
 import FeedProfile from './FeedProfile';
 import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Profile = ({user,userProfile}) => {
   const dispatch = useDispatch();
   const {id } = useParams();
+  const location = useLocation();
   const [mode,setMode] = useState('light');
   const darkTheme = createTheme({
     palette: {
@@ -23,7 +25,7 @@ const Profile = ({user,userProfile}) => {
     dispatch(getUser(id));
     dispatch(getRequestByUserId(user?.user_id));
     dispatch(getPostByUserId(id));
-  },[dispatch, id, user?.user_id]);
+  },[dispatch, id, user?.user_id,location]);
 
   return (
     <ThemeProvider theme = {darkTheme}>
