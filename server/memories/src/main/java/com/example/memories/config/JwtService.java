@@ -36,7 +36,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis())) // Set ngày bắt đầu tạo token
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 48)) // Token hiệu lực trong thời gian
+                .setExpiration(new Date(System.currentTimeMillis() + 4000 * 60 * 48)) // Token hiệu lực trong thời gian
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact(); //Tạo và trả về token
     }

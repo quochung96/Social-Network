@@ -28,7 +28,7 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getPostById(id));
     }
     @PostMapping("/{userId}/posts")
-    public ResponseEntity createPost(@PathVariable Long userId, @RequestBody Posts post){
+    public ResponseEntity createPost(@PathVariable Long userId, @RequestBody Posts post) throws Exception{
         return ResponseEntity.ok().body(postService.createPost(userId, post));
     }
     @PutMapping("/posts/{id}")

@@ -33,8 +33,8 @@ const EditProfile = ({user, userProfile}) => {
   const [open, setOpen] = useState(false);
   const {request} = useSelector((state) => state.requests);
   if(!request) return 'no request';
-  
-  const userRequest = request.filter(rs => Number(rs.receiveUser.user_id) === Number(id));
+
+  const userRequest = request.filter(rs => Number(rs.receiveUser.user_id) === Number(id)); // PASS TEST CASE ADD NEW FRIEN
   const handleClickOpen = () => {
     setOpen(true);
   }

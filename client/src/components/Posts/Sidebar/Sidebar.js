@@ -74,18 +74,7 @@ const Sidebar = ({ mode, setMode, user, setUser, userProfile }) => {
             >
               {user?.result.given_name || userProfile?.userName || "No Name"}
             </Typography>
-            <Typography
-              variant="h6"
-              fontSize="15px"
-              fontWeight="300"
-              fontFamily="Helvetica"
-              color="grey"
-            >
-              {Number(userProfile?.follower) > 1000
-                ? String(Number(userProfile?.follower / 1000)).replace(".", ",")
-                : userProfile?.follower || 0}{" "}
-              bạn bè
-            </Typography>
+
             <img alt="icon" className={classes.lineBreak} src={lineBreak} />
           </Box>
           <List>

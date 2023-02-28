@@ -3,7 +3,7 @@ package com.example.memories.service.implement;
 import com.example.memories.entity.NotificationsEntity;
 import com.example.memories.model.Notifications;
 import com.example.memories.repository.repositoryJPA.NotificationsRepository;
-import com.example.memories.repository.repositoryPaging.PostsRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.NotificationService;
 import jakarta.transaction.Transactional;

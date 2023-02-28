@@ -6,7 +6,7 @@ import EditProfile from './EditProfile/EditProfile';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
 import { getPostByUserId } from '../../actions/posts';
-import {getRequestByUserId} from '../../actions/friendRequest';
+import {getRequestBySendUserId} from '../../actions/friendRequest';
 import FeedProfile from './FeedProfile';
 import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -23,7 +23,7 @@ const Profile = ({user,userProfile}) => {
   });
   useEffect(() => {
     dispatch(getUser(id));
-    dispatch(getRequestByUserId(user?.user_id));
+    dispatch(getRequestBySendUserId(user.user_id));
     dispatch(getPostByUserId(id));
   },[dispatch, id, user?.user_id,location]);
 
@@ -34,7 +34,7 @@ const Profile = ({user,userProfile}) => {
         <Stack direction = 'row' justifyContent = "space-between">
           <Sidebar setMode = {setMode} mode = {mode} user = {user} userProfile = {userProfile} />
           <Box display = 'flex' flexDirection = 'column' p = {1} flex = {4}>
-            <EditProfile user = {user} id = {id} userProfile = {userProfile} />
+            <EditProfile user = {user} userProfile = {userProfile} />
             <FeedProfile user = {user} userProfile = {userProfile} />
           </Box>
         </Stack>

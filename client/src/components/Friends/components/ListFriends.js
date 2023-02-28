@@ -7,7 +7,7 @@ const ListFriends = ({userRequest}) => {
   const openProfile = () => navigate(`/profile/${userRequest.receiveUser.user_id}`);
   return (
     <>
-    {userRequest?.isAccepted === 1 ? (
+    {userRequest?.isAccepted ? (
         <ButtonBase onClick = {openProfile}>
             <Box display = 'flex' flexDirection = 'row' marginBottom = '10px' gap = '14px' borderRadius = '10px' minWidth = '600px' border = '0.5px solid #A2A2A2'>
                 <Avatar alt = 'avatar-img' src = {userRequest?.receiveUser.avatar_url} sx = {{width: 60, height: 60, margin: '6px 6px 6px'}} />

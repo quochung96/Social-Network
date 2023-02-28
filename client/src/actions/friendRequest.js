@@ -1,11 +1,11 @@
-import { START_LOADING, END_LOADING,FETCH_REQUEST_USER,CREATE, UPDATE, DELETE } from "../constants/actionTypes";
+import { START_LOADING, END_LOADING,FETCH_ALL_REQUEST,FETCH_REQUEST_USER,CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 import * as api from '../api/index.js';
 
-export const getRequestByUserId = (userId) => async(dispatch) => {
+export const getRequestBySendUserId = (userId) => async(dispatch) => {
     try{
       dispatch({type: START_LOADING});
   
-      const { data } = await api.fetchUserFriendRequest(userId);
+      const { data } = await api.fetchSendUserFriendRequest(userId);
   
       dispatch({ type: FETCH_REQUEST_USER, payload: {request: data}});
       dispatch({type: END_LOADING});
@@ -13,6 +13,30 @@ export const getRequestByUserId = (userId) => async(dispatch) => {
     }catch(e){
       console.log(e);
     }
+}
+export const getRequests = () => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const {data } = await api.fetchAllFriendRequests();
+
+    dispatch({ type: FETCH_ALL_REQUEST, payload: {data}});
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getRequestByReceiveUserId = (userId) => async(dispatch) => {
+  try{
+    dispatch({type: START_LOADING});
+
+    const { data } = await api.fetchReceiveUserFriendRequest(userId);
+
+    dispatch({ type: FETCH_REQUEST_USER, payload: {request: data}});
+    dispatch({type: END_LOADING});
+
+  }catch(e){
+    console.log(e);
+  }
 }
 export const acceptUserFriendRequest = (id) => async(dispatch) => {
     try{

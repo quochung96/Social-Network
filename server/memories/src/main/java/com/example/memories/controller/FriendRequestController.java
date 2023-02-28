@@ -21,9 +21,13 @@ public class FriendRequestController {
         return ResponseEntity.ok().body(friendRequestService.getFriendRequestById(id));
     }
 
-    @GetMapping("/user/{userid}/friendrequests")
-    public ResponseEntity getUserFriendRequest(@PathVariable long userid){
-        return ResponseEntity.ok().body(friendRequestService.getFriendRequestsByUserId(userid));
+    @GetMapping("/user/{userid}/friendrequests/sendUserId")
+    public ResponseEntity getSendUserFriendRequest(@PathVariable long userid){
+        return ResponseEntity.ok().body(friendRequestService.getFriendRequestsBySendUserId(userid));
+    }
+    @GetMapping("/user/{userid}/friendrequests/receiveUserId")
+    public ResponseEntity getReceiveUserFriendRequest(@PathVariable long userid){
+        return ResponseEntity.ok().body(friendRequestService.getFriendRequestsByReceiveUserId(userid));
     }
     @PostMapping("user/{userId}/friendrequests")
     public ResponseEntity createFriendRequest(@PathVariable long userId,@RequestBody FriendRequests friendRequests){

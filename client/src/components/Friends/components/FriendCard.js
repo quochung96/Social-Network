@@ -1,13 +1,15 @@
-import { Card, CardMedia,Button, Typography } from '@mui/material';
+import { Card, CardMedia,Button, Typography, ButtonBase } from '@mui/material';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Avatar from '../../../assets/icons/user.png';
 import { acceptUserFriendRequest } from '../../../actions/friendRequest';
 import { deleteFriendRequest } from '../../../actions/friendRequest';
-const FriendCard = ({userRequest}) => {
+import { useNavigate } from 'react-router-dom';
+const FriendCard = ({user,userRequest}) => {
   const [formData] = useState({
     reqId: userRequest?.reqId
   });
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleAcceptRequest = () => {
     dispatch(acceptUserFriendRequest(formData.reqId));
@@ -19,16 +21,18 @@ const FriendCard = ({userRequest}) => {
   }
   return (
     <>
-    {!userRequest?.isAccepted ? (
+    {!userRequest?.isAccepted && userRequest?.receiveUser.user_id === user?.user_id  ? (
+        <ButtonBase onClick = {() => navigate(`/profile/${userRequest.sendUser.user_id}`)}>
         <Card sx = {{maxWidth: 200, borderRadius: 5,margin: '10px 1rem 2px'}}>
             <CardMedia 
                 sx = {{height: 160, borderTopLeftRadius: '10px', borderTopRightRadius: '10px'}}
-                image = {userRequest?.receiveUser.avatar_url || Avatar}
+                image = {userRequest?.sendUser.avatar_url || Avatar}
             />
-            <Typography variant="h7" fontFamily="Helvetica" paddingLeft = '2px'>{userRequest?.receiveUser.userName}</Typography>
+            <Typography variant="h7" fontFamily="Helvetica" paddingLeft = '2px'>{userRequest?.sendUser.userName}</Typography>
             <Button variant = "contained" fullWidth onClick = {handleAcceptRequest} sx = {{borderRadius: 20, marginTop: '20px'}}>Confirm</Button>
             <Button variant = "outlined" fullWidth onClick = {handleDeleteRequest} sx = {{borderRadius: 20, marginTop: '5px'}}>Delete</Button>
         </Card>
+        </ButtonBase>
     ) : null
     }
     </>

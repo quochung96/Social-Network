@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Box,ButtonBase,IconButton, Typography, Button, Menu, MenuItem} from '@mui/material';
+import React, {useState,useEffect} from 'react';
+import {Box,ButtonBase,Dialog,IconButton, Typography, Button} from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import useStyles from './styles';
 import ProfileCard from '../../widgets/ProfileCard';
@@ -7,7 +7,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import GroupIcon from '@mui/icons-material/Group';
 import {useDispatch} from 'react-redux';
-import { acceptFriendRequest, createFriendRequest } from '../../../actions/friendRequest';
+import { acceptUserFriendRequest, createFriendRequest } from '../../../actions/friendRequest';
 import { deleteFriendRequest } from '../../../api';
 
 const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
@@ -15,23 +15,25 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
     const dispatch = useDispatch();
     const [formData] = useState({
         sendUser: {
-            user_id: user.user_id
+            user_id: user?.user_id
         }
     });
-    const [anchorElUser, setAnchorElUser] = useState(null);
-
-    const handleOpenResponse = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    useEffect(() => {
+        console.log(userRequest);
+    })
+    const [open, setOpen] = useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+      }
+      const handleClose = () => {
+        setOpen(false);
+      }
     const handleCreateFriend = () => {
         dispatch(createFriendRequest(userProfile.user_id,formData));
         window.location.reload(false);
     }
     const handleAcceptRequest = () => {
-        dispatch(acceptFriendRequest(userRequest[0].reqId));
+        dispatch(acceptUserFriendRequest(userRequest[0].reqId));
         window.location.reload(false);
     }
     const handleDeleteRequest = () => {
@@ -78,62 +80,35 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
                 : 
                 (userRequest[0].isAccepted === 0 ?
                     <>
-                        <ButtonBase onClick = {handleOpenResponse} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
-                            <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-                                <PersonAddAlt1Icon fontSize = "large"/>
-                                <Typography fontWeight = 'bold'>Respond</Typography>
-                            </Box>
-                        </ButtonBase>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              keepMounted
-                              transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              open={Boolean(anchorElUser)}
-                              onClose={handleCloseUserMenu}
-                        >
-                            <MenuItem>
+                        {userRequest[0].receiveUser.user_id === user?.user_id ? <>
+                            <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                                <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                                    <PersonAddAlt1Icon fontSize = "large"/>
+                                    <Typography fontWeight = 'bold'>Respond</Typography>
+                                </Box>
+                            </ButtonBase>
+                            <Dialog open = {open} onClose = {handleClose}>
                                 <Button onClick = {handleAcceptRequest} variant = "text">Confirm</Button>
-                            </MenuItem>
-                            <MenuItem>
                                 <Button onClick = {handleDeleteRequest} variant = "text">Delete Request</Button>
-                            </MenuItem>
-                        </Menu>
+                            </Dialog>
+                        </> :  <ButtonBase onClick = {handleDeleteRequest} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                                <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                                    <PersonAddAlt1Icon fontSize = "large"/>
+                                    <Typography fontWeight = 'bold'>Cancel</Typography>
+                                </Box>
+                            </ButtonBase>}
                     </>
                  : 
                  <>
-                    <ButtonBase onClick = {handleOpenResponse} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                    <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
                     <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
                         <GroupIcon fontSize = "large"/>
                         <Typography fontWeight = 'bold'>Friend</Typography>
                     </Box>
                     </ButtonBase>
-                    <Menu
-                            sx={{ mt: "45px" }}
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              keepMounted
-                              transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              open={Boolean(anchorElUser)}
-                              onClose={handleCloseUserMenu}
-                        >
-                             <MenuItem>
-                                <Button onClick = {handleDeleteRequest} variant = "text">Unfriend</Button>
-                             </MenuItem>
-                    </Menu>
+                    <Dialog open = {open} onClose = {handleClose}>
+                        <Button onClick = {handleDeleteRequest} variant = "text">Unfriend</Button>
+                    </Dialog>
                 </>
                 )
                 }

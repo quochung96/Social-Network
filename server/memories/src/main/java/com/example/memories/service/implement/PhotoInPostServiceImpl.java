@@ -3,7 +3,7 @@ package com.example.memories.service.implement;
 import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.model.PhotoInPosts;
 import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
-import com.example.memories.repository.repositoryPaging.PostsRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.PhotoInPostService;
 import com.example.memories.utils.FileUploadUtil;

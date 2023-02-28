@@ -20,17 +20,17 @@ public class PostsEntity {
     @Column(name = "POST_ID", nullable = false)
     private Long postId;
 
-    @Column(name="POST_CONTENT")
+    @Column(name="POST_CONTENT", nullable = false)
     private String content;
 
     @Column(name="PERMISSION")
-    private long permission;
+    private String permission;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="USER_ID")
     private UsersEntity user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PHOTO_ID")
     private PhotoInPostEntity photoInPost;
 

@@ -7,7 +7,8 @@ import java.util.List;
 public interface FriendRequestService {
     List<FriendRequests> getAllFriendRequests();
     FriendRequests getFriendRequestById(long id);
-    List<FriendRequests> getFriendRequestsByUserId(long userId);
+    List<FriendRequests> getFriendRequestsBySendUserId(long userId);
+    List<FriendRequests> getFriendRequestsByReceiveUserId(long userId);
     FriendRequests createFriendRequest(long userId, FriendRequests request);
     FriendRequests updateFriendRequest(long id, FriendRequests request);
     FriendRequests deleteFriendRequest(long id);

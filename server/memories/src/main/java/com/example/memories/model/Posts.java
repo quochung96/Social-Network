@@ -18,7 +18,7 @@ public class Posts {
 
     private String content;
 
-    private long permission;
+    private String permission;
 
     private UsersEntity user;
     private Date createAt;

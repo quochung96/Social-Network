@@ -55,9 +55,27 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     @Override
-    public List<FriendRequests> getFriendRequestsByUserId(long userId) {
+    public List<FriendRequests> getFriendRequestsBySendUserId(long userId) {
         UsersEntity user = usersRepository.findById(userId).get();
         List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllBySendUser(user).get();
+
+        List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
+                data -> new FriendRequests(
+                        data.getReqId(),
+                        data.getSendUser(),
+                        data.getReceiveUser(),
+                        data.getIsAccepted(),
+                        data.getIsArchived(),
+                        data.getCreateAt(),
+                        data.getUpdateAt()
+                )
+        ).collect(Collectors.toList());
+        return friendRequests;
+    }
+    @Override
+    public List<FriendRequests> getFriendRequestsByReceiveUserId(long userId) {
+        UsersEntity user = usersRepository.findById(userId).get();
+        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllByReceiveUser(user).get();
 
         List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
                 data -> new FriendRequests(

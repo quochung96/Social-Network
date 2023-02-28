@@ -3,10 +3,9 @@ package com.example.memories.service.implement;
 import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.entity.PostsEntity;
 import com.example.memories.exeption.PostNotFoundException;
-import com.example.memories.helper.PagingAndSortingHelper;
 import com.example.memories.model.Posts;
 import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
-import com.example.memories.repository.repositoryPaging.PostsRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.PostService;
 import jakarta.transaction.Transactional;
@@ -19,8 +18,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
-import static com.example.memories.constant.SpringBootApplicationConstant.POSTS_PER_PAGE;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -86,21 +83,27 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Posts createPost(long userID, Posts post) {
-        PostsEntity newPost = new PostsEntity();
-        //When create a post have an image save to the database
-        PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
-        photoInPostRepository.save(photoInPostEntity);
-        post.setPhotoInPost(photoInPostEntity);
-
-        post.setCreateAt(new Date());
-        post.setUpdateAt(new Date());
-        if(userRepository.findById(userID).isPresent()) {
-            post.setUser(userRepository.findById(userID).get());
+    public Posts createPost(long userID, Posts post) throws Exception {
+        try {
+            PostsEntity newPost = new PostsEntity();
+            //When create a post have an image save to the database
+            if (post.getPhotoInPost().getPhotoUrl() != null) {
+                PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
+                photoInPostRepository.save(photoInPostEntity);
+                post.setPhotoInPost(photoInPostEntity);
+            }
+            post.setCreateAt(new Date());
+            post.setUpdateAt(new Date());
+            if (userRepository.findById(userID).isPresent()) {
+                post.setUser(userRepository.findById(userID).get());
+            }
+            BeanUtils.copyProperties(post, newPost);
+            postsRepository.save(newPost);
+            return post;
         }
-        BeanUtils.copyProperties(post, newPost);
-        postsRepository.save(newPost);
-        return post;
+        catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override

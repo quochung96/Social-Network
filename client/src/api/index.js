@@ -11,7 +11,9 @@ API.interceptors.request.use((req) => {
 });
 
 //FriendRequests
-export const fetchUserFriendRequest = (userId) => API.get(`/user/${userId}/friendrequests`);
+export const fetchSendUserFriendRequest = (userId) => API.get(`/user/${userId}/friendrequests/sendUserId`);
+export const fetchReceiveUserFriendRequest = (userId) => API.get(`/user/${userId}/friendrequests/receiveUserId`);
+export const fetchAllFriendRequests = () => API.get(`/friendrequests`)
 export const acceptUserFriendRequest = (id) => API.put(`/friendrequest/${id}/accept`); 
 export const deleteFriendRequest = (id) => API.delete(`/friendrequest/${id}`);
 export const createFriendRequest = (userId,formData) => API.post(`user/${userId}/friendrequests`,formData);

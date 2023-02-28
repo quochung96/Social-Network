@@ -37,6 +37,7 @@ const AddPost = ({user,userProfile}) => {
     console.log(formPost);
 
     dispatch(createPost(user?.user_id,formPost)); //OK
+    window.location.reload(false);
   }
   const handleClickOpen = () => {
     setOpen(true);
@@ -59,10 +60,10 @@ const AddPost = ({user,userProfile}) => {
             </StyledInputBase>
             </Box>
             <div>
-              <Dialog open = {open} onClose = {handleClose}>
+              <Dialog open = {open} onClose = {handleClose} sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
                   Create post
-                  <IconButton onClick = {handleClose} sx = {{position: 'absolute', right: '20px'}}>
+                  <IconButton onClick = {handleClose} >
                     <CancelOutlinedIcon fontSize = "large"/>
                   </IconButton>
                 </DialogTitle>
