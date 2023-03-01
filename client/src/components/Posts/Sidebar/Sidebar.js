@@ -64,14 +64,6 @@ const Sidebar = ({ mode, setMode, user, setUser, userProfile }) => {
               fontWeight="400"
               fontFamily="Helvetica"
             >
-              {user?.result.name}
-            </Typography>
-            <Typography
-              variant="h6"
-              fontSize="17px"
-              fontWeight="300"
-              fontFamily="Helvetica"
-            >
               {user?.result.given_name || userProfile?.userName || "No Name"}
             </Typography>
 

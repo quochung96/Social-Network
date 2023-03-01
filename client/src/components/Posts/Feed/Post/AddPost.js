@@ -46,7 +46,7 @@ const AddPost = ({user,userProfile}) => {
     setOpen(false);
   }
   return (
-    <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '90%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
+    <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '86%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
         <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {openProfile}>
               <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url}/>

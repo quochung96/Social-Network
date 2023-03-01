@@ -13,12 +13,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class Comments {
     private Long cmtId;
-
     private String cmtContent;
-
-    private UsersEntity usersId;
+    private UsersEntity users;
     private Long replyTo;
-    private PostsEntity postId;
+    private PostsEntity post;
     private Date createAt;
     private Date updateAt;
     private int isArchieved;

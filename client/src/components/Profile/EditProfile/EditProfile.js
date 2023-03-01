@@ -112,7 +112,7 @@ const EditProfile = ({user, userProfile}) => {
                     <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary = "Name" secondary = "Full Name"/>
-                <ListItemText primary = {<Typography noWrap>{user?.result.name || userProfile?.userName || 'Select your username'}</Typography>} />
+                <ListItemText primary = {<Typography noWrap>{userProfile?.userName || user?.result.name || 'Select your username'}</Typography>} />
             </ListItem>
             <ListItem>
                 <ListItemIcon>

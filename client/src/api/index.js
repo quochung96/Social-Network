@@ -25,15 +25,18 @@ export const fetchUser = (id) => API.get(`/users/${id}`); // OK
 export const deleteUser = (id) => API.delete(`/users/${id}`); // OK
 export const updateUser = (user,id) => API.put(`/users/${id}`,user); // OK
 //Posts
-export const fetchPostByUserId = (userId) => API.get(`/${userId}/posts`);
+export const fetchPostByUserId = (userId) => API.get(`/${userId}/posts`); //OK
 export const fetchPost = (id) => API.get(`/posts/${id}`); // OK
 export const fetchPosts = () => API.get("/posts"); // OK
-// export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`); // To-do
-export const createPost = (user_id, newPost) => API.post(`/${user_id}/posts`, newPost); // OK
+//export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`); // To-do
+export const createPost = (user_id, newPost) => API.post(`/${user_id}/posts`, newPost); // OK 
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`); // To-do
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`, {value}); // To-do
-export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost); // OK
+export const updatePost = (id, updatedPost) => API.put(`/posts/${id}`, updatedPost); // OK
 export const deletePost = (id) => API.delete(`/posts/${id}`); // OK
+
+//Comment
+export const fetchCommentByPostId = (postId) => API.get(`/post/${postId}/comments`);
 
 //Chat
 

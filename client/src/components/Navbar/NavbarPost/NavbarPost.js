@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   AppBar,
   Typography,
@@ -27,8 +27,9 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import * as actionType from "../../../constants/actionTypes";
+import {getRequestByReceiveUserId} from '../../../actions/friendRequest';
 
 const NavbarPost = ({ user, setUser, userProfile }) => {
   const navigate = useNavigate();
@@ -57,6 +58,11 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
     navigate("/auth");
     setUser(null);
   };
+  const {request} = useSelector((state) => state.requests);
+  useEffect(() => {
+    dispatch(getRequestByReceiveUserId(user?.user_id));
+  },[dispatch,user?.user_id]);
+  if(!request) {return "No requests";}
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -106,7 +112,7 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
               </Badge>
             </IconButton>
             <IconButton onClick = {() => navigate("/friendRequest")}>
-              <Badge badgeContent={2} color="error">
+              <Badge badgeContent={request.filter((rq) => rq.isAccepted === 0).length} color="error">
                 <PeopleAltIcon fontSize="medium" />
               </Badge>
             </IconButton>

@@ -114,8 +114,12 @@ public class PostServiceImpl implements PostService {
 
 //        newPost.setPermission(post.getPermission());
             newPost.setUpdateAt(new Date());
+            if(post.getPhotoInPost().getPhotoUrl() != null){
+                PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
+                photoInPostRepository.save(photoInPostEntity);
+                newPost.setPhotoInPost(photoInPostEntity);
+            }
             postsRepository.save(newPost);
-
             Posts updatePostResponse = new Posts();
             BeanUtils.copyProperties(newPost, updatePostResponse);
             return updatePostResponse;

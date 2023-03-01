@@ -3,6 +3,8 @@ package com.example.memories.service.implement;
 import com.example.memories.entity.CommentsEntity;
 import com.example.memories.model.Comments;
 import com.example.memories.repository.repositoryJPA.CommentsRepository;
+import com.example.memories.repository.repositoryJPA.PostsRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.CommentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,28 +21,34 @@ import java.util.stream.Collectors;
 @Transactional(rollbackOn = Exception.class)
 public class CommentServiceImpl implements CommentService {
     @Autowired
-    CommentsRepository commentsRepository;
+    private CommentsRepository commentsRepository;
+    @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
+    private PostsRepository postsRepository;
     @Override
-    public Comments createComment(Comments comments){
+    public Comments createComment(long userId,Comments comments){
         CommentsEntity commentsEntity = new CommentsEntity();
-        commentsEntity.setCreateAt(new Date());
-        commentsEntity.setUpdateAt(new Date());
+        comments.setIsArchieved(0);
+        comments.setUsers(usersRepository.findById(userId).get());
+        comments.setCreateAt(new Date());
+        comments.setUpdateAt(new Date());
         BeanUtils.copyProperties(comments,commentsEntity);
         commentsRepository.save(commentsEntity);
         return comments;
     }
 
     @Override
-    public List<Comments> getAllComments() {
-        List<CommentsEntity> commentsEntities = commentsRepository.findAll();
+    public List<Comments> getAllCommentsPost(long postId) {
+        List<CommentsEntity> commentsEntities = commentsRepository.findAllByPost(postsRepository.findById(postId).get());
 
         List<Comments> comments = commentsEntities.stream().map(
                 cmt -> new Comments(
                         cmt.getCmtId(),
                         cmt.getCmtContent(),
-                        cmt.getUsersId(),
+                        cmt.getUsers(),
                         cmt.getReplyTo(),
-                        cmt.getPostId(),
+                        cmt.getPost(),
                         cmt.getCreateAt(),
                         cmt.getUpdateAt(),
                         cmt.getIsArchieved()

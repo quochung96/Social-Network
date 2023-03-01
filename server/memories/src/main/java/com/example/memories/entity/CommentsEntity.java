@@ -32,15 +32,15 @@ public class CommentsEntity implements Serializable {
     @Column(name = "CMT_CONTENT", nullable = false, length = 255)
     private String cmtContent;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USERS_ID")
-    private UsersEntity usersId;
+    @JoinColumn(name = "USER_ID")
+    private UsersEntity users;
 
     @Column(name = "REPLY_TO")
     private Long replyTo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "POST_ID")
-    private PostsEntity postId;
+    private PostsEntity post;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT",nullable = true)
@@ -51,7 +51,6 @@ public class CommentsEntity implements Serializable {
     private Date updateAt;
 
     @Column(name = "IS_ARCHIEVED", nullable = false)
-    @Size(min = 1, message = "Temp delete must contain at least 1 operation")
     private int isArchieved;
 
 }

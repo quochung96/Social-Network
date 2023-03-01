@@ -5,16 +5,18 @@ import {ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,
 import {useNavigate} from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import moment from 'moment';
+import {useDispatch} from 'react-redux';
 import FileBase from 'react-file-base64';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PublicIcon from '@mui/icons-material/Public';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { updatePost } from '../../../../actions/posts';
 const Post = ({post,user,userProfile}) => {
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
   const [isShowImage, setIsShowImage] = useState(false);
   const [formPost, setFormPost] = useState({content: ''});
   const [img, setImg] = useState(null);
-  
   const [open, setOpen] = useState(false);
   const handleShowImage = () => setIsShowImage(true);
   const handleCloseImage = () => {
@@ -44,12 +46,14 @@ const Post = ({post,user,userProfile}) => {
   };
   const handleEditPost = (e) => {
     e.preventDefault();
-    
+    console.log(formPost);
+    dispatch(updatePost(post.postId, formPost));
+    window.location.reload(false);
   }
   const openDetailPost = () => navigate(`/posts/${post.postId}`);
   
   return (
-    <Card sx={{ margin: 4, borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
+    <Card sx={{ margin: 4,width: '1000px', borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
       <CardHeader
         avatar={
           <IconButton onClick = {handleOpenProfile}>
@@ -124,7 +128,7 @@ const Post = ({post,user,userProfile}) => {
       {post.photoInPost && 
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
-              sx = {{width: '100%',minWidth: 1040, height: 1200, objectFit: 'cover'}}
+              sx = {{width: '100%',minWidth: 1000, height: 800, objectFit: 'cover'}}
               component="img"
               image = {post?.photoInPost.photoUrl}
               alt="img-post"

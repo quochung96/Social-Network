@@ -26,6 +26,7 @@ export default makeStyles((theme) => ({
     header_info: {
         display: 'flex',
         alignItems: 'flex-end',
+        cursor: 'pointer',
         '& .MuiAvatar-root': {
             width: '60px',
             height: '60px',
@@ -36,7 +37,7 @@ export default makeStyles((theme) => ({
             height: '50px',
             margin: '0px 25px',
             backgroundColor: 'whitesmoke',
-            color: '#000'
+            borderRadius: 60
         }
     },
     userName: {

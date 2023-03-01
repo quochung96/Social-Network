@@ -2,12 +2,12 @@ import React,{useEffect} from 'react'
 import ListFriends from '../components/ListFriends';
 import {useSelector} from 'react-redux';
 import { Box,Grid, Container, Skeleton } from '@mui/material';
-const ListFriendFeeds = () => {
-  const {isLoading,requests} = useSelector((state) => state.requests);
+const ListFriendFeeds = ({user}) => {
+  const {isLoading,request} = useSelector((state) => state.requests);
   useEffect(() => {
-    console.log(requests);
+    console.log(request);
   });
-  if(isLoading && !requests) return 'No friends found';
+  if(isLoading && !request) return 'No friends found';
   return (
     isLoading ? (
         <Container >
@@ -24,7 +24,7 @@ const ListFriendFeeds = () => {
       ) :(
     <Box flex = {3} p={1} sx = {{width: '100%',minWidth: 1200, height: 'auto', background: 'white', marginLeft: '20px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', borderRadius: '10px'}}>
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2 }}>
-          {requests.map((userRequest) => (
+          {request.map((userRequest) => (
             <Grid key={userRequest.reqId} item xs={6}>
               <ListFriends userRequest={userRequest}/>
           </Grid>
