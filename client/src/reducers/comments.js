@@ -13,7 +13,7 @@ const commentReducer = (state = {isLoading: true, comments: []}, action) => {
         case FETCH_COMMENT_POST:
             return {
                 ...state,
-                requests: action.payload.data
+                comments: action.payload.data
             };
         case CREATE:
             return {

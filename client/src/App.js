@@ -23,7 +23,7 @@ const App = () => {
         <BrowserRouter>
           <Container maxWidth = "xl">
             <Routes>
-              <Route path = "/" element = {<Home/>} />
+              <Route path = "/" element = {!user ? <Home /> : <Navigate to = "/posts"/>} />
               <Route path = "/profile/:id" element = {<Profile user = {user} userProfile = {userProfile} />}/>
               <Route path = "/forgotPassword" element = {<ForgotPassword />}/>
               <Route path = "/message" element = {<Message />}/>

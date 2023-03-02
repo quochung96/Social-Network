@@ -1,7 +1,10 @@
 import React,{useState} from 'react';
 import {Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
 import CommentIcon from '@mui/icons-material/Comment';
-import {ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,Checkbox,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {Paper,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,Checkbox,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import moment from 'moment';
@@ -11,13 +14,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PublicIcon from '@mui/icons-material/Public';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { updatePost } from '../../../../actions/posts';
+import lineBreak from '../../../../assets/icons/Line 2.png';
 const Post = ({post,user,userProfile}) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
   const [isShowImage, setIsShowImage] = useState(false);
   const [formPost, setFormPost] = useState({content: ''});
   const [img, setImg] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [openAudience, setOpenAudience] = useState(false);
+  const [openRecycleBin, setOpenRecycleBin] = useState(false);
   const handleShowImage = () => setIsShowImage(true);
   const handleCloseImage = () => {
     setIsShowImage(false)
@@ -29,11 +35,35 @@ const Post = ({post,user,userProfile}) => {
   }
   const navigate = useNavigate();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  function handleClickOpen(id) {
+    switch (id) {
+      case 1:
+        setOpenEdit(true);   
+        break;
+      case 2:
+        setOpenAudience(true);
+        break;
+      case 3:
+        setOpenRecycleBin(true);
+        break;
+      default:
+        break;
+    }
   }
-  const handleClose = () => {
-    setOpen(false);
+  function handleClose(id){
+    switch (id) {
+      case 1:
+        setOpenEdit(false);   
+        break;
+      case 2:
+        setOpenAudience(false);
+        break;
+      case 3:
+        setOpenRecycleBin(false);
+        break;
+      default:
+        break;
+    }
   }
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -53,7 +83,7 @@ const Post = ({post,user,userProfile}) => {
   const openDetailPost = () => navigate(`/posts/${post.postId}`);
   
   return (
-    <Card sx={{ margin: 4,width: '1000px', borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
+    <Card sx={{ margin: 4,width: '800px', borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
       <CardHeader
         avatar={
           <IconButton onClick = {handleOpenProfile}>
@@ -63,13 +93,52 @@ const Post = ({post,user,userProfile}) => {
         action={
           (user?.user_id === post?.user.user_id &&
           <>
-            <IconButton aria-label="settings" onClick={handleClickOpen}>
+            <IconButton onClick={handleExpandClick}>
               <MoreVert />
             </IconButton>
-            <Dialog open = {open} onClose = {handleClose}>
-            <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <Paper sx = {{marginLeft: -30,display: 'flex', flexDirection: 'column',alignItems: 'start', gap: '5px'}}>
+                  <ButtonBase onClick = {() => handleClickOpen(2)}>
+                    <Box display = 'flex' flexDirection = 'row' gap = '5px'>
+                      <PublicIcon />
+                      <Typography variant = 'text.secondary' fontWeight = 'bold'>Edit audience</Typography>
+                    </Box>
+                  </ButtonBase>
+                  <ButtonBase onClick = {() => handleClickOpen(1)}>
+                    <Box display = 'flex' flexDirection = 'row' gap = '5px'>
+                      <EditOutlinedIcon />
+                      <Typography variant = 'text.secondary' fontWeight = 'bold'>Edit Post</Typography>          
+                    </Box>
+                  </ButtonBase>
+                  <img alt = 'icon' src = {lineBreak} width = '200px'/>
+                  <ButtonBase onClick = {null}>
+                    <Box display = 'flex' flexDirection = 'row' gap = '5px'>
+                      <ArchiveOutlinedIcon />
+                      <Typography variant = 'text.secondary' fontWeight = 'bold'>Move to archive</Typography>     
+                    </Box>
+                  </ButtonBase>
+                  <ButtonBase onClick = {() => handleClickOpen(3)}>
+                    <Box display = 'flex' flexDirection = 'row' gap = '5px'> 
+                      <DeleteOutlinedIcon />
+                      <Typography variant = 'text.secondary' fontWeight = 'bold'>Move to Recycle Bin</Typography>
+                    </Box>
+                  </ButtonBase>
+                </Paper>
+            </Collapse>
+            {/* Open Edit Audience*/}
+            <Dialog open = {openAudience} onClose = {() => handleClose(2)}>
+              <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
+                  Edit Audience
+                  <IconButton onClick = {() => handleClose(2)} >
+                    <CancelOutlinedIcon fontSize = "large"/>
+                  </IconButton>
+              </DialogTitle>
+            </Dialog>
+            {/* Open Edit Post*/}
+            <Dialog open = {openEdit} onClose = {() => handleClose(1)}>
+                <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
                   Edit Post
-                  <IconButton onClick = {handleClose} >
+                  <IconButton onClick = {() => handleClose(1)} >
                     <CancelOutlinedIcon fontSize = "large"/>
                   </IconButton>
                 </DialogTitle>
@@ -85,9 +154,9 @@ const Post = ({post,user,userProfile}) => {
                           <div>Public</div>
                           <KeyboardArrowDownIcon fontSize = 'small'/>
                         </Box>
-                      </Box>
+                      </Box>u
                     </Box>
-                    <TextField name = "content" onChange={handleChange} label = "What's on your mind" fullWidth/>
+                    <TextField name = "content" onChange={handleChange} multiline label = "What's on your mind" fullWidth/>
                     {isShowImage && 
                       <Box display='flex' justifyContent = 'center' alignItems='center' width= "500px" height = "auto" minHeight = "300px" sx = {{border: '2px solid', borderRadius: '20px', borderStyle: 'groove'}}>
                         <IconButton onClick = {handleCloseImage} sx = {{position: 'absolute', right: '40px', bottom: '380px'}}>
@@ -110,6 +179,15 @@ const Post = ({post,user,userProfile}) => {
                 <Button fullWidth variant='contained' onClick = {handleEditPost}>POST</Button>
                 </DialogActions>
             </Dialog>
+            {/* Open Recycle Bin*/}
+            <Dialog open = {openRecycleBin} onClose = {() => handleClose(3)}>
+              <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
+                  Move to your recycle bin?
+                  <IconButton onClick = {() => handleClose(3)} >
+                    <CancelOutlinedIcon fontSize = "large"/>
+                  </IconButton>
+              </DialogTitle>
+            </Dialog>
           </>
           )
         }
@@ -128,7 +206,7 @@ const Post = ({post,user,userProfile}) => {
       {post.photoInPost && 
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
-              sx = {{width: '100%',minWidth: 1000, height: 800, objectFit: 'cover'}}
+              sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
               component="img"
               image = {post?.photoInPost.photoUrl}
               alt="img-post"
@@ -142,7 +220,7 @@ const Post = ({post,user,userProfile}) => {
             checkedIcon={<Favorite sx={{ color: "red" }} />}
           />
         </IconButton>
-        <IconButton onClick = {handleExpandClick}>
+        <IconButton onClick = {null}>
           <CommentIcon />
         </IconButton>
         <IconButton aria-label="share">

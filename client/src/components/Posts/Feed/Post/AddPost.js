@@ -46,7 +46,7 @@ const AddPost = ({user,userProfile}) => {
     setOpen(false);
   }
   return (
-    <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '86%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
+    <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '70%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
         <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {openProfile}>
               <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url}/>
@@ -81,7 +81,7 @@ const AddPost = ({user,userProfile}) => {
                         </Box>
                       </Box>
                     </Box>
-                    <TextField name = "content" onChange={handleChange} label = "What's on your mind" fullWidth/>
+                    <TextField name = "content" onChange={handleChange} multiline label = "What's on your mind" fullWidth/>
                     {isShowImage && 
                       <Box display='flex' justifyContent = 'center' alignItems='center' width= "500px" height = "auto" minHeight = "300px" sx = {{border: '2px solid', borderRadius: '20px', borderStyle: 'groove'}}>
                         <IconButton onClick = {handleCloseImage} sx = {{position: 'absolute', right: '40px', bottom: '380px'}}>

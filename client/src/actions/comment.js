@@ -7,7 +7,7 @@ export const getCommentByPostId = (postId) => async(dispatch) => {
   
       const { data } = await api.fetchCommentByPostId(postId);
   
-      dispatch({ type: FETCH_COMMENT_POST, payload: {request: data}});
+      dispatch({ type: FETCH_COMMENT_POST, payload: { data}});
       dispatch({type: END_LOADING});
   
     }catch(e){

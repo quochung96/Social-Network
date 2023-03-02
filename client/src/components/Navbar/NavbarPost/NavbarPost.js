@@ -62,6 +62,9 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
   useEffect(() => {
     dispatch(getRequestByReceiveUserId(user?.user_id));
   },[dispatch,user?.user_id]);
+  useEffect(() => {
+    console.log(request);
+  })
   if(!request) {return "No requests";}
 
   return (

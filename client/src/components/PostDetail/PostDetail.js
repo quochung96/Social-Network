@@ -1,29 +1,45 @@
 import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material';
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Container, IconButton, Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Container, IconButton, Paper, Typography,Box,TextField } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import moment from 'moment';
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPost } from '../../actions/posts';
+import { getCommentByPostId } from '../../actions/comment';
+import { getUser } from '../../actions/users';
 import NavbarPost from '../Navbar/NavbarPost/NavbarPost';
 import lineBreak from '../../assets/icons/Line 2.png';
+import Comment from './Comment/Comment';
+import SendIcon from '@mui/icons-material/Send';
 const PostDetail = ({user,setUser,userProfile}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {id} = useParams();
+  const [formComment, setFormComment] = useState({content: ''})
   const handleOpenProfile = () => {
     navigate(`/profile/${userProfile.user_id}}`)
   }
+  const handleChange = (e) => {
+    setFormComment({...formComment,[e.target.name]: e.target.value});
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formComment);
+  }
   const post = useSelector((state) => state.posts.post);
+  const {comments} = useSelector((state) => state.comments);
   useEffect(() => {
     dispatch(getPost(id));
-  },[dispatch,id]);
+    dispatch(getUser(user?.user_id));
+    dispatch(getCommentByPostId(id));
+  },[dispatch,id,user?.user_id]);
   useEffect(() => {
-    console.log(post);
+    console.log(userProfile);
+    console.log(comments);
   });
-  if(!post){ return "No post found";}
+  if(!post) { return "No post found";}
+  if(!comments) {return "No Comments";}
   return (
     <Box>
         <NavbarPost user = {user} setUser = {setUser} userProfile = {userProfile}/>
@@ -42,7 +58,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                 </Box>
               </Card>
               <Box>
-              <Box width = '600px' marginLeft = '20px'>
+              <Box width = '500px' marginLeft = '20px'>
                     <CardHeader
                       avatar={
                         <IconButton onClick = {handleOpenProfile}>
@@ -67,7 +83,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                       </Typography>
                     </CardContent>
                     <Box sx ={{ paddingLeft: 2, opacity: 0.3}}>
-                      <img alt = 'icon' src = {lineBreak} width = '550px'/>
+                      <img alt = 'icon' src = {lineBreak} width = '450px'/>
                     </Box>
                     <CardActions sx = {{marginLeft: '20px',display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <IconButton onClick = {null} sx = {{gap: 1, opacity: 0.8}}>
@@ -87,11 +103,18 @@ const PostDetail = ({user,setUser,userProfile}) => {
                         </IconButton>
                     </CardActions>
                     <Box sx ={{ paddingLeft: 2, opacity: 0.3}}>
-                      <img alt = 'icon' src = {lineBreak} width = '550px'/>
+                      <img alt = 'icon' src = {lineBreak} width = '450px'/>
                     </Box>
                     <Box display = 'flex' flexDirection = 'column'>
-                      Comment
+                      {comments.map((comment) => (
+                        <Comment key = {comment.cmtId} comment = {comment}/>
+                      ))}
                     </Box>
+                </Box>
+                <Box display = 'flex' flexDirection = 'row' width = '400px' sx = {{position: 'absolute',bottom:-80,marginLeft: 4}}>
+                  <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
+                  <TextField name = "content" onChange={handleChange} multiline label = "Write a comment..." fullWidth sx = {{marginLeft: 2}}/>
+                  <IconButton onClick = {handleSubmit}><SendIcon /></IconButton>
                 </Box>
               </Box>
           </Paper>

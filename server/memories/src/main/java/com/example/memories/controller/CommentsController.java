@@ -20,7 +20,7 @@ public class CommentsController {
     public ResponseEntity getCommentById(@PathVariable Long id){
         return ResponseEntity.ok().body(commentService.getCommentById(id));
     }
-    @PostMapping("/{userId}/comments")
+    @PostMapping("/user/{userId}/comments")
     public ResponseEntity createComment(@PathVariable Long userId, @RequestBody Comments comments){
         return ResponseEntity.ok().body(commentService.createComment(userId,comments));
     }
