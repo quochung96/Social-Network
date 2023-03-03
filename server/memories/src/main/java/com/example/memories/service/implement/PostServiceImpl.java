@@ -87,7 +87,7 @@ public class PostServiceImpl implements PostService {
         try {
             PostsEntity newPost = new PostsEntity();
             //When create a post have an image save to the database
-            if (post.getPhotoInPost().getPhotoUrl() != null) {
+            if (post.getPhotoInPost() != null || post.getPhotoInPost().getPhotoUrl().isEmpty()) {
                 PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
                 photoInPostRepository.save(photoInPostEntity);
                 post.setPhotoInPost(photoInPostEntity);

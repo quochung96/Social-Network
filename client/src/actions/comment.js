@@ -14,3 +14,13 @@ export const getCommentByPostId = (postId) => async(dispatch) => {
       console.log(e);
     }
 }
+export const createCommentByUserId = (userId,postId,newComment) => async(dispatch) => {
+  try{
+    dispatch({ type: START_LOADING });
+    const { data } = await api.createCommentByUserId(userId,postId,newComment);
+
+    dispatch({ type: CREATE, payload: data });
+  }catch(e){
+    console.log(e);
+  }
+}

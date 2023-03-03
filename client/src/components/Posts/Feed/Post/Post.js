@@ -24,6 +24,7 @@ const Post = ({post,user,userProfile}) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openAudience, setOpenAudience] = useState(false);
   const [openRecycleBin, setOpenRecycleBin] = useState(false);
+
   const handleShowImage = () => setIsShowImage(true);
   const handleCloseImage = () => {
     setIsShowImage(false)
@@ -154,7 +155,7 @@ const Post = ({post,user,userProfile}) => {
                           <div>Public</div>
                           <KeyboardArrowDownIcon fontSize = 'small'/>
                         </Box>
-                      </Box>u
+                      </Box>
                     </Box>
                     <TextField name = "content" onChange={handleChange} multiline label = "What's on your mind" fullWidth/>
                     {isShowImage && 
@@ -203,7 +204,7 @@ const Post = ({post,user,userProfile}) => {
             {post?.content}
         </Typography>
       </CardContent>
-      {post.photoInPost && 
+      {post.photoInPost.photoUrl && 
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
               sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
@@ -220,7 +221,7 @@ const Post = ({post,user,userProfile}) => {
             checkedIcon={<Favorite sx={{ color: "red" }} />}
           />
         </IconButton>
-        <IconButton onClick = {null}>
+        <IconButton onClick = {() => navigate(`/posts/${post.postId}`)}>
           <CommentIcon />
         </IconButton>
         <IconButton aria-label="share">

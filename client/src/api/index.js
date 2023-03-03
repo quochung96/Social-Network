@@ -37,6 +37,7 @@ export const deletePost = (id) => API.delete(`/posts/${id}`); // OK
 
 //Comment
 export const fetchCommentByPostId = (postId) => API.get(`/post/${postId}/comments`);
+export const createCommentByUserId = (userId,postId,newComment) => API.post(`/user/${userId}/comments/${postId}`,newComment);
 
 //Chat
 

@@ -23,7 +23,7 @@ public class PhotoInPostEntity {
     @Column(name="IS_HIGHLIGHT")
     private Integer isHighlight;
 
-    @Column(name = "PHOTO_URL", nullable = false)
+    @Column(name = "PHOTO_URL")
     private String photoUrl;
 
     @ManyToOne

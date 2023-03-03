@@ -1,12 +1,12 @@
 import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material';
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Container, IconButton, Paper, Typography,Box,TextField } from '@mui/material';
+import {ButtonBase, Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Container, IconButton, Paper, Typography,Box,TextField } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import moment from 'moment';
 import React,{useEffect,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getPost } from '../../actions/posts';
-import { getCommentByPostId } from '../../actions/comment';
+import { getCommentByPostId,createCommentByUserId } from '../../actions/comment';
 import { getUser } from '../../actions/users';
 import NavbarPost from '../Navbar/NavbarPost/NavbarPost';
 import lineBreak from '../../assets/icons/Line 2.png';
@@ -16,16 +16,13 @@ const PostDetail = ({user,setUser,userProfile}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {id} = useParams();
-  const [formComment, setFormComment] = useState({content: ''})
-  const handleOpenProfile = () => {
-    navigate(`/profile/${userProfile.user_id}}`)
-  }
+  const [formComment, setFormComment] = useState({cmtContent: ''})
   const handleChange = (e) => {
     setFormComment({...formComment,[e.target.name]: e.target.value});
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formComment);
+    dispatch(createCommentByUserId(user.user_id,id,formComment));
   }
   const post = useSelector((state) => state.posts.post);
   const {comments} = useSelector((state) => state.comments);
@@ -34,10 +31,6 @@ const PostDetail = ({user,setUser,userProfile}) => {
     dispatch(getUser(user?.user_id));
     dispatch(getCommentByPostId(id));
   },[dispatch,id,user?.user_id]);
-  useEffect(() => {
-    console.log(userProfile);
-    console.log(comments);
-  });
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}
   return (
@@ -48,12 +41,14 @@ const PostDetail = ({user,setUser,userProfile}) => {
               <Card >
                 <Box flex = {2}>
                 {post.photoInPost && 
+                    <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: '800px',background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <CardMedia
-                          sx = {{width: '100%',Width: 1200, height: 800, objectFit: 'cover'}}
+                          sx = {{width: 800, height: 'auto', objectFit: 'cover'}}
                           component="img"
                           image = {post?.photoInPost.photoUrl}
                           alt="img-post"
                       />
+                    </Box>
                   }
                 </Box>
               </Card>
@@ -61,9 +56,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
               <Box width = '500px' marginLeft = '20px'>
                     <CardHeader
                       avatar={
-                        <IconButton onClick = {handleOpenProfile}>
                           <Avatar sx = {{width: '60px',height:'60px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 8px'}} alt = 'avatar-test' src = {post?.user.avatar_url}/>
-                        </IconButton>
                       }
                       action={
                         <IconButton aria-label="settings" onClick={null}>
@@ -105,15 +98,17 @@ const PostDetail = ({user,setUser,userProfile}) => {
                     <Box sx ={{ paddingLeft: 2, opacity: 0.3}}>
                       <img alt = 'icon' src = {lineBreak} width = '450px'/>
                     </Box>
-                    <Box display = 'flex' flexDirection = 'column'>
+                    <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap'}}>
                       {comments.map((comment) => (
                         <Comment key = {comment.cmtId} comment = {comment}/>
                       ))}
                     </Box>
                 </Box>
-                <Box display = 'flex' flexDirection = 'row' width = '400px' sx = {{position: 'absolute',bottom:-80,marginLeft: 4}}>
+                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:5,width: 520, background: 'white'}}>
+                  <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
                   <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
-                  <TextField name = "content" onChange={handleChange} multiline label = "Write a comment..." fullWidth sx = {{marginLeft: 2}}/>
+                  </ButtonBase>
+                  <TextField name = "cmtContent" onChange={handleChange} multiline label = "Write a comment..." fullWidth sx = {{marginLeft: 2,marginRight: 2}}/>
                   <IconButton onClick = {handleSubmit}><SendIcon /></IconButton>
                 </Box>
               </Box>

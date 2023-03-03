@@ -27,10 +27,11 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostsRepository postsRepository;
     @Override
-    public Comments createComment(long userId,Comments comments){
+    public Comments createComment(long postId,long userId,Comments comments){
         CommentsEntity commentsEntity = new CommentsEntity();
         comments.setIsArchieved(0);
         comments.setUsers(usersRepository.findById(userId).get());
+        comments.setPost(postsRepository.findById(postId).get());
         comments.setCreateAt(new Date());
         comments.setUpdateAt(new Date());
         BeanUtils.copyProperties(comments,commentsEntity);

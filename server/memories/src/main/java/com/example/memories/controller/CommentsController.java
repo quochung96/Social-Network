@@ -20,9 +20,9 @@ public class CommentsController {
     public ResponseEntity getCommentById(@PathVariable Long id){
         return ResponseEntity.ok().body(commentService.getCommentById(id));
     }
-    @PostMapping("/user/{userId}/comments")
-    public ResponseEntity createComment(@PathVariable Long userId, @RequestBody Comments comments){
-        return ResponseEntity.ok().body(commentService.createComment(userId,comments));
+    @PostMapping("/user/{userId}/comments/{postId}")
+    public ResponseEntity createComment(@PathVariable Long postId,@PathVariable Long userId, @RequestBody Comments comments){
+        return ResponseEntity.ok().body(commentService.createComment(postId,userId,comments));
     }
     @DeleteMapping("/comments/{id}")
     public ResponseEntity deleteComment(@PathVariable Long id){

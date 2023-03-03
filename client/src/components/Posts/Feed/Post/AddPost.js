@@ -17,7 +17,8 @@ const AddPost = ({user,userProfile}) => {
   const [isShowImage, setIsShowImage] = useState(false);
   const [img, setImg] = useState(null);
   const [open, setOpen] = useState(false);
-  const [formPost, setFormPost] = useState({content: ''});
+  const [openPermission, setOpenPermission] = useState(false);
+  const [formPost, setFormPost] = useState({content: '',photoInPost:{photoUrl: null}});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const openProfile = () => {navigate(`/profile/${userProfile?.user_id || user?.result.sub}`)};
@@ -39,11 +40,25 @@ const AddPost = ({user,userProfile}) => {
     dispatch(createPost(user?.user_id,formPost)); //OK
     window.location.reload(false);
   }
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = (key) => {
+    switch (key) {
+      case 1:
+        setOpen(true);   
+        break;
+      default:
+        setOpenPermission(true);
+        break;
+    }
   }
-  const handleClose = () => {
-    setOpen(false);
+  const handleClose = (key) => {
+    switch (key) {
+      case 1:
+        setOpen(false);   
+        break;
+      default:
+        setOpenPermission(false);
+        break;
+    }
   }
   return (
     <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '70%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
@@ -53,17 +68,17 @@ const AddPost = ({user,userProfile}) => {
             </IconButton>
             <Box marginTop = '10px' width = '100%' sx = {{borderRadius: '30px'}}>
             <StyledInputBase
-                onClick = {handleClickOpen}
+                onClick = {() => handleClickOpen(1)}
                 sx = {{border: '2px solid', borderRadius: '20px', borderStyle: 'groove', width: '100%', height: '40px', marginLeft: '10px'}}
             >
               <Typography variant='outlined'>Start a post</Typography> 
             </StyledInputBase>
             </Box>
             <div>
-              <Dialog open = {open} onClose = {handleClose} sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Dialog open = {open} onClose = {() => handleClose(1)} sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
                   Create post
-                  <IconButton onClick = {handleClose} >
+                  <IconButton onClick = {() => handleClose(1)} >
                     <CancelOutlinedIcon fontSize = "large"/>
                   </IconButton>
                 </DialogTitle>
@@ -73,7 +88,7 @@ const AddPost = ({user,userProfile}) => {
                       <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url } sx = {{width: '60px', height: '60px'}}/>
                       <Box display = 'flex' flexDirection = 'column' sx ={{gap: '3px', marginTop: '-5px'}}>
                         <Typography>{userProfile?.userName}</Typography>
-                        <Box component={"button"} onClick = {() => console.log("Click to permission")} 
+                        <Box component={"button"} onClick = {() => handleClickOpen(2)} 
                           display= 'flex' flexDirection = 'row' justifyContent= 'center' alignItems='center' sx = {{width: '110px', height: '25px', background: '#A9A9A9',opacity: '0.7' ,borderRadius: '5px', gap: '5px', color: '#000000', cursor: 'pointer'}}>
                           <PublicIcon fontSize='small'/>
                           <div>Public</div>
@@ -103,6 +118,15 @@ const AddPost = ({user,userProfile}) => {
                   </Box>
                 <Button fullWidth variant='contained' onClick = {handleSubmit}>POST</Button>
                 </DialogActions>
+              </Dialog>
+              {/* Open Edit Permission*/}
+              <Dialog open = {openPermission} onClose = {() => handleClose(2)}>
+                <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
+                    Edit Permission
+                    <IconButton onClick = {() => handleClose(2)} >
+                      <CancelOutlinedIcon fontSize = "large"/>
+                    </IconButton>
+                </DialogTitle>
               </Dialog>
             </div>
         </Box>
