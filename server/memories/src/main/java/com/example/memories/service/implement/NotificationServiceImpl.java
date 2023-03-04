@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.NotificationsEntity;
+import com.example.memories.entity.UsersEntity;
 import com.example.memories.model.Notifications;
 import com.example.memories.repository.repositoryJPA.NotificationsRepository;
 import com.example.memories.repository.repositoryPaging.PostsRepository;
@@ -8,6 +9,7 @@ import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.NotificationService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,27 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationsRepository notificationsRepository;
     @Autowired
     private final PostsRepository postsRepository;
+    @Override
+    public List<Notifications> getAllNotiByUserId(long userId) {
+        if(usersRepository.findById(userId).isPresent()) {
+            UsersEntity user = usersRepository.findById(userId).get();
+            List<NotificationsEntity> notificationsEntities = notificationsRepository.findAllByUser(user).get();
+            List<Notifications> notifications = notificationsEntities.stream().map(
+                    notification -> new Notifications(
+                            notification.getNotiId(),
+                            notification.getIsSeen(),
+                            notification.getCreateAt(),
+                            notification.getUpdateAt(),
+                            notification.getNotiType(),
+                            notification.getIsPopular(),
+                            notification.getUser(),
+                            notification.getPost()
+                        )
+            ).collect(Collectors.toList());
+            return notifications;
+        }
+        return null;
+    }
     @Override
     public List<Notifications> getAllNotification() {
         List<NotificationsEntity> notificationsEntities = notificationsRepository.findAll();
@@ -82,4 +105,6 @@ public class NotificationServiceImpl implements NotificationService {
         notificationsRepository.deleteById(id);
         return true;
     }
+
+
 }

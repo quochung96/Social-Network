@@ -3,9 +3,12 @@ package com.example.memories.service.implement;
 import com.example.memories.entity.ReactionsEntity;
 import com.example.memories.model.Reactions;
 import com.example.memories.repository.repositoryJPA.ReactionRepository;
+import com.example.memories.repository.repositoryJPA.UsersRepository;
+import com.example.memories.repository.repositoryPaging.PostsRepository;
 import com.example.memories.service.interfaces.ReactionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +23,23 @@ import java.util.stream.Collectors;
 public class ReactionServiceImpl implements ReactionService {
     @Autowired
     private ReactionRepository reactionRepository;
+    @Autowired
+    private UsersRepository usersRepository;
+    @Autowired
+    private PostsRepository postsRepository;
     public ReactionServiceImpl(ReactionRepository reactionRepository){
         this.reactionRepository = reactionRepository;
     }
+
     @Override
-    public Reactions createReaction(Reactions reactions) {
-        ReactionsEntity reactionsEntity = new ReactionsEntity();
-        reactionsEntity.setCreateAt(new Date());
-        reactionsEntity.setUpdateAt(new Date());
-        BeanUtils.copyProperties(reactions,reactionsEntity);
-        reactionRepository.save(reactionsEntity);
+    public Reactions createReaction(Long userId, Long postId, Reactions reactions) {
+        ReactionsEntity newReaction = new ReactionsEntity();
+        reactions.setCreateAt(new Date());
+        reactions.setUpdateAt(new Date());
+        reactions.setUserId(usersRepository.findById(userId).get());
+        reactions.setPostId(postsRepository.findById(postId).get());
+        BeanUtils.copyProperties(reactions, newReaction);
+        reactionRepository.save(newReaction);
         return reactions;
     }
 

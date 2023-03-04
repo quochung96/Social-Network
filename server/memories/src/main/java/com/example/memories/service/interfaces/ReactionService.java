@@ -5,7 +5,7 @@ import com.example.memories.model.Reactions;
 import java.util.List;
 
 public interface ReactionService {
-    Reactions createReaction(Reactions reactions);
+    Reactions createReaction(Long userId, Long postId, Reactions reactions);
     List<Reactions> getAllReactions();
     Reactions getReactionById(Long id);
     Reactions updateReaction(Long id, Reactions reactions);
