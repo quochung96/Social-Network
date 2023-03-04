@@ -4,7 +4,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {Paper,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,Checkbox,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
+import {Checkbox,Container,Paper,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import moment from 'moment';
@@ -15,6 +15,8 @@ import PublicIcon from '@mui/icons-material/Public';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { updatePost } from '../../../../actions/posts';
 import lineBreak from '../../../../assets/icons/Line 2.png';
+import CheckBox from '../../../widgets/Checkbox';
+import World from '../../../../assets/icons/public.png';
 const Post = ({post,user,userProfile}) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
@@ -24,7 +26,6 @@ const Post = ({post,user,userProfile}) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openAudience, setOpenAudience] = useState(false);
   const [openRecycleBin, setOpenRecycleBin] = useState(false);
-
   const handleShowImage = () => setIsShowImage(true);
   const handleCloseImage = () => {
     setIsShowImage(false)
@@ -128,12 +129,21 @@ const Post = ({post,user,userProfile}) => {
             </Collapse>
             {/* Open Edit Audience*/}
             <Dialog open = {openAudience} onClose = {() => handleClose(2)}>
-              <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
-                  Edit Audience
-                  <IconButton onClick = {() => handleClose(2)} >
-                    <CancelOutlinedIcon fontSize = "large"/>
-                  </IconButton>
+              <DialogTitle sx = {{fontWeight: 'bold', textAlign: 'center'}}>
+                  <Container maxWidth = "xl">
+                    <Paper sx = {{display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
+                      <div style={{marginLeft: '11rem'}}>Select Audience</div>
+                      <IconButton onClick = {() => handleClose(2)} >
+                        <CancelOutlinedIcon fontSize = "large"/>
+                      </IconButton>
+                    </Paper>
+                  </Container>
               </DialogTitle>
+              <DialogContent>
+                <Typography fontSize = '16px' fontWeight='bold'>To help friends find you, your current profile picture can be seen by everyone.</Typography>
+                <Typography variant = 'text.secondary'>You can decide who should see the other details, such as the description, likes or comments.</Typography>
+              <CheckBox icon = {World} title = "Public" subtitle = "Anyone on or off Memories" defaultValue= "Public"/>
+              </DialogContent>
             </Dialog>
             {/* Open Edit Post*/}
             <Dialog open = {openEdit} onClose = {() => handleClose(1)}>
@@ -204,7 +214,7 @@ const Post = ({post,user,userProfile}) => {
             {post?.content}
         </Typography>
       </CardContent>
-      {post.photoInPost.photoUrl && 
+      {post.photoInPost && 
       <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
               sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
@@ -221,7 +231,7 @@ const Post = ({post,user,userProfile}) => {
             checkedIcon={<Favorite sx={{ color: "red" }} />}
           />
         </IconButton>
-        <IconButton onClick = {() => navigate(`/posts/${post.postId}`)}>
+        <IconButton onClick = {null}>
           <CommentIcon />
         </IconButton>
         <IconButton aria-label="share">
