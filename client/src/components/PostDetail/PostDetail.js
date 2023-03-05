@@ -43,7 +43,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
           <Paper sx = {{height: '800px', display: 'flex', flexDirection: 'row'}}>
               <Card >
                 <Box flex = {2}>
-                {post.photoInPost != null &&  (
+                {post.photoInPost.photoUrl &&  (
                   <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: '800px',background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                   <CardMedia
                         sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}

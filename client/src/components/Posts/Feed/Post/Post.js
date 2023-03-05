@@ -244,7 +244,7 @@ const Post = ({post,user,userProfile}) => {
             {post?.content}
         </Typography>
       </CardContent>
-      {post.photoInPost != null && (
+      {post.photoInPost.photoUrl && (
         <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
               sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}

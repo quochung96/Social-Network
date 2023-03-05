@@ -55,7 +55,7 @@ const EditProfile = ({user, userProfile}) => {
   }
   return (
     <>
-        <ProfileDetails handleCoverImage = {handleClickOpen} user = {user} userProfile = {userProfile} userRequest = {userRequest} userResponse = {userResponse}/>
+        <ProfileDetails handleCoverImage = {handleClickOpen} user = {user} userProfile = {userProfile} userRequest = {userRequest} userResponse = {userResponse} id = {id}/>
         <Box p = {1} flex = {1}>
         <Box display = 'flex' flexDirection = 'column' sx = {{borderRadius: '20px',background :"#FFF", width :'100%', height: 'auto', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
         <List>

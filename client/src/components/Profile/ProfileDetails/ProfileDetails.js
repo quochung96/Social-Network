@@ -10,18 +10,30 @@ import {useDispatch} from 'react-redux';
 import { acceptUserFriendRequest, createFriendRequest } from '../../../actions/friendRequest';
 import { deleteFriendRequest } from '../../../api';
 
-const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResponse}) => {
+const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResponse,id}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [isResponse, setIsResponse] = useState(false);
+    const [isRequest, setIsRequest] = useState(false);
     const [formData] = useState({
         sendUser: {
             user_id: user?.user_id
         }
     });
+    const uResponse = userResponse.filter(rp => Number(rp.sendUser.user_id) === Number(id));
+    const uRequest = userRequest.filter(rq => Number(rq.sendUser.user_id) === Number(id));
     useEffect(() => {
         console.log("userRequest",userRequest);
         console.log("userResponse",userResponse);
-    })
+        console.log("uResponse",uResponse);
+        console.log("uRequest",uRequest);
+        if(userRequest.length !== 0){
+            setIsRequest(true);
+        }
+        if(userResponse.length ){
+            setIsResponse(true);
+        }
+    },[uRequest, uResponse, userRequest, userResponse]);
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,11 +46,21 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
         window.location.reload(false);
     }
     const handleAcceptRequest = () => {
-        dispatch(acceptUserFriendRequest(userRequest[0].reqId));
+        if(isResponse){
+            dispatch(acceptUserFriendRequest(uResponse[0].reqId));
+        }
+        if(isRequest){
+            dispatch(acceptUserFriendRequest(uRequest[0].reqId));
+        }
         window.location.reload(false);
     }
     const handleDeleteRequest = () => {
-        dispatch(deleteFriendRequest(userRequest[0].reqId));
+        if(isResponse){
+            dispatch(deleteFriendRequest(uResponse[0].reqId));
+        }
+        if(isRequest){
+            dispatch(deleteFriendRequest(uRequest[0].reqId));
+        }
         window.location.reload(false);
     }
     return (
@@ -82,9 +104,9 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
                 <>
                 { userRequest.length !== 0 ? 
                 <>
-                {(userRequest[0].isAccepted === 0) ?
+                {(uRequest[0].isAccepted === 0) ?
                     <>
-                        {userRequest[0].receiveUser.user_id === user?.user_id ? <>
+                        {uRequest[0].receiveUser.user_id === user?.user_id ? <>
                             <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
                                 <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
                                     <PersonAddAlt1Icon fontSize = "large"/>
@@ -122,9 +144,9 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
                 </>
                 :
                 <>
-                {(userResponse[0].isAccepted === 0) ?
+                {(uResponse[0].isAccepted === 0) ?
                     <>
-                        {userResponse[0].receiveUser.user_id === user?.user_id ? <>
+                        {uResponse[0].receiveUser.user_id === user?.user_id ? <>
                             <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
                                 <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
                                     <PersonAddAlt1Icon fontSize = "large"/>
