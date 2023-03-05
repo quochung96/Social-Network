@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Grid,Box} from '@mui/material';
 import { useSelector } from 'react-redux';
 import AddPost from '../Posts/Feed/Post/AddPost';
@@ -6,6 +6,9 @@ import Post from '../Posts/Feed/Post/Post';
 
 const FeedProfile = ({user, userProfile}) => {
   const {postUser} = useSelector((state) => state.posts);
+  useEffect(() => {
+    console.log(postUser);
+  });
   if(!postUser) return 'No post user';
   return (
     (postUser ? 

@@ -10,7 +10,7 @@ import {useDispatch} from 'react-redux';
 import { acceptUserFriendRequest, createFriendRequest } from '../../../actions/friendRequest';
 import { deleteFriendRequest } from '../../../api';
 
-const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
+const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResponse}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [formData] = useState({
@@ -19,7 +19,8 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
         }
     });
     useEffect(() => {
-        console.log(userRequest);
+        console.log("userRequest",userRequest);
+        console.log("userResponse",userResponse);
     })
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
@@ -68,9 +69,9 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
             }
         </Box>
         <ProfileCard handleAvatarImage = {handleCoverImage} avatarUrl = {user?.result.picture || userProfile?.avatar_url} marginTop = "-143px" />
-        {userProfile?.user_id !== user?.user_id &&
+        {(userProfile?.user_id !== user?.user_id ) &&
             <Box display = 'flex' flexDirection = 'row' gap = '20px'>
-                {userRequest.length === 0 ?
+                {(userRequest.length === 0 && userResponse.length === 0) ?
                 <ButtonBase onClick = {handleCreateFriend} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
                 <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
                     <PersonAddAlt1Icon fontSize = "large"/>
@@ -78,7 +79,10 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
                 </Box>
                 </ButtonBase>
                 : 
-                (userRequest[0].isAccepted === 0 ?
+                <>
+                { userRequest.length !== 0 ? 
+                <>
+                {(userRequest[0].isAccepted === 0) ?
                     <>
                         {userRequest[0].receiveUser.user_id === user?.user_id ? <>
                             <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
@@ -91,12 +95,16 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
                                 <Button onClick = {handleAcceptRequest} variant = "text">Confirm</Button>
                                 <Button onClick = {handleDeleteRequest} variant = "text">Delete Request</Button>
                             </Dialog>
-                        </> :  <ButtonBase onClick = {handleDeleteRequest} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                        </> :  
+                        <>
+                        <ButtonBase onClick = {handleDeleteRequest} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
                                 <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
                                     <PersonAddAlt1Icon fontSize = "large"/>
                                     <Typography fontWeight = 'bold'>Cancel</Typography>
                                 </Box>
-                            </ButtonBase>}
+                        </ButtonBase>
+                        </>    
+                            }
                     </>
                  : 
                  <>
@@ -110,7 +118,50 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest}) => {
                         <Button onClick = {handleDeleteRequest} variant = "text">Unfriend</Button>
                     </Dialog>
                 </>
-                )
+                }
+                </>
+                :
+                <>
+                {(userResponse[0].isAccepted === 0) ?
+                    <>
+                        {userResponse[0].receiveUser.user_id === user?.user_id ? <>
+                            <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                                <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                                    <PersonAddAlt1Icon fontSize = "large"/>
+                                    <Typography fontWeight = 'bold'>Respond</Typography>
+                                </Box>
+                            </ButtonBase>
+                            <Dialog open = {open} onClose = {handleClose}>
+                                <Button onClick = {handleAcceptRequest} variant = "text">Confirm</Button>
+                                <Button onClick = {handleDeleteRequest} variant = "text">Delete Request</Button>
+                            </Dialog>
+                        </> :  
+                        <>
+                        <ButtonBase onClick = {handleDeleteRequest} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                                <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                                    <PersonAddAlt1Icon fontSize = "large"/>
+                                    <Typography fontWeight = 'bold'>Cancel</Typography>
+                                </Box>
+                        </ButtonBase>
+                        </>    
+                            }
+                    </>
+                 : 
+                 <>
+                    <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
+                    <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                        <GroupIcon fontSize = "large"/>
+                        <Typography fontWeight = 'bold'>Friend</Typography>
+                    </Box>
+                    </ButtonBase>
+                    <Dialog open = {open} onClose = {handleClose}>
+                        <Button onClick = {handleDeleteRequest} variant = "text">Unfriend</Button>
+                    </Dialog>
+                </>
+                }
+                </>
+                }
+                </>
                 }
                 <ButtonBase onClick = {null} sx = {{display: 'flex',background: '#E4E6EB', borderRadius: 2, width: 130, height: 40, color: 'black'}}>
                     <Box display = 'flex' flexDirection = 'row' sx = {{gap: 1,alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>

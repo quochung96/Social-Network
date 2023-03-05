@@ -1,11 +1,12 @@
 package com.example.memories.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter@Setter
@@ -21,13 +22,13 @@ public class NotificationsEntity {
     @Column(name = "IS_SEEN", nullable = true)
     private Integer isSeen;
 
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT", nullable = true )
-    private Date createAt;
+    private LocalDateTime createAt;
 
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_AT", nullable = true)
-    private Date updateAt;
+    private LocalDateTime updateAt;
 
     @Column(name = "NOTI_TYPE", nullable = true)
     private Long notiType;

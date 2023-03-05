@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,8 +53,8 @@ public class AccountServiceImpl implements AccountService{
             String encodedPassword = passwordEncoder.encode(account.getHashPassword());
             account.setHashPassword(encodedPassword);
             // Default set
-            account.setCreateAt(new Date());
-            account.setUpdateAt(new Date());
+            account.setCreateAt(LocalDateTime.now());
+            account.setUpdateAt(LocalDateTime.now());
             //IF the database doesn't exist -> Insert a new
             if (!rolesRepository.findByRoleName("USER").isPresent()) {
                 RolesEntity roles = new RolesEntity("USER");
@@ -173,7 +174,7 @@ public class AccountServiceImpl implements AccountService{
         //WHERE ACC_ID = id;
         accountsEntity.setPhone_number(account.getPhone_number());
         accountsEntity.setEmail(account.getEmail());
-        accountsEntity.setUpdateAt(new Date());
+        accountsEntity.setUpdateAt(LocalDateTime.now());
         accountsRepository.save(accountsEntity);
         return account;
     }

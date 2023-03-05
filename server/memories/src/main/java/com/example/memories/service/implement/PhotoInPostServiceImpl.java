@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +26,6 @@ import java.util.stream.Collectors;
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class PhotoInPostServiceImpl implements PhotoInPostService {
-    @Autowired
-    private final UsersRepository usersRepository;
     @Autowired
     private final PhotoInPostRepository photoInPostRepository;
     @Autowired
@@ -41,7 +40,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
                         photoinpost.getPhotoId(),
                         photoinpost.getIsHighlight(),
                         photoinpost.getPhotoUrl(),
-                        photoinpost.getPost(),
+                        photoinpost.getPosts(),
                         photoinpost.getCreateAt(),
                         photoinpost.getUpdateAt()
                 )
@@ -54,8 +53,8 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
         try {
             PhotoInPostEntity newPhotoInPost = new PhotoInPostEntity();
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            photoInPosts.setCreateAt(new Date());
-            photoInPosts.setUpdateAt(new Date());
+            photoInPosts.setCreateAt(LocalDateTime.now());
+            photoInPosts.setUpdateAt(LocalDateTime.now());
             ;
             photoInPosts.setPost(postsRepository.findById(postId).get());
             String uploadDir = Paths.get("server/memories/src/main/resources/static")
@@ -78,7 +77,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     @Override
     public PhotoInPosts updatePhoto(Long id, PhotoInPosts photoInPosts) {
         PhotoInPostEntity newPhotoInPost = photoInPostRepository.findById(id).get();
-        newPhotoInPost.setUpdateAt(new Date());
+        newPhotoInPost.setUpdateAt(LocalDateTime.now());
         newPhotoInPost.setPhotoUrl(photoInPosts.getPhotoUrl());
         photoInPostRepository.save(newPhotoInPost);
 

@@ -17,7 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
-
     private AccountBuilder result;
     private Long user_id;
 }

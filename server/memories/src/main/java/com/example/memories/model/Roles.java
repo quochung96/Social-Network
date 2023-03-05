@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /*
@@ -15,6 +16,6 @@ import java.util.Date;
 public class Roles {
     private Long role_id;
     private String roleName;
-    private Date createAt;
-    private Date updatedAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updatedAt;
 }

@@ -1,5 +1,6 @@
 package com.example.memories.service.implement;
 
+import com.example.memories.builder.PostResponse;
 import com.example.memories.entity.PhotoInPostEntity;
 import com.example.memories.entity.PostsEntity;
 import com.example.memories.exeption.PostNotFoundException;
@@ -12,9 +13,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -31,30 +36,36 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PhotoInPostRepository photoInPostRepository;
     @Override
-    public List<Posts> getAllPosts() {
-        List<PostsEntity> postsEntities = postsRepository.findAll(); // List all post in database
+    public PostResponse getAllPosts(int pageNo,int pageSize,String sortBy, String sortDir){
+            Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+            Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+            Page<PostsEntity> posts = postsRepository.findAll(pageable);
 
-        //List All the post mapping to Posts model
-        List<Posts> posts = postsEntities.stream().map(
-                post -> new Posts(
-                        post.getPostId(),
-                        post.getContent(),
-                        post.getPermission(),
-                        post.getUser(),
-                        post.getCreateAt(),
-                        post.getUpdateAt(),
-                        post.getIsArchieved(),
-                        post.getPhotoInPost()
-                )
-        ).collect(Collectors.toList());
+            List<PostsEntity> listOfPosts = posts.getContent();
 
-        return posts;
+            List<Posts> content = listOfPosts.stream().map(post ->
+                    new Posts(
+                            post.getPostId(),
+                            post.getContent(),
+                            post.getPermission(),
+                            post.getUser(),
+                            post.getCreateAt(),
+                            post.getUpdateAt(),
+                            post.getIsArchieved(),
+                            post.getPhotoInPost()
+                    )
+            ).collect(Collectors.toList());
+            PostResponse postResponse = new PostResponse();
+            postResponse.setContent(content);
+            postResponse.setPageNo(posts.getNumber());
+            postResponse.setPageSize(posts.getSize());
+            postResponse.setTotalElements(posts.getTotalElements());
+            postResponse.setTotalPages(posts.getTotalPages());
+            postResponse.setLast(posts.isLast());
+
+            return postResponse;
     }
 
-//    @Override
-//    public void getPostsByPage(int pageNumber, PagingAndSortingHelper helper) {
-//        helper.listEntities(pageNumber, POSTS_PER_PAGE, postsRepository);
-//    }
 
     @Override
     public List<Posts> getPostByUserId(long userId) throws PostNotFoundException {
@@ -92,8 +103,8 @@ public class PostServiceImpl implements PostService {
                 photoInPostRepository.save(photoInPostEntity);
                 post.setPhotoInPost(photoInPostEntity);
             }
-            post.setCreateAt(new Date());
-            post.setUpdateAt(new Date());
+            post.setCreateAt(LocalDateTime.now());
+            post.setUpdateAt(LocalDateTime.now());
             if (userRepository.findById(userID).isPresent()) {
                 post.setUser(userRepository.findById(userID).get());
             }
@@ -111,10 +122,8 @@ public class PostServiceImpl implements PostService {
         if(postsRepository.findById(id).isPresent()) {
             PostsEntity newPost = postsRepository.findById(id).get();
             newPost.setContent(post.getContent());
-
-//        newPost.setPermission(post.getPermission());
-            newPost.setUpdateAt(new Date());
-            if(post.getPhotoInPost().getPhotoUrl() != null){
+            newPost.setUpdateAt(LocalDateTime.now());
+            if(post.getPhotoInPost() != null || post.getPhotoInPost().getPhotoUrl() != null){
                 PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());
                 photoInPostRepository.save(photoInPostEntity);
                 newPost.setPhotoInPost(photoInPostEntity);
@@ -125,6 +134,21 @@ public class PostServiceImpl implements PostService {
             return updatePostResponse;
         }
         else{
+            throw new PostNotFoundException(String.format("Could not found any post with Id %s", id));
+        }
+    }
+
+    @Override
+    public Posts updateAudiencePost(long id, Posts post) throws PostNotFoundException {
+        if(postsRepository.findById(id).isPresent()){
+                PostsEntity newPost = postsRepository.findById(id).get();
+                newPost.setPermission(post.getPermission());
+                postsRepository.save(newPost);
+                Posts updatePostResponse = new Posts();
+                BeanUtils.copyProperties(newPost, updatePostResponse);
+                return updatePostResponse;
+        }
+        else {
             throw new PostNotFoundException(String.format("Could not found any post with Id %s", id));
         }
     }

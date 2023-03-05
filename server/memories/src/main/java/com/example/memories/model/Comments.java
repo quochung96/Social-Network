@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,8 +18,8 @@ public class Comments {
     private UsersEntity users;
     private Long replyTo;
     private PostsEntity post;
-    private Date createAt;
-    private Date updateAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
     private int isArchieved;
 }
 

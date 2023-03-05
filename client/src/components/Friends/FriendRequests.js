@@ -7,6 +7,8 @@ import {useDispatch} from 'react-redux';
 import {getRequestByReceiveUserId} from '../../actions/friendRequest';
 import { useLocation } from 'react-router-dom';
 import {getUser} from '../../actions/users';
+
+//OK
 const FriendRequests = ({user,setUser,userProfile}) => {
     const dispatch = useDispatch();
     const location = useLocation();

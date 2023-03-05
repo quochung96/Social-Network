@@ -4,15 +4,17 @@ import NavbarPost from '../Navbar/NavbarPost/NavbarPost';
 import ListFriendFeeds from './FriendFeeds/ListFriendFeeds';
 import SidebarFriend from './SidebarFriend/SidebarFriend';
 import {useDispatch} from 'react-redux';
-import {getRequestByReceiveUserId} from '../../actions/friendRequest';
+import {getRequests} from '../../actions/friendRequest';
 import {getUser} from '../../actions/users';
 import {useLocation} from 'react-router-dom';
+
+//OK
 const Friends = ({user,setUser,userProfile}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   useEffect(() => {
     dispatch(getUser(user?.user_id));
-    dispatch(getRequestByReceiveUserId(user?.user_id));
+    dispatch(getRequests());
   },[dispatch,user?.user_id,location]);
   return (
     <Box>

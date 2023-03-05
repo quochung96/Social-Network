@@ -1,4 +1,4 @@
-import { FETCH_REQUEST_USER, CREATE, UPDATE, DELETE, FETCH_ALL_REQUEST } from "../constants/actionTypes";
+import { FETCH_RESPONSE_USER,FETCH_REQUEST_USER, CREATE, UPDATE, DELETE, FETCH_ALL_REQUEST } from "../constants/actionTypes";
 
 const requestReducer = (state = {isLoading: true, requests: []}, action) => {
     switch(action.type){
@@ -15,6 +15,11 @@ const requestReducer = (state = {isLoading: true, requests: []}, action) => {
                 ...state,
                 requests: action.payload.data
             };
+        case FETCH_RESPONSE_USER:
+            return {
+                ...state,
+                response: action.payload.response
+            }
         case FETCH_REQUEST_USER:
             return {
                 ...state,

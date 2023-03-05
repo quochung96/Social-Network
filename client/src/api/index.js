@@ -33,6 +33,7 @@ export const createPost = (user_id, newPost) => API.post(`/${user_id}/posts`, ne
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`); // To-do
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`, {value}); // To-do
 export const updatePost = (id, updatedPost) => API.put(`/posts/${id}`, updatedPost); // OK
+export const updateAudiencePost = (id,updatedPost) => API.put(`/posts/${id}/audience`,updatedPost);
 export const deletePost = (id) => API.delete(`/posts/${id}`); // OK
 
 //Comment

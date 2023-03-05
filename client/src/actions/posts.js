@@ -10,15 +10,18 @@ export const getPost = (id) => async (dispatch) => {
       const { data } = await api.fetchPost(id);
   
       dispatch({ type: FETCH_POST, payload: { post: data } });
+      dispatch({ type: END_LOADING });
     } catch (error) {
       console.log(error);
     }
 };
 export const getPostByUserId = (userId) => async(dispatch) => {
   try{
+    dispatch({ type: START_LOADING });
     const {data} = await api.fetchPostByUserId(userId);
 
     dispatch({ type: FETCH_POST_USER, payload: {postUser: data}});
+    dispatch({ type: END_LOADING });
   }catch(e){
     console.log(e);
   }
@@ -28,7 +31,7 @@ export const getPostByUserId = (userId) => async(dispatch) => {
 export const getPosts = () => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING });
-      const {data } = await api.fetchPosts();
+      const { data } = await api.fetchPosts();
   
       dispatch({ type: FETCH_ALL, payload: {data}});
       dispatch({ type: END_LOADING });
@@ -70,6 +73,16 @@ export const updatePost = (id, post) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const updateAudiencePost = (id,post) => async (dispatch) => {
+  try{
+    const {data} = await api.updateAudiencePost(id,post);
+    
+    dispatch({type: UPDATE, payload: data});
+  }catch(error){
+    console.log(error);
+  }
+}
 
 //To-do
 export const likePost = (id) => async (dispatch) => {

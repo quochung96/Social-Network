@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +28,8 @@ public class UserServiceImpl implements UserService {
         UsersEntity usersEntity = new UsersEntity();
         //Copy all the properties RoleEntity assigned to Role model
         user.setFollower(0L);
-        user.setCreateAt(new Date());
-        user.setUpdatedAt(new Date());
+        user.setCreateAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
 
         BeanUtils.copyProperties(user, usersEntity);
         usersRepository.save(usersEntity);
@@ -97,7 +98,7 @@ public class UserServiceImpl implements UserService {
         usersEntity.setGender(user.getGender());
         usersEntity.setCover_url(user.getCover_url());
         usersEntity.setAvatar_url(user.getAvatar_url());
-        usersEntity.setUpdateAt(new Date());
+        usersEntity.setUpdateAt(LocalDateTime.now());
         usersRepository.save(usersEntity);
         return user;
     }
@@ -106,7 +107,7 @@ public class UserServiceImpl implements UserService {
     public Users updateFollowerUser(Long id, Users user) {
         UsersEntity usersEntity = usersRepository.findById(id).get();
         usersEntity.setFollower(user.getFollower() + 1);
-        usersEntity.setUpdateAt(new Date());
+        usersEntity.setUpdateAt(LocalDateTime.now());
         usersRepository.save(usersEntity);
         return user;
     }

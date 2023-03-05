@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,8 +27,8 @@ public class ReactionServiceImpl implements ReactionService {
     @Override
     public Reactions createReaction(Reactions reactions) {
         ReactionsEntity reactionsEntity = new ReactionsEntity();
-        reactionsEntity.setCreateAt(new Date());
-        reactionsEntity.setUpdateAt(new Date());
+        reactionsEntity.setCreateAt(LocalDateTime.now());
+        reactionsEntity.setUpdateAt(LocalDateTime.now());
         BeanUtils.copyProperties(reactions,reactionsEntity);
         reactionRepository.save(reactionsEntity);
         return reactions;
@@ -60,7 +61,7 @@ public class ReactionServiceImpl implements ReactionService {
     @Override
     public Reactions updateReaction(Long id, Reactions reactions) {
         ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
-        reactionsEntity.setUpdateAt(new Date());
+        reactionsEntity.setUpdateAt(LocalDateTime.now());
         reactionRepository.save(reactionsEntity);
         return reactions;
     }

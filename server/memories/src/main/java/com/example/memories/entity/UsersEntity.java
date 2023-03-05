@@ -1,9 +1,11 @@
 package com.example.memories.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 /*
     @author Anh Dung
@@ -20,8 +22,8 @@ public class UsersEntity {
         // Constructor with parameters
         this.userName = userName;
         this.follower = 0L;
-        this.createAt = new Date();
-        this.updateAt = new Date();
+        this.createAt = LocalDateTime.now();
+        this.updateAt = LocalDateTime.now();
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,10 +52,10 @@ public class UsersEntity {
 
     @Column(name = "AVATAR_URL")
     private String avatar_url;
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT")
-    private Date createAt;
-    @Temporal(TemporalType.DATE)
+    private LocalDateTime createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_At")
-    private Date updateAt;
+    private LocalDateTime updateAt;
 }

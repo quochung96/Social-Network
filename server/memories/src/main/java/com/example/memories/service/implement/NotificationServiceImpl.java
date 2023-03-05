@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,8 +49,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notifications createNotification(Long userId, Long postId, Notifications notification) {
         NotificationsEntity newNotification = new NotificationsEntity();
-        notification.setCreateAt(new Date());
-        notification.setUpdateAt(new Date());
+        notification.setCreateAt(LocalDateTime.now());
+        notification.setUpdateAt(LocalDateTime.now());
         notification.setUser(usersRepository.findById(userId).get());
         notification.setPost(postsRepository.findById(postId).get());
         BeanUtils.copyProperties(notification, newNotification);
@@ -60,7 +61,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notifications updateNotification(Long id, Notifications notification) {
         NotificationsEntity newNotification = notificationsRepository.findById(id).get();
-        newNotification.setUpdateAt(new Date());
+        newNotification.setUpdateAt(LocalDateTime.now());
         newNotification.setNotiId(notification.getNotiType());
         notificationsRepository.save(newNotification);
 

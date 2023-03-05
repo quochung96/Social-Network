@@ -31,24 +31,28 @@ const PostDetail = ({user,setUser,userProfile}) => {
     dispatch(getUser(user?.user_id));
     dispatch(getCommentByPostId(id));
   },[dispatch,id,user?.user_id]);
+  useEffect(() => {
+    console.log(post);
+  })
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}
   return (
     <Box>
         <NavbarPost user = {user} setUser = {setUser} userProfile = {userProfile}/>
         <Container maxWidth="xl">
-          <Paper sx = {{minHeight: '600px', display: 'flex', flexDirection: 'row'}}>
+          <Paper sx = {{height: '800px', display: 'flex', flexDirection: 'row'}}>
               <Card >
                 <Box flex = {2}>
-                {post.photoInPost && 
-                    <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: '800px',background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <CardMedia
-                          sx = {{width: 800, height: 'auto', objectFit: 'cover'}}
-                          component="img"
-                          image = {post?.photoInPost.photoUrl}
-                          alt="img-post"
-                      />
-                    </Box>
+                {post.photoInPost != null &&  (
+                  <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: '800px',background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                  <CardMedia
+                        sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
+                        component="img"
+                        image = {post.photoInPost.photoUrl}
+                        alt="img-post"
+                    />
+                  </Box>
+                )    
                   }
                 </Box>
               </Card>
@@ -104,7 +108,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                       ))}
                     </Box>
                 </Box>
-                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:5,width: 520, background: 'white'}}>
+                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:-75,width: 520, background: 'white'}}>
                   <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
                   <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
                   </ButtonBase>

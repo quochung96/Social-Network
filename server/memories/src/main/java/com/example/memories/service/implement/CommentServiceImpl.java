@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,8 +33,8 @@ public class CommentServiceImpl implements CommentService {
         comments.setIsArchieved(0);
         comments.setUsers(usersRepository.findById(userId).get());
         comments.setPost(postsRepository.findById(postId).get());
-        comments.setCreateAt(new Date());
-        comments.setUpdateAt(new Date());
+        comments.setCreateAt(LocalDateTime.now());
+        comments.setUpdateAt(LocalDateTime.now());
         BeanUtils.copyProperties(comments,commentsEntity);
         commentsRepository.save(commentsEntity);
         return comments;
@@ -69,7 +70,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comments updateComment(Long id, Comments comments) {
         CommentsEntity commentsEntity = commentsRepository.findById(id).get();
-        commentsEntity.setUpdateAt(new Date());
+        commentsEntity.setUpdateAt(LocalDateTime.now());
         commentsEntity.setCmtContent(comments.getCmtContent());
         commentsEntity.setReplyTo(comments.getReplyTo());
         commentsRepository.save(commentsEntity);

@@ -4,6 +4,7 @@ import com.example.memories.entity.UsersEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 @Data
 @NoArgsConstructor
@@ -14,6 +15,6 @@ public class FriendRequests {
     private UsersEntity receiveUser;
     private int isAccepted;
     private int isArchived;
-    private Date createAt;
-    private Date updateAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }

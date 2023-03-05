@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -14,8 +15,8 @@ import java.util.Date;
 public class Notifications {
     private Long notificationId;
     private Integer isSeen;
-    private Date createAt;
-    private Date updateAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
     private Long notiType;
     private Integer isPopular;
     private UsersEntity user;

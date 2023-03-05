@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,7 +82,7 @@ public class RoleServiceImpl implements RoleService {
         //SET ROLE_NAME = role
         //WHERE ROLE_ID = id;
         rolesEntity.setRoleName(role.getRoleName());
-        rolesEntity.setUpdateAt(new Date());
+        rolesEntity.setUpdateAt(LocalDateTime.now());
 
         rolesRepository.save(rolesEntity);
         return role;

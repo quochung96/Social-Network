@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -94,8 +95,8 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public FriendRequests createFriendRequest(long userId, FriendRequests request) {
         FriendRequestEntity friendRequestEntity= new FriendRequestEntity();
-        request.setCreateAt(new Date());
-        request.setUpdateAt(new Date());
+        request.setCreateAt(LocalDateTime.now());
+        request.setUpdateAt(LocalDateTime.now());
         request.setReceiveUser(usersRepository.findById(userId).get());
         BeanUtils.copyProperties(request, friendRequestEntity);
         friendRequestRepository.save(friendRequestEntity);
@@ -105,7 +106,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public FriendRequests updateFriendRequest(long id, FriendRequests request) {
         FriendRequestEntity friendRequestEntity= friendRequestRepository.findById(id).get();
-        friendRequestEntity.setUpdateAt(new Date());
+        friendRequestEntity.setUpdateAt(LocalDateTime.now());
         friendRequestEntity.setIsAccepted(request.getIsAccepted());
         friendRequestRepository.save(friendRequestEntity);
 

@@ -1,11 +1,12 @@
 package com.example.memories.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -31,10 +32,10 @@ public class FriendRequestEntity {
     private int isAccepted;
     @Column(name = "IS_ARCHIEVED")
     private int isArchived;
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT")
-    private Date createAt;
-    @Temporal(TemporalType.DATE)
+    private LocalDateTime createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_At")
-    private Date updateAt;
+    private LocalDateTime updateAt;
 }

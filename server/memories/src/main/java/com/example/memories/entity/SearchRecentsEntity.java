@@ -1,11 +1,12 @@
 package com.example.memories.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,13 +29,13 @@ public class SearchRecentsEntity {
     @Column(name = "PAGE_ID")
     private Long pageId;
 
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT")
-    private Date createAt;
+    private LocalDateTime createAt;
 
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_AT")
-    private Date updateAt;
+    private LocalDateTime updateAt;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")

@@ -7,7 +7,7 @@ const Comment = ({comment}) => {
       <Avatar alt = "avatar" src = {comment.users.avatar_url} />
       <Box flexDirection = 'column'>
       <Box sx = {{background: 'whitesmoke',display: 'flex', flexDirection: 'row', borderRadius: 5, minHeight: 70,minWidth: 400 ,maxWidth: 500}}>
-        <Box sx ={{flexDirection: 'column',display: 'flex',justifyContent: 'center'}}>
+        <Box sx ={{flexDirection: 'column',display: 'flex',justifyContent: 'center', wordWrap: 'break-word',whiteSpace: 'pre-wrap'}}>
           <Typography sx = {{marginLeft: 3,marginBottom: 0.5,fontWeight: '600',opacity: 0.8}}>{comment.users.userName}</Typography>
           <Typography sx = {{marginLeft: 3}}>{comment.cmtContent}</Typography>
         </Box>

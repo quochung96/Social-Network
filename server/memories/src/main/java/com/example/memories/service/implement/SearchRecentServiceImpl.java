@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,8 +43,8 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     @Override
     public SearchRecents createSearch(Long userId, SearchRecents searchRecents) {
         SearchRecentsEntity newSearchRecent = new SearchRecentsEntity();
-        searchRecents.setCreateAt(new Date());
-        searchRecents.setUpdateAt(new Date());
+        searchRecents.setCreateAt(LocalDateTime.now());
+        searchRecents.setUpdateAt(LocalDateTime.now());
         searchRecents.setUser(usersRepository.findById(userId).get());
         BeanUtils.copyProperties(searchRecents, newSearchRecent);
         searchRecentsRepository.save(newSearchRecent);
@@ -53,7 +54,7 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     @Override
     public SearchRecents updateSearch(Long id, SearchRecents searchRecents) {
         SearchRecentsEntity newSearchRecents = searchRecentsRepository.findById(id).get();
-        newSearchRecents.setUpdateAt(new Date());
+        newSearchRecents.setUpdateAt(LocalDateTime.now());
         searchRecents.setSearchType(searchRecents.getSearchType());
         searchRecentsRepository.save(newSearchRecents);
 

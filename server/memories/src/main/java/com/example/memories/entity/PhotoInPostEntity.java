@@ -1,9 +1,10 @@
 package com.example.memories.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
@@ -12,8 +13,8 @@ public class PhotoInPostEntity {
     public PhotoInPostEntity() {}
     public PhotoInPostEntity(String photoUrl){
         this.photoUrl = photoUrl;
-        this.createAt = new Date();
-        this.updateAt = new Date();
+        this.createAt = LocalDateTime.now();
+        this.updateAt = LocalDateTime.now();
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +27,16 @@ public class PhotoInPostEntity {
     @Column(name = "PHOTO_URL")
     private String photoUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "POST_ID")
-    private PostsEntity post;
-    @Temporal(TemporalType.DATE)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="POST_ID")
+    private PostsEntity posts;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT", nullable = true)
-    private Date createAt;
+    private LocalDateTime createAt;
 
-
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_AT", nullable = true)
-    private Date updateAt;
+    private LocalDateTime updateAt;
 
 }

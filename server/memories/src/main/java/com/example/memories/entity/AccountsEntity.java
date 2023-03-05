@@ -1,6 +1,8 @@
 package com.example.memories.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Email;
@@ -10,7 +12,7 @@ import lombok.*;
 
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /*
     @author Anh Dung
@@ -66,10 +68,10 @@ public class AccountsEntity implements Serializable {
     @JoinColumn(name = "USER_ID") // Liên kết với nhau qua khóa ngoại USER_ID
     private UsersEntity users;
 
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT")
-    private Date createAt;
-    @Temporal(TemporalType.DATE)
+    private LocalDateTime createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_AT")
-    private Date updateAt;
+    private LocalDateTime updateAt;
 }

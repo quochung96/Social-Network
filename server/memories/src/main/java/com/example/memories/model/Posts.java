@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,9 +23,9 @@ public class Posts {
     private String permission;
 
     private UsersEntity user;
-    private Date createAt;
+    private LocalDateTime createAt;
 
-    private Date updateAt;
+    private LocalDateTime updateAt;
 
     private int isArchieved;
 

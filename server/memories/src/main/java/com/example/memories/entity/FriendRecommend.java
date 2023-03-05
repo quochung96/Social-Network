@@ -1,11 +1,12 @@
 package com.example.memories.entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -14,12 +15,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name="FRIENDRECOMMEND")
 public class FriendRecommend {
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT")
-    private Date createAt;
-    @Temporal(TemporalType.DATE)
+    private LocalDateTime createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_At")
-    private Date updateAt;
+    private LocalDateTime updateAt;
 
     @Id
     @OneToOne

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -27,6 +28,6 @@ public class Accounts {
     private int isArchieved;
     private RolesEntity roles;
     private UsersEntity users;
-    private Date createAt;
-    private Date updateAt;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }

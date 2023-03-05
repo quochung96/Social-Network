@@ -6,10 +6,9 @@ import EditProfile from './EditProfile/EditProfile';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../../actions/users';
 import { getPostByUserId } from '../../actions/posts';
-import {getRequestBySendUserId} from '../../actions/friendRequest';
+import {getRequestBySendUserId,getRequests} from '../../actions/friendRequest';
 import FeedProfile from './FeedProfile';
-import { useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useParams,useLocation } from 'react-router-dom';
 
 const Profile = ({user,userProfile}) => {
   const dispatch = useDispatch();
@@ -24,6 +23,7 @@ const Profile = ({user,userProfile}) => {
   useEffect(() => {
     dispatch(getUser(id));
     dispatch(getRequestBySendUserId(user.user_id));
+    dispatch(getRequests());
     dispatch(getPostByUserId(id));
   },[dispatch, id, user?.user_id,location]);
 

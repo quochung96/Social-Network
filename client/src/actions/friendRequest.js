@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING,FETCH_ALL_REQUEST,FETCH_REQUEST_USER,CREATE, UPDATE, DELETE } from "../constants/actionTypes";
+import { FETCH_RESPONSE_USER,START_LOADING, END_LOADING,FETCH_ALL_REQUEST,FETCH_REQUEST_USER,CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 import * as api from '../api/index.js';
 
 export const getRequestBySendUserId = (userId) => async(dispatch) => {
@@ -32,6 +32,19 @@ export const getRequestByReceiveUserId = (userId) => async(dispatch) => {
     const { data } = await api.fetchReceiveUserFriendRequest(userId);
 
     dispatch({ type: FETCH_REQUEST_USER, payload: {request: data}});
+    dispatch({type: END_LOADING});
+
+  }catch(e){
+    console.log(e);
+  }
+}
+export const getResponseByUserId = (userId) => async(dispatch) => {
+  try{
+    dispatch({type: START_LOADING});
+
+    const { data } = await api.fetchReceiveUserFriendRequest(userId);
+
+    dispatch({ type: FETCH_RESPONSE_USER, payload: {response: data}});
     dispatch({type: END_LOADING});
 
   }catch(e){
