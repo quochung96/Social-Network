@@ -21,14 +21,15 @@ import java.time.Instant;
 public class LoggerAspect {
     private Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
     @Around("execution(* com.example.memories.*.*(..))")
-    public void before(@NotNull ProceedingJoinPoint joinPoint) throws Throwable{
-       logger.info(joinPoint.getSignature().toString() + "method start");
+    public Object before(@NotNull ProceedingJoinPoint joinPoint) throws Throwable{
+        logger.info(joinPoint.getSignature().toString() + "method start");
         Instant startTime = Instant.now(); //Get the current time
         Object result = joinPoint.proceed();
         Instant endTime = Instant.now();
         long timeProcess = Duration.between(startTime, endTime).toMillis(); // Subtract the time process -> Get the time running
-        logger.info("Time executed: "+ joinPoint.getSignature().toString() + "running end");
+        logger.info("Time executed: "+ joinPoint.getSignature().toString() + "running end" + timeProcess);
         logger.info(joinPoint.getSignature().toString() + "end");
+        return result;
     }
     @AfterThrowing(value = "execution(* com.example.memories.*.*(..))", throwing = "e")
     public void logExeption(@NotNull JoinPoint joinPoint, @NotNull Exception e){

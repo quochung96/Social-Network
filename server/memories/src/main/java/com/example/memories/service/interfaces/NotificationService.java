@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface NotificationService {
     public List<Notifications> getAllNotification();
-    Notifications createNotification(Long userId, Long postId, Notifications notification);
-    Notifications updateNotification(Long id, Notifications notification);
-    Notifications getNotiById(Long id);
-    Boolean deleteNotiById(Long id);
+    Notifications createNotification(long userId, long postId, Notifications notification);
+    Notifications updateNotification(long id, Notifications notification);
+    Notifications getNotificationById(long id);
+    Boolean deleteNotificationById(long id);
 
 }

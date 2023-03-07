@@ -42,7 +42,6 @@ export const createCommentByUserId = (userId,postId,newComment) => API.post(`/us
 
 //Chat
 
-
 //Authentication
 export const signin = (formData) => API.post('accounts/signin',formData); // OK
 export const signup = (formData) => API.post('accounts/signup',formData); // OK

@@ -1,12 +1,10 @@
 package com.example.memories.builder;
 
-import com.example.memories.entity.UsersEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 
 /*
     @author Anh Dung

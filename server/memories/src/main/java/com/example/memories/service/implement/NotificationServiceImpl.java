@@ -47,19 +47,23 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notifications createNotification(Long userId, Long postId, Notifications notification) {
+    public Notifications createNotification(long userId, long postId, Notifications notification) {
         NotificationsEntity newNotification = new NotificationsEntity();
         notification.setCreateAt(LocalDateTime.now());
         notification.setUpdateAt(LocalDateTime.now());
-        notification.setUser(usersRepository.findById(userId).get());
-        notification.setPost(postsRepository.findById(postId).get());
+        if(usersRepository.findById(userId).isPresent()) {
+            notification.setUser(usersRepository.findById(userId).get());
+        }
+        if(postsRepository.findById(postId).isPresent()) {
+            notification.setPost(postsRepository.findById(postId).get());
+        }
         BeanUtils.copyProperties(notification, newNotification);
         notificationsRepository.save(newNotification);
         return notification;
     }
 
     @Override
-    public Notifications updateNotification(Long id, Notifications notification) {
+    public Notifications updateNotification(long id, Notifications notification) {
         NotificationsEntity newNotification = notificationsRepository.findById(id).get();
         newNotification.setUpdateAt(LocalDateTime.now());
         newNotification.setNotiId(notification.getNotiType());
@@ -71,7 +75,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notifications getNotiById(Long id) {
+    public Notifications getNotificationById(long id) {
         NotificationsEntity notificationsEntity = notificationsRepository.findById(id).get();
         Notifications notification = new Notifications();
         BeanUtils.copyProperties(notificationsEntity, notification);
@@ -79,7 +83,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Boolean deleteNotiById(Long id) {
+    public Boolean deleteNotificationById(long id) {
         notificationsRepository.deleteById(id);
         return true;
     }

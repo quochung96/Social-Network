@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import {
+  Collapse,
   AppBar,
   Typography,
   Box,
@@ -30,13 +31,17 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { useDispatch,useSelector } from "react-redux";
 import * as actionType from "../../../constants/actionTypes";
 import {getRequestByReceiveUserId} from '../../../actions/friendRequest';
+import Notifications from '../../Notifications/Notifications';
 
 const NavbarPost = ({ user, setUser, userProfile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorElUser, setAnchorElUser] = useState(null);
-
+  const [expanded, setExpanded] = useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -106,11 +111,15 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
         </Box>
         <div className={classes.header_right}>
           <div className={classes.header_info}>
-            <IconButton>
+            <IconButton onClick = {handleExpandClick}>
               <Badge badgeContent={17} color="error">
                 <NotificationsNoneIcon fontSize="medium" />
               </Badge>
             </IconButton>
+            <Collapse in = {expanded} timeout = "auto" unmountOnExit>
+              {/*Notifications*/}
+              <Notifications />
+            </Collapse>
             <IconButton onClick = {() => navigate("/friendRequest")}>
               <Badge badgeContent={request.filter((rq) => rq.isAccepted === 0).length} color="error">
                 <PeopleAltIcon fontSize="medium" />

@@ -19,18 +19,18 @@ public class NotificationsEntity {
     @Column(name = "NOTI_ID", nullable = false)
     private Long notiId;
 
-    @Column(name = "IS_SEEN", nullable = true)
+    @Column(name = "IS_SEEN", nullable = false)
     private Integer isSeen;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "CREATE_AT", nullable = true )
+    @Column(name = "CREATE_AT" )
     private LocalDateTime createAt;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "UPDATE_AT", nullable = true)
+    @Column(name = "UPDATE_AT")
     private LocalDateTime updateAt;
 
-    @Column(name = "NOTI_TYPE", nullable = true)
+    @Column(name = "NOTI_TYPE")
     private Long notiType;
 
     @ManyToOne
@@ -41,6 +41,6 @@ public class NotificationsEntity {
     @JoinColumn(name = "POST_ID")
     private PostsEntity post;
 
-    @Column(name = "IS_POPULAR", nullable = true)
+    @Column(name = "IS_POPULAR")
     private Integer isPopular;
 }

@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "net": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-file-base64": "^1.0.3",
@@ -27,6 +28,8 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5",
     "web-vitals": "^3.1.1"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Message = () => {
   return (
@@ -8,4 +8,4 @@ const Message = () => {
   )
 }
 
-export default Message;
+export default Message

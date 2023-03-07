@@ -1,7 +1,6 @@
 package com.example.memories.builder;
 
 import com.example.memories.entity.RolesEntity;
-import com.example.memories.entity.UsersEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,10 +48,6 @@ public class AccountBuilder implements UserDetails {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private RolesEntity roles;
-
-//    @OneToOne //Đánh dấu quan hệ 1-1 với User
-//    @JoinColumn(name = "USER_ID") // Liên kết với nhau qua khóa ngoại USER_ID
-//    private UsersEntity users;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATE_AT")

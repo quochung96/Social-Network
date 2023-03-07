@@ -247,7 +247,7 @@ const Post = ({post,user,userProfile}) => {
       {post.photoInPost.photoUrl && (
         <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <CardMedia
-              sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
+              sx = {{width: '118%', height: 'auto', objectFit: 'cover'}}
               component="img"
               image = {post.photoInPost.photoUrl}
               alt="img-post"
