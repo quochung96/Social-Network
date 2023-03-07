@@ -21,7 +21,7 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
         }
     });
     const uResponse = userResponse.filter(rp => Number(rp.sendUser.user_id) === Number(id));
-    const uRequest = userRequest.filter(rq => Number(rq.sendUser.user_id) === Number(id));
+    const uRequest = userRequest.filter(rq => Number(rq.receiveUser.user_id) === Number(id));
     useEffect(() => {
         console.log("userRequest",userRequest);
         console.log("userResponse",userResponse);
@@ -102,7 +102,7 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
                 </ButtonBase>
                 : 
                 <>
-                { userRequest.length !== 0 ? 
+                {userRequest.length !== 0 ? 
                 <>
                 {(uRequest[0].isAccepted === 0) ?
                     <>
@@ -126,7 +126,7 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
                                 </Box>
                         </ButtonBase>
                         </>    
-                            }
+                         }
                     </>
                  : 
                  <>
