@@ -5,7 +5,7 @@ import { Box,Grid, Container, Skeleton } from '@mui/material';
 const ListFriendFeeds = ({user}) => {
   const {isLoading,requests} = useSelector((state) => state.requests);
   if(isLoading && !requests) return 'No friends found';
-  const listFriends = requests.filter(item => (item.receiveUser.user_id === user.user_id || item.sendUser.user_id === user)) 
+  const listFriends = requests.filter(item => (item.receiveUser.user_id === user.user_id || item.sendUser.user_id === user.user_id)) 
   return (
     isLoading ? (
         <Container >

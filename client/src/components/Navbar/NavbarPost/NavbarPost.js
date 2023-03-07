@@ -8,6 +8,9 @@ import {
   IconButton,
   Avatar,
   Tooltip,
+  InputAdornment,
+  Autocomplete,
+  TextField
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Menu from "@mui/material/Menu";
@@ -16,10 +19,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import memoriesLogo from "../../../assets/icons/memories-Logo.png";
 import useStyles from "./styles";
 import {
-  Search,
-  SearchIconWrapper,
   StyledToolbar,
-  StyledInputBase,
   UserBox,
 } from "../../widgets/Styles";
 import { Link, useNavigate } from "react-router-dom";
@@ -63,6 +63,13 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
     navigate("/auth");
     setUser(null);
   };
+  const options = [
+    { title: 'Option 1' },
+    { title: 'Option 2' },
+    { title: 'Option 3' },
+    { title: 'Option 4' },
+    { title: 'Option 5' },
+  ];
   const {request} = useSelector((state) => state.requests);
   useEffect(() => {
     dispatch(getRequestByReceiveUserId(user?.user_id));
@@ -76,17 +83,32 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Link to="/posts">
               <img src={memoriesLogo} alt="icon" height="60px" />
-            </Link>
+            </Link>     
           </Box>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon fontSize="large" />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
+            {/*SEARCH*/}
+            <Autocomplete
+              sx = {{width: '300px'}}
+              options={options}
+              getOptionLabel={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Search"
+                  variant="outlined"
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                    classes: {
+                      root: classes.root
+                    }
+                  }}
+                />
+              )}
             />
-          </Search>
         </Box>
         <Box sx={{ display: { xs: "none", md: "block" } }}>
           <div className={classes.header_middle}>

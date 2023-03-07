@@ -40,9 +40,16 @@ export default makeStyles((theme) => ({
             borderRadius: 60
         }
     },
-    userName: {
-        display: 'flex',
-        alignItems: 'center',
-        textAlign: 'center',
+    root: {
+        backgroundColor: '#f2f2f2',
+        borderRadius: 4,
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: '#ccc',
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: '#007bff',
+          },
+        },
       },
 }));

@@ -1,9 +1,12 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Avatar,Box,Typography,ButtonBase} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
 const ListFriends = ({user,userRequest}) => {
   const navigate = useNavigate();
+  useEffect(() => {
+    console.log(userRequest);
+  })
   const openProfile = () => (userRequest.sendUser.user_id !== user.user_id ? navigate(`/profile/${userRequest.sendUser.user_id}`) : navigate(`/profile/${userRequest.receiveUser.user_id}`));
   return (
     <>

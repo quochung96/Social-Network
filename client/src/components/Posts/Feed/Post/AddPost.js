@@ -12,18 +12,35 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../../../api';
 import FileBase from 'react-file-base64';
+import EditAudience from './EditAudience';
+import Friends from '../../../../assets/icons/friends.png';
+import FriendsExcept from '../../../../assets/icons/friends_except.png';
+import Lock from '../../../../assets/icons/padlock.png';
 
 const AddPost = ({user,userProfile}) => {
   const [isShowImage, setIsShowImage] = useState(false);
   const [img, setImg] = useState(null);
   const [open, setOpen] = useState(false);
   const [openPermission, setOpenPermission] = useState(false);
-  const [formPost, setFormPost] = useState({content: '',photoInPost:{photoUrl: null}});
+  const [formPost, setFormPost] = useState({content: '',permission: 'Public',photoInPost:{photoUrl: null}});
+  const [audienceValue, setAudienceValue] = useState("Public");
+  const [isFriendExcept,setIsFriendExcept] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const openProfile = () => {navigate(`/profile/${userProfile?.user_id || user?.result.sub}`)};
   const handleChange = (e) => {
     setFormPost({...formPost, [e.target.name]: e.target.value}); 
+  }
+  const handleChangeAudience = (e) => {
+    setAudienceValue(e.target.value);
+    console.log({permission: audienceValue});
+    if(e.target.value === 'Friends except'){
+      setIsFriendExcept(true);
+    }
+    else{
+      setIsFriendExcept(false);
+    }
   }
   const handleShowImage = () => setIsShowImage(true);
   const handleCloseImage = () => {
@@ -33,6 +50,19 @@ const AddPost = ({user,userProfile}) => {
   const getFiles = (files) => {
     setImg(files);
     setFormPost({ ...formPost, photoInPost: {photoUrl: files.base64}});
+  }
+  const handleSubmitAudience = (e) => {
+    if(audienceValue === 'Friends except'){
+      setIsFriendExcept(true);
+    }
+    else{
+      setIsFriendExcept(false);
+      setFormPost({...formPost, permission: audienceValue});
+      setOpenPermission(false);
+    }
+  }
+  const handleFriendExcept = () => {
+    //To-do
   }
   const handleSubmit = () => {
     console.log(formPost);
@@ -57,6 +87,7 @@ const AddPost = ({user,userProfile}) => {
         break;
       default:
         setOpenPermission(false);
+        setAudienceValue("Public");
         break;
     }
   }
@@ -89,9 +120,12 @@ const AddPost = ({user,userProfile}) => {
                       <Box display = 'flex' flexDirection = 'column' sx ={{gap: '3px', marginTop: '-5px'}}>
                         <Typography>{userProfile?.userName}</Typography>
                         <Box component={"button"} onClick = {() => handleClickOpen(2)} 
-                          display= 'flex' flexDirection = 'row' justifyContent= 'center' alignItems='center' sx = {{width: '110px', height: '25px', background: '#A9A9A9',opacity: '0.7' ,borderRadius: '5px', gap: '5px', color: '#000000', cursor: 'pointer'}}>
-                          <PublicIcon fontSize='small'/>
-                          <div>Public</div>
+                          display= 'flex' flexDirection = 'row' justifyContent= 'center' alignItems='center' sx = {{width: '120px', height: '25px', background: '#A9A9A9',opacity: '0.7' ,borderRadius: '5px', gap: '5px', color: '#000000', cursor: 'pointer'}}>
+                          {audienceValue === "Public" && <PublicIcon fontSize='small'/> }
+                          {audienceValue === "Friends" && <img alt = 'icon' src = {Friends} width = "20%"/>}
+                          {audienceValue === "Friends except" && <img alt = 'icon' src = {FriendsExcept} width = "20%"/>}
+                          {audienceValue === "Only me" && <img alt = 'icon' src = {Lock} width = "20%"/>}
+                          <div>{audienceValue}</div>
                           <KeyboardArrowDownIcon fontSize = 'small'/>
                         </Box>
                       </Box>
@@ -120,14 +154,7 @@ const AddPost = ({user,userProfile}) => {
                 </DialogActions>
               </Dialog>
               {/* Open Edit Permission*/}
-              <Dialog open = {openPermission} onClose = {() => handleClose(2)}>
-                <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
-                    Edit Permission
-                    <IconButton onClick = {() => handleClose(2)} >
-                      <CancelOutlinedIcon fontSize = "large"/>
-                    </IconButton>
-                </DialogTitle>
-              </Dialog>
+              <EditAudience openAudience = {openPermission} onClose = {()=>handleClose(2)} audienceValue = {audienceValue} handleChangeAudience={handleChangeAudience} handleSubmitAudience = {handleSubmitAudience} isFriendExcept = {isFriendExcept} handleFriendExcept = {handleFriendExcept}/>
             </div>
         </Box>
         <Box display = 'flex' flexDirection = 'row' justifyContent = 'space-evenly' alignItems = 'center'>

@@ -4,22 +4,23 @@ import CommentIcon from '@mui/icons-material/Comment';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {RadioGroup,FormControl,Grid,Checkbox,Container,Paper,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
+import {Checkbox,Paper,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
 import FileBase from 'react-file-base64';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import PublicIcon from '@mui/icons-material/Public';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { updatePost,updateAudiencePost } from '../../../../actions/posts';
+
 import lineBreak from '../../../../assets/icons/Line 2.png';
-import CheckBox from '../../../widgets/Checkbox';
-import World from '../../../../assets/icons/public.png';
+import EditAudience from './EditAudience';
 import Friends from '../../../../assets/icons/friends.png';
 import FriendsExcept from '../../../../assets/icons/friends_except.png';
 import Lock from '../../../../assets/icons/padlock.png';
+import PublicIcon from '@mui/icons-material/Public';
+
 const Post = ({post,user,userProfile}) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
@@ -30,7 +31,7 @@ const Post = ({post,user,userProfile}) => {
   const [openAudience, setOpenAudience] = useState(false);
   const [openRecycleBin, setOpenRecycleBin] = useState(false);
 
-  const [audienceValue, setAudienceValue] = useState("Public");
+  const [audienceValue, setAudienceValue] = useState(post.permission);
   const handleChangeAudience = (e) => {
     setAudienceValue(e.target.value);
     console.log({permission: audienceValue});
@@ -145,36 +146,7 @@ const Post = ({post,user,userProfile}) => {
                 </Paper>
             </Collapse>
             {/* Open Edit Audience*/}
-            <Dialog open = {openAudience} onClose = {() => handleClose(2)}>
-              <DialogTitle sx = {{fontWeight: 'bold', textAlign: 'center'}}>
-                  <Container maxWidth = "xl">
-                    <Paper sx = {{display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
-                      <div style={{marginLeft: '11rem'}}>Select Audience</div>
-                      <IconButton onClick = {() => handleClose(2)} >
-                        <CancelOutlinedIcon fontSize = "large"/>
-                      </IconButton>
-                    </Paper>
-                  </Container>
-              </DialogTitle>
-              <DialogContent>
-                <Typography fontSize = '16px' fontWeight='bold'>To help friends find you, your current profile picture can be seen by everyone.</Typography>
-                <Typography variant = 'text.secondary'>You can decide who should see the other details, such as the description, likes or comments.</Typography>
-                <Grid container spacing = {4} item xs = {12} sm = {12} md = {6} sx = {{marginTop: 2}}>
-                  <FormControl>
-                  <RadioGroup value = {audienceValue} onChange = {handleChangeAudience}>
-                    <CheckBox icon = {World} title = "Public" subtitle = "Anyone on or off Memories"/>
-                    <CheckBox icon = {Friends} title = "Friends" subtitle = "Your friends on Facebook ."/>
-                    <CheckBox icon = {FriendsExcept} title = "Friends except" subtitle = "Don't show to some friends"/>
-                    <CheckBox icon = {Lock} title = "Only me" subtitle = "Only you can see your post ."/>
-                  </RadioGroup>
-                  </FormControl>
-                </Grid>
-              </DialogContent>
-              <DialogActions>
-                <Button variant = "text" onClick = {() => handleClose(2)}>Cancel</Button>
-                <Button variant = "contained" onClick = {handleSubmitAudience}>Save</Button>
-              </DialogActions>
-            </Dialog>
+            <EditAudience openAudience = {openAudience} onClose = {() => handleClose(2)} audienceValue = {audienceValue} handleChangeAudience = {handleChangeAudience} handleSubmitAudience = {handleSubmitAudience}/>
             {/* Open Edit Post*/}
             <Dialog open = {openEdit} onClose = {() => handleClose(1)}>
                 <DialogTitle sx = {{fontWeight: 'bold', alignItems: 'center', justifyContent: 'center', display: 'flex', textAlign: 'center'}}>
@@ -189,10 +161,13 @@ const Post = ({post,user,userProfile}) => {
                       <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url } sx = {{width: '60px', height: '60px'}}/>
                       <Box display = 'flex' flexDirection = 'column' sx ={{gap: '3px', marginTop: '-5px'}}>
                         <Typography>{userProfile?.userName}</Typography>
-                        <Box component={"button"} onClick = {() => console.log("Click to permission")} 
-                          display= 'flex' flexDirection = 'row' justifyContent= 'center' alignItems='center' sx = {{width: '110px', height: '25px', background: '#A9A9A9',opacity: '0.7' ,borderRadius: '5px', gap: '5px', color: '#000000', cursor: 'pointer'}}>
-                          <PublicIcon fontSize='small'/>
-                          <div>Public</div>
+                        <Box 
+                          display= 'flex' flexDirection = 'row' justifyContent= 'center' alignItems='center' sx = {{width: '110px', height: '25px', background: '#A9A9A9',opacity: '0.8' ,borderRadius: '5px', gap: '5px', color: '#000000', cursor: 'pointer'}}>
+                          {post.permission === "Public" && <PublicIcon fontSize='small'/> }
+                          {post.permission === "Friends" && <img alt = 'icon' src = {Friends} width = "20%"/>}
+                          {post.permission === "Friends except" && <img alt = 'icon' src = {FriendsExcept} width = "20%"/>}
+                          {post.permission === "Only me" && <img alt = 'icon' src = {Lock} width = "20%"/>}
+                          <div>{post.permission}</div>
                           <KeyboardArrowDownIcon fontSize = 'small'/>
                         </Box>
                       </Box>
@@ -246,12 +221,14 @@ const Post = ({post,user,userProfile}) => {
       </CardContent>
       {post.photoInPost.photoUrl && (
         <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
+        <Box sx = {{height: 'auto',width:'800px' ,background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <CardMedia
-              sx = {{width: '118%', height: 'auto', objectFit: 'cover'}}
+              sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
               component="img"
               image = {post.photoInPost.photoUrl}
               alt="img-post"
           />
+        </Box>
       </ButtonBase>
       )
       }

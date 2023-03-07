@@ -1,5 +1,5 @@
 import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material';
-import {ButtonBase, Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Container, IconButton, Paper, Typography,Box,TextField } from '@mui/material';
+import {ButtonBase, Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, IconButton, Paper, Typography,Box,TextField } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import moment from 'moment';
 import React,{useEffect,useState} from 'react';
@@ -16,7 +16,9 @@ const PostDetail = ({user,setUser,userProfile}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {id} = useParams();
-  const [formComment, setFormComment] = useState({cmtContent: ''})
+  const [formComment, setFormComment] = useState({cmtContent: ''});
+  const [readMore,setReadMore] = useState(false);
+  const linkName = readMore ? 'See less' : 'See More';
   const handleChange = (e) => {
     setFormComment({...formComment,[e.target.name]: e.target.value});
   }
@@ -33,18 +35,19 @@ const PostDetail = ({user,setUser,userProfile}) => {
   },[dispatch,id,user?.user_id]);
   useEffect(() => {
     console.log(post);
-  })
+  });
+
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}
   return (
     <Box>
         <NavbarPost user = {user} setUser = {setUser} userProfile = {userProfile}/>
-        <Container maxWidth="xl">
+        <Box width = '1300px'>
           <Paper sx = {{height: '800px', display: 'flex', flexDirection: 'row'}}>
               <Card >
                 <Box flex = {2}>
                 {post.photoInPost.photoUrl &&  (
-                  <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: '800px',background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                  <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: 'auto',width:'800px' ,background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                   <CardMedia
                         sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
                         component="img"
@@ -76,7 +79,13 @@ const PostDetail = ({user,setUser,userProfile}) => {
                     />
                     <CardContent>
                       <Typography variant="body2" color="text.secondary">
-                          {post?.content}
+                          {post.content.length <= 255 ? post?.content : (<div>
+                            {!readMore && post?.content.substring(0,255)} 
+                            {readMore && post.content}
+                            <strong style = {{marginLeft: 3, cursor: 'pointer'}} onClick = {() => setReadMore(!readMore)}>
+                              {linkName}
+                            </strong>
+                          </div>)}
                       </Typography>
                     </CardContent>
                     <Box sx ={{ paddingLeft: 2, opacity: 0.3}}>
@@ -108,7 +117,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                       ))}
                     </Box>
                 </Box>
-                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:-75,width: 520, background: 'white'}}>
+                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:10,width: 520, background: 'white',borderRadius: '30px', boxShadow: 'rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px, rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px, rgba(240, 46, 170, 0.05) 0px 25px;'}}>
                   <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
                   <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
                   </ButtonBase>
@@ -117,7 +126,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                 </Box>
               </Box>
           </Paper>
-        </Container>
+        </Box>
     </Box>
   )
 }
