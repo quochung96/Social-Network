@@ -143,4 +143,9 @@ public class PostServiceImpl implements PostService {
         postsRepository.deleteById(postId);
         return true;
     }
+
+    @Override
+    public Long countPost() {
+        return postsRepository.countAllPosts();
+    }
 }

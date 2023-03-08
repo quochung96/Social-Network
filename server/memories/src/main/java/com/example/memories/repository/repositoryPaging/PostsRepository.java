@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
     List<PostsEntity> findAll();
+
+    @Query("SELECT COUNT(1) FROM PostsEntity")
+    Long countAllPosts();
 }

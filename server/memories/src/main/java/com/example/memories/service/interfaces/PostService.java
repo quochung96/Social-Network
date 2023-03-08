@@ -21,4 +21,6 @@ public interface PostService {
     Posts getPostById(long id) throws PostNotFoundException;
 
     Boolean deletePostById(long id) throws PostNotFoundException;
+
+    Long countPost();
 }

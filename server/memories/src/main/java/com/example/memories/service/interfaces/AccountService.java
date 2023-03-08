@@ -16,4 +16,6 @@ public interface AccountService {
     Accounts getAccountById(Long id);
 
     Accounts updateAccount(Long id, Accounts account);
+
+    List<Accounts> getRecentAccountRegister();
 }
