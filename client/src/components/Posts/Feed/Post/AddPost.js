@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { createPost } from '../../../../api';
 import FileBase from 'react-file-base64';
 import EditAudience from './EditAudience';
+import EditFriendExcept from './EditFriendExcept';
 import Friends from '../../../../assets/icons/friends.png';
 import FriendsExcept from '../../../../assets/icons/friends_except.png';
 import Lock from '../../../../assets/icons/padlock.png';
@@ -22,6 +23,7 @@ const AddPost = ({user,userProfile}) => {
   const [img, setImg] = useState(null);
   const [open, setOpen] = useState(false);
   const [openPermission, setOpenPermission] = useState(false);
+  const [openFriendExcept, setOpenFriendExcept] = useState(false);
   const [formPost, setFormPost] = useState({content: '',permission: 'Public',photoInPost:{photoUrl: null}});
   const [audienceValue, setAudienceValue] = useState("Public");
   const [isFriendExcept,setIsFriendExcept] = useState(false);
@@ -37,6 +39,7 @@ const AddPost = ({user,userProfile}) => {
     console.log({permission: audienceValue});
     if(e.target.value === 'Friends except'){
       setIsFriendExcept(true);
+      setOpenFriendExcept(true);
     }
     else{
       setIsFriendExcept(false);
@@ -62,7 +65,7 @@ const AddPost = ({user,userProfile}) => {
     }
   }
   const handleFriendExcept = () => {
-    //To-do
+    setOpenFriendExcept(true);
   }
   const handleSubmit = () => {
     console.log(formPost);
@@ -75,8 +78,11 @@ const AddPost = ({user,userProfile}) => {
       case 1:
         setOpen(true);   
         break;
-      default:
+      case 2:
         setOpenPermission(true);
+        break;
+      default:
+        setOpenFriendExcept(true);
         break;
     }
   }
@@ -85,9 +91,12 @@ const AddPost = ({user,userProfile}) => {
       case 1:
         setOpen(false);   
         break;
-      default:
+      case 2:
         setOpenPermission(false);
         setAudienceValue("Public");
+        break;
+      default:
+        setOpenFriendExcept(false);
         break;
     }
   }
@@ -155,6 +164,8 @@ const AddPost = ({user,userProfile}) => {
               </Dialog>
               {/* Open Edit Permission*/}
               <EditAudience openAudience = {openPermission} onClose = {()=>handleClose(2)} audienceValue = {audienceValue} handleChangeAudience={handleChangeAudience} handleSubmitAudience = {handleSubmitAudience} isFriendExcept = {isFriendExcept} handleFriendExcept = {handleFriendExcept}/>
+              {/** Open Friend Except */}
+              <EditFriendExcept openFriendExcept = {openFriendExcept} onClose = {() => handleClose(3)}/>
             </div>
         </Box>
         <Box display = 'flex' flexDirection = 'row' justifyContent = 'space-evenly' alignItems = 'center'>

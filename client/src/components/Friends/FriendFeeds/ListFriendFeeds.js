@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React from 'react';
 import ListFriends from '../components/ListFriends';
 import {useSelector} from 'react-redux';
 import { Box,Grid, Container, Skeleton } from '@mui/material';
