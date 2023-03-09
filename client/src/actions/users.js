@@ -3,7 +3,6 @@ import * as api from '../api/index.js';
 
 
 //OK
-//Get detail of user by id
 export const getUser = (id) => async (dispatch) => {
     try{
         dispatch({type: START_LOADING});
@@ -15,7 +14,7 @@ export const getUser = (id) => async (dispatch) => {
     }
 };
 
-//Get all user in admin
+//Ok
 export const getUsers = () => async (dispatch) => {
     try{
         dispatch({type: START_LOADING});
@@ -29,7 +28,7 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
-//Create a new user in admin board
+//Ok
 export const createUser = (user) => async (dispatch) => {
     try{
         dispatch({type: START_LOADING});
@@ -42,7 +41,7 @@ export const createUser = (user) => async (dispatch) => {
     }
 }
 
-//Update user by an id
+//Ok
 export const updateUser = (id,user) => async(dispatch) => {
     try{
         const {data} = await api.updateUser(id, user);

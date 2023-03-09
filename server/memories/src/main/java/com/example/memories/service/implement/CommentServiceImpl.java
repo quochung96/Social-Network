@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.CommentsEntity;
+import com.example.memories.exeption.CommentNotFoundException;
 import com.example.memories.model.Comments;
 import com.example.memories.repository.repositoryJPA.CommentsRepository;
 import com.example.memories.repository.repositoryJPA.PostsRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,8 +33,8 @@ public class CommentServiceImpl implements CommentService {
     public Comments createComment(long postId,long userId,Comments comments){
         CommentsEntity commentsEntity = new CommentsEntity();
         comments.setIsArchieved(0);
-        comments.setUsers(usersRepository.findById(userId).get());
-        comments.setPost(postsRepository.findById(postId).get());
+        comments.setUsers(usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get(): null);
+        comments.setPost(postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null);
         comments.setCreateAt(LocalDateTime.now());
         comments.setUpdateAt(LocalDateTime.now());
         BeanUtils.copyProperties(comments,commentsEntity);
@@ -44,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
     public List<Comments> getAllCommentsPost(long postId) {
         List<CommentsEntity> commentsEntities = commentsRepository.findAllByPost(postsRepository.findById(postId).get());
 
-        List<Comments> comments = commentsEntities.stream().map(
+        return commentsEntities.stream().map(
                 cmt -> new Comments(
                         cmt.getCmtId(),
                         cmt.getCmtContent(),
@@ -56,7 +58,6 @@ public class CommentServiceImpl implements CommentService {
                         cmt.getIsArchieved()
                 )
         ).collect(Collectors.toList());
-        return comments;
     }
 
     @Override
@@ -68,18 +69,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comments updateComment(Long id, Comments comments) {
-        CommentsEntity commentsEntity = commentsRepository.findById(id).get();
-        commentsEntity.setUpdateAt(LocalDateTime.now());
-        commentsEntity.setCmtContent(comments.getCmtContent());
-        commentsEntity.setReplyTo(comments.getReplyTo());
-        commentsRepository.save(commentsEntity);
-        return comments;
+    public Comments updateComment(Long id, Comments comments) throws CommentNotFoundException {
+        try {
+            CommentsEntity commentsEntity = commentsRepository.findById(id).get();
+            commentsEntity.setUpdateAt(LocalDateTime.now());
+            commentsEntity.setCmtContent(comments.getCmtContent());
+            commentsEntity.setReplyTo(comments.getReplyTo());
+            commentsRepository.save(commentsEntity);
+            return comments;
+        }catch (NoSuchElementException e){
+            throw new CommentNotFoundException(String.format("Could not found any post with Id %s", id));
+        }
     }
 
     @Override
-    public boolean deleteComment(Long id) {
-        commentsRepository.deleteById(id);
-        return true;
+    public boolean deleteComment(Long id) throws CommentNotFoundException {
+        try {
+            commentsRepository.deleteById(id);
+            return true;
+        }
+        catch (NoSuchElementException e){
+            throw new CommentNotFoundException(String.format("Could not found any post with Id %s", id));
+        }
     }
 }

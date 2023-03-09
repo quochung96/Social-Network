@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from "react";
 import {
-  Collapse,
   AppBar,
   Typography,
   Box,
@@ -31,17 +30,13 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { useDispatch,useSelector } from "react-redux";
 import * as actionType from "../../../constants/actionTypes";
 import {getRequestByReceiveUserId} from '../../../actions/friendRequest';
-import Notifications from '../../Notifications/Notifications';
+import {getPostsBySearch} from '../../../actions/posts';
 
 const NavbarPost = ({ user, setUser, userProfile }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const classes = useStyles();
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [expanded, setExpanded] = useState(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -63,6 +58,23 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
     navigate("/auth");
     setUser(null);
   };
+  const [search,setSearch] = useState('');
+  const handleKeyPress = (e) => {
+    if(e.keyCode === 13 || e.key === 'Enter'){
+        e.preventDefault();
+        searchPost();
+    }
+  }
+  const searchPost = () => {
+    if(search.trim()){
+        console.log(search);     
+        dispatch(getPostsBySearch(String(search)));
+        navigate(`/posts/search?keyword=${search}`)
+    }
+    else{
+        navigate(`/`);
+    }
+  }
   const options = [
     { title: 'Option 1' },
     { title: 'Option 2' },
@@ -95,6 +107,10 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
                   {...params}
                   label="Search"
                   variant="outlined"
+                  onKeyPress = {handleKeyPress}
+                  multiline
+                  value = {search}
+                  onChange = {(e) => setSearch(e.target.value)}
                   InputProps={{
                     ...params.InputProps,
                     startAdornment: (
@@ -133,15 +149,11 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
         </Box>
         <div className={classes.header_right}>
           <div className={classes.header_info}>
-            <IconButton onClick = {handleExpandClick}>
+            <IconButton onClick = {() => navigate(`/notification`)}>
               <Badge badgeContent={17} color="error">
                 <NotificationsNoneIcon fontSize="medium" />
               </Badge>
             </IconButton>
-            <Collapse in = {expanded} timeout = "auto" unmountOnExit>
-              {/*Notifications*/}
-              <Notifications />
-            </Collapse>
             <IconButton onClick = {() => navigate("/friendRequest")}>
               <Badge badgeContent={request.filter((rq) => rq.isAccepted === 0).length} color="error">
                 <PeopleAltIcon fontSize="medium" />

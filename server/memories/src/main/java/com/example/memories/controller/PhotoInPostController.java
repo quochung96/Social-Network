@@ -1,4 +1,5 @@
 package com.example.memories.controller;
+import com.example.memories.exeption.PhotoNotFoundException;
 import com.example.memories.model.PhotoInPosts;
 import com.example.memories.service.interfaces.PhotoInPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PhotoInPostController {
         return ResponseEntity.ok().body(photoInPostService.getPhotoById(id));
     }
     @PutMapping("/photoinposts/{id}")
-    public ResponseEntity updatePhoto(@PathVariable Long id, @RequestBody PhotoInPosts photoInPosts){
+    public ResponseEntity updatePhoto(@PathVariable Long id, @RequestBody PhotoInPosts photoInPosts) throws PhotoNotFoundException {
         return ResponseEntity.ok().body(photoInPostService.updatePhoto(id, photoInPosts));
     }
     @PostMapping(value = "/{postId}/photoinposts", consumes={ MediaType.MULTIPART_FORM_DATA_VALUE }, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +35,7 @@ public class PhotoInPostController {
         return ResponseEntity.ok().body(photoInPostService.createPhotoInPost(postId, photoInPosts, multipartFile));
     }
     @DeleteMapping("/photoinposts/{id}")
-    public ResponseEntity deletePhoto(@PathVariable Long id){
+    public ResponseEntity deletePhoto(@PathVariable Long id) throws PhotoNotFoundException {
         return ResponseEntity.ok().body(photoInPostService.deletePhotoInPost(id));
     }
 
@@ -42,6 +43,7 @@ public class PhotoInPostController {
     )
     public @ResponseBody byte[] getImageWithMediaType() throws IOException {
         InputStream in = getClass().getResourceAsStream("/static/Post-img/1000/flower2.png");
+        assert in != null;
         return IOUtils.toByteArray(in);
     }
 

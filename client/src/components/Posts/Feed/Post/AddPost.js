@@ -32,11 +32,10 @@ const AddPost = ({user,userProfile}) => {
   const dispatch = useDispatch();
   const openProfile = () => {navigate(`/profile/${userProfile?.user_id || user?.result.sub}`)};
   const handleChange = (e) => {
-    setFormPost({...formPost, [e.target.name]: e.target.value}); 
+      setFormPost({...formPost, [e.target.name]: e.target.value}); 
   }
   const handleChangeAudience = (e) => {
     setAudienceValue(e.target.value);
-    console.log({permission: audienceValue});
     if(e.target.value === 'Friends except'){
       setIsFriendExcept(true);
       setOpenFriendExcept(true);
@@ -101,7 +100,7 @@ const AddPost = ({user,userProfile}) => {
     }
   }
   return (
-    <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '70%', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
+    <Box bgcolor = "#FFFFFF" flex = {4} p = {2} display = 'flex' flexDirection = 'column' sx = {{margin: 4,width: '750px', height: 'auto', borderRadius: '20px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 5px'}}>
         <Box display = 'flex' flexDirection = 'row'>
             <IconButton onClick = {openProfile}>
               <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url}/>
@@ -165,7 +164,7 @@ const AddPost = ({user,userProfile}) => {
               {/* Open Edit Permission*/}
               <EditAudience openAudience = {openPermission} onClose = {()=>handleClose(2)} audienceValue = {audienceValue} handleChangeAudience={handleChangeAudience} handleSubmitAudience = {handleSubmitAudience} isFriendExcept = {isFriendExcept} handleFriendExcept = {handleFriendExcept}/>
               {/** Open Friend Except */}
-              <EditFriendExcept openFriendExcept = {openFriendExcept} onClose = {() => handleClose(3)}/>
+              <EditFriendExcept user = {user} openFriendExcept = {openFriendExcept} onClose = {() => handleClose(3)}/>
             </div>
         </Box>
         <Box display = 'flex' flexDirection = 'row' justifyContent = 'space-evenly' alignItems = 'center'>

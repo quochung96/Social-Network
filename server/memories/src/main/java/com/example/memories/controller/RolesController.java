@@ -1,5 +1,6 @@
 package com.example.memories.controller;
 
+import com.example.memories.exeption.RoleNotFoundException;
 import com.example.memories.model.Roles;
 import com.example.memories.service.interfaces.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class RolesController {
         this.roleService = roleService;
     }
     @PostMapping("/role")
-    public Roles createRole(@RequestBody Roles role){
+    public Roles createRole(@RequestBody Roles role) throws Exception {
         return roleService.createRole(role);
     }
     @GetMapping("/role")
@@ -32,9 +33,8 @@ public class RolesController {
         return roleService.getAllRoles();
     }
     @DeleteMapping("/role/{id}")
-    public ResponseEntity<Map<String,Boolean>> deleteRole(@PathVariable Long id){
-        boolean deleted = false;
-        deleted = roleService.deleteRole(id);
+    public ResponseEntity<Map<String,Boolean>> deleteRole(@PathVariable Long id) throws RoleNotFoundException {
+        boolean deleted = roleService.deleteRole(id);
         Map<String,Boolean> response = new HashMap<>();
         response.put("deleted", deleted);
         return ResponseEntity.ok(response);
@@ -45,8 +45,7 @@ public class RolesController {
         return ResponseEntity.ok(role);
     }
     @PutMapping("/role/{id}")
-    public ResponseEntity<Roles> updateRole(@PathVariable Long id, @RequestBody Roles role){
-        role = roleService.updateRole(id, role);
-        return ResponseEntity.ok(role);
+    public ResponseEntity<Roles> updateRole(@PathVariable Long id, @RequestBody Roles role) throws RoleNotFoundException {
+        return ResponseEntity.ok(roleService.updateRole(id, role));
     }
 }

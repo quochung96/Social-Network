@@ -31,7 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<Notifications> getAllNotification() {
         List<NotificationsEntity> notificationsEntities = notificationsRepository.findAll();
-        List<Notifications> notifications = notificationsEntities.stream().map(
+        return notificationsEntities.stream().map(
                 notification -> new Notifications(
                         notification.getNotiId(),
                         notification.getIsSeen(),
@@ -43,7 +43,6 @@ public class NotificationServiceImpl implements NotificationService {
                         notification.getPost()
                 )
         ).collect(Collectors.toList());
-        return notifications;
     }
 
     @Override

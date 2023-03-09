@@ -13,6 +13,8 @@ import FriendRequests from './components/Friends/FriendRequests';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import {useSelector} from 'react-redux';
 import PostDetail from './components/PostDetail/PostDetail';
+import SearchPosts from './components/SearchPosts/SearchPosts';
+import Notifications from './components/Notifications/Notifications';
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -32,6 +34,8 @@ const App = () => {
               <Route path = "/friendRequest" element = {<FriendRequests user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
               <Route path = "/auth" element = {!user ? <Auth /> : <Navigate to = "/posts"/>}/>
               <Route path = "/posts" element = {!user ? <Navigate to = "/auth"/> : <Posts user = {user} setUser = {setUser} userProfile = {userProfile}/>} />
+              <Route path = "/posts/search" element = {<SearchPosts user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
+              <Route path = "/notification" element = {<Notifications user = {user} setUser = {setUser} userProfile = {userProfile}/>}/>
             </Routes>
           </Container>
         </BrowserRouter>

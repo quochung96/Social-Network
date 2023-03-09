@@ -1,19 +1,16 @@
 package com.example.memories.service.interfaces;
 
 import com.example.memories.builder.AuthenticationResponse;
+import com.example.memories.exeption.AccountNotFoundException;
 import com.example.memories.model.Accounts;
 
 import java.util.List;
 
 public interface AccountService {
     AuthenticationResponse createAccount(Accounts account) throws Exception; //Done
-
-    AuthenticationResponse authenticate(Accounts account);
-
+    AuthenticationResponse authenticate(Accounts account) throws AccountNotFoundException;
     List<Accounts> getAllAccounts();
-
-    boolean deleteAccount(Long id);
+    boolean deleteAccount(Long id) throws AccountNotFoundException;
     Accounts getAccountById(Long id);
-
-    Accounts updateAccount(Long id, Accounts account);
+    Accounts updateAccount(Long id, Accounts account) throws AccountNotFoundException;
 }

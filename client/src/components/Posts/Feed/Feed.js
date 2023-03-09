@@ -8,7 +8,7 @@ const Feed = ({user, userProfile}) => {
   //Khi nào kết nối database và xử lý xong redux thì xài này
   const {isLoading,posts} = useSelector((state) => state.posts);
   useEffect(() => {
-    console.log(posts,isLoading);
+    console.log(posts);
   })
   if(!posts && isLoading) return "No posts found";
   return (

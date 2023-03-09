@@ -11,20 +11,25 @@ import { getUser } from '../../actions/users';
 import NavbarPost from '../Navbar/NavbarPost/NavbarPost';
 import lineBreak from '../../assets/icons/Line 2.png';
 import Comment from './Comment/Comment';
-import SendIcon from '@mui/icons-material/Send';
+
 const PostDetail = ({user,setUser,userProfile}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {id} = useParams();
+  const [comment,setComment] = useState('');
   const [formComment, setFormComment] = useState({cmtContent: ''});
   const [readMore,setReadMore] = useState(false);
   const linkName = readMore ? 'See less' : 'See More';
   const handleChange = (e) => {
+    setComment(e.target.value);
     setFormComment({...formComment,[e.target.name]: e.target.value});
   }
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(createCommentByUserId(user.user_id,id,formComment));
+    if(e.keyCode === 13 || e.key === 'Enter'){
+      e.preventDefault();
+      dispatch(createCommentByUserId(user.user_id,id,formComment));
+      setComment('');
+    }
   }
   const post = useSelector((state) => state.posts.post);
   const {comments} = useSelector((state) => state.comments);
@@ -36,6 +41,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
   useEffect(() => {
     console.log(post);
   });
+
 
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}
@@ -117,12 +123,11 @@ const PostDetail = ({user,setUser,userProfile}) => {
                       ))}
                     </Box>
                 </Box>
-                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:10,width: 520, background: 'white',borderRadius: '30px', boxShadow: 'rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px, rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px, rgba(240, 46, 170, 0.05) 0px 25px;'}}>
+                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:-62,width: 520, background: 'white',borderRadius: '30px', boxShadow: 'rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px, rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px, rgba(240, 46, 170, 0.05) 0px 25px;'}}>
                   <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
                   <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
                   </ButtonBase>
-                  <TextField name = "cmtContent" onChange={handleChange} multiline label = "Write a comment..." fullWidth sx = {{marginLeft: 2,marginRight: 2}}/>
-                  <IconButton onClick = {handleSubmit}><SendIcon /></IconButton>
+                  <TextField name = "cmtContent" value = {comment} onKeyPress={handleSubmit} onChange={handleChange} multiline label = "Write a comment..." fullWidth sx = {{marginLeft: 2,marginRight: 2}}/>
                 </Box>
               </Box>
           </Paper>

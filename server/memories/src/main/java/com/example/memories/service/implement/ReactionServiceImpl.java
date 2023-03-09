@@ -37,7 +37,7 @@ public class ReactionServiceImpl implements ReactionService {
     @Override
     public List<Reactions> getAllReactions() {
         List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
-        List<Reactions> reactions = reactionsEntities.stream().map(
+        return reactionsEntities.stream().map(
                 react -> new Reactions(
                         react.getReactId(),
                         react.getCreateAt(),
@@ -47,7 +47,6 @@ public class ReactionServiceImpl implements ReactionService {
                         react.getCmtId()
                 )
         ).collect(Collectors.toList());
-        return reactions;
     }
 
     @Override

@@ -1,4 +1,4 @@
-import {FETCH_POST_USER, FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE} from "../constants/actionTypes";
+import {FETCH_BY_SEARCH,FETCH_POST_USER, FETCH_ALL, FETCH_POST, LIKE, CREATE, UPDATE, DELETE} from "../constants/actionTypes";
 const postReducer = (state = {isLoading: true, posts: []}, action)=>{
     switch (action.type) {
         case 'START_LOADING' :
@@ -10,16 +10,18 @@ const postReducer = (state = {isLoading: true, posts: []}, action)=>{
                 ...state,
                 isLoading: false
             };
+        case FETCH_BY_SEARCH:
         case FETCH_ALL:
             return {
                 ...state,
-                posts: action.payload.data
+                posts: action.payload.data,
             };
         case FETCH_POST:
             return {
                 ...state,
                 post: action.payload.post
             };
+   
         case FETCH_POST_USER:
             return {
                 ...state,

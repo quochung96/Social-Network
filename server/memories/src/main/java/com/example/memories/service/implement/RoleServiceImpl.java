@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.RolesEntity;
+import com.example.memories.exeption.RoleNotFoundException;
 import com.example.memories.model.Roles;
 import com.example.memories.repository.repositoryJPA.RolesRepository;
 import com.example.memories.service.interfaces.RoleService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /*
@@ -25,22 +27,23 @@ public class RoleServiceImpl implements RoleService {
     //Constructor
     private RolesRepository rolesRepository;
     @Override
-    public Roles createRole(Roles role) {
-        //Create new role entity
-        RolesEntity roleEntity = new RolesEntity();
-        //Copy all the properties RoleEntity assigned to Role model
-        BeanUtils.copyProperties(role, roleEntity);
-        rolesRepository.save(roleEntity);
-        return role;
+    public Roles createRole(Roles role) throws Exception {
+        try {
+            RolesEntity roleEntity = new RolesEntity();
+            //Copy all the properties RoleEntity assigned to Role model
+            BeanUtils.copyProperties(role, roleEntity);
+            rolesRepository.save(roleEntity);
+            return role;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
-
     @Override
     public List<Roles> getAllRoles() {
-        //Get all list of roles with Spring Data JPA query
-        // Select * from roles;
         List<RolesEntity> rolesEntities = rolesRepository.findAll();
         //Get all the roles
-        List<Roles> roles = rolesEntities.
+        return rolesEntities.
                 stream()
                 .map(rol -> new Roles(
                         rol.getRole_id(),
@@ -48,43 +51,42 @@ public class RoleServiceImpl implements RoleService {
                         rol.getCreateAt(),
                         rol.getUpdateAt()
                 )).collect(Collectors.toList());
-        return roles;
     }
 
     @Override
-    public boolean deleteRole(Long id) {
-        //SELECT * from ACC_ROLES
-        //WHERE ROLE_ID = id;
-        RolesEntity role = rolesRepository.findById(id).get();
-        //DELETE FROM ROLES
-        //WHERE ROLE_ID = id;
-        rolesRepository.delete(role);
-        return true;
+    public boolean deleteRole(Long id) throws RoleNotFoundException {
+        try {
+            RolesEntity role = rolesRepository.findById(id).isPresent() ? rolesRepository.findById(id).get() : null;
+            assert role != null;
+            rolesRepository.delete(role);
+            return true;
+        }catch (NoSuchElementException e){
+            throw new RoleNotFoundException(String.format("Could not found any post with Id %s", id));
+        }
     }
 
     @Override
     public Roles getRoleById(Long id) {
-        //SELECT * from ACC_ROLES
-        //WHERE ROLE_ID = id;
-        RolesEntity rolesEntity = rolesRepository.findById(id).get();
+        RolesEntity rolesEntity = rolesRepository.findById(id).isPresent() ? rolesRepository.findById(id).get() : null;
         Roles roles = new Roles();
         // Assign all the properties roleEntity to roles
+        assert rolesEntity != null;
         BeanUtils.copyProperties(rolesEntity, roles);
         return roles;
     }
 
     @Override
-    public Roles updateRole(Long id, Roles role) {
-        //SELECT * from ACC_ROLES
-        //WHERE ROLE_ID = id;
-        RolesEntity rolesEntity = rolesRepository.findById(id).get();
-        //UPDATE ACC_ROLES
-        //SET ROLE_NAME = role
-        //WHERE ROLE_ID = id;
-        rolesEntity.setRoleName(role.getRoleName());
-        rolesEntity.setUpdateAt(LocalDateTime.now());
+    public Roles updateRole(Long id, Roles role) throws RoleNotFoundException {
+        try {
+            RolesEntity rolesEntity = rolesRepository.findById(id).get();
+            rolesEntity.setRoleName(role.getRoleName());
+            rolesEntity.setUpdateAt(LocalDateTime.now());
 
-        rolesRepository.save(rolesEntity);
-        return role;
+            rolesRepository.save(rolesEntity);
+            return role;
+        }
+        catch (NoSuchElementException e){
+            throw new RoleNotFoundException(String.format("Could not found any post with Id %s", id));
+        }
     }
 }

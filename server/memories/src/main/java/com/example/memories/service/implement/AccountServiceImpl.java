@@ -6,6 +6,8 @@ import com.example.memories.config.JwtService;
 import com.example.memories.entity.AccountsEntity;
 import com.example.memories.entity.RolesEntity;
 import com.example.memories.entity.UsersEntity;
+import com.example.memories.exeption.AccountNotFoundException;
+import com.example.memories.exeption.PostNotFoundException;
 import com.example.memories.model.Accounts;
 import com.example.memories.repository.repositoryJPA.AccountBuilderRepository;
 import com.example.memories.repository.repositoryJPA.AccountsRepository;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 /*
     @author Anh Dung
@@ -95,35 +98,32 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public AuthenticationResponse authenticate(Accounts account) {
-        // Khi token được gen từ front-end -> qua lớp authentication manager
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        account.getEmail(),
-                        account.getHashPassword()
-                )
-        );
-        // Tìm xem account có email đó hay chưa --> Nếu chưa có thì throw exception
-        AccountBuilder user = accountBuilderRepository.findByEmail(account.getEmail())
-                .orElseThrow();
-
-        Long user_id = accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id();
-        //Gen token ra
-        var jwtToken = jwtService.generateToken(user);
-
-        return AuthenticationResponse.builder().token(jwtToken).
-                result(user).
-                user_id(user_id).
-                build();
+    public AuthenticationResponse authenticate(Accounts account) throws AccountNotFoundException {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            account.getEmail(),
+                            account.getHashPassword()
+                    )
+            );
+            AccountBuilder user = accountBuilderRepository.findByEmail(account.getEmail())
+                    .orElseThrow();
+            Long user_id = accountsRepository.findByEmail(account.getEmail()).isPresent() ? accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id() : null;
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder().token(jwtToken).
+                    result(user).
+                    user_id(user_id).
+                    build();
+        }
+        catch (NoSuchElementException e){
+            throw new AccountNotFoundException("User not found");
+        }
     }
 
     @Override
     public List<Accounts> getAllAccounts() {
-        //Get all list of accounts with Spring Data JPA query
-        // Select * from accounts;
         List<AccountsEntity> accountsEntities = accountsRepository.findAll();
-        //Get all the accounts
-        List<Accounts> accounts = accountsEntities.
+        return accountsEntities.
                 stream()
                 .map(acc -> new Accounts(
                         acc.getAcc_id(),
@@ -137,45 +137,42 @@ public class AccountServiceImpl implements AccountService{
                         acc.getCreateAt(),
                         acc.getUpdateAt()
                 )).collect(Collectors.toList());
-        return accounts;
     }
 
     @Override
-    public boolean deleteAccount(Long id) {
-        //SELECT * from ACCOUNTS
-        //WHERE ACC_ID = id;
-        AccountsEntity account = accountsRepository.findById(id).get();
-//        account.setIsArchieved(1);
-//        accountsRepository.save(account);
-        //DELETE FROM ACCOUNTS
-        //WHERE ACC_ID = id;
-        accountsRepository.delete(account);
-        return true;
+    public boolean deleteAccount(Long id) throws AccountNotFoundException {
+        try {
+            AccountsEntity account = accountsRepository.findById(id).isPresent() ? accountsRepository.findById(id).get() : null;
+            assert account != null;
+            accountsRepository.delete(account);
+            return true;
+        }
+        catch (NoSuchElementException e){
+            throw new AccountNotFoundException(String.format("Could not found any account with Id %s", id));
+        }
     }
 
     @Override
     public Accounts getAccountById(Long id) {
-        //SELECT * from ACCOUNTS
-        //WHERE ACC_ID = id;
-        AccountsEntity accountsEntity = accountsRepository.findById(id).get();
+        AccountsEntity accountsEntity = accountsRepository.findById(id).isPresent() ? accountsRepository.findById(id).get() : null;
         Accounts account = new Accounts();
-        // Assign all the properties AccountEntity to account
+        assert accountsEntity != null;
         BeanUtils.copyProperties(accountsEntity, account);
         return account;
     }
 
     @Override
-    public Accounts updateAccount(Long id, Accounts account) {
-        //SELECT * from ACC_ROLES
-        //WHERE ROLE_ID = id;
-        AccountsEntity accountsEntity = accountsRepository.findById(id).get();
-        //UPDATE ACCOUNTS
-        //SET PHONE_NUM = phone_number
-        //WHERE ACC_ID = id;
-        accountsEntity.setPhone_number(account.getPhone_number());
-        accountsEntity.setEmail(account.getEmail());
-        accountsEntity.setUpdateAt(LocalDateTime.now());
-        accountsRepository.save(accountsEntity);
-        return account;
+    public Accounts updateAccount(Long id, Accounts account) throws AccountNotFoundException {
+        try {
+            AccountsEntity accountsEntity = accountsRepository.findById(id).isPresent() ? accountsRepository.findById(id).get() : null;
+            assert accountsEntity != null;
+            accountsEntity.setPhone_number(account.getPhone_number());
+            accountsEntity.setEmail(account.getEmail());
+            accountsEntity.setUpdateAt(LocalDateTime.now());
+            accountsRepository.save(accountsEntity);
+            return account;
+        }catch (NoSuchElementException e){
+            throw new AccountNotFoundException(String.format("Could not found any account with Id %s", id));
+        }
     }
 }

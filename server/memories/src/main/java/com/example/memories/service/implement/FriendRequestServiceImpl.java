@@ -2,6 +2,7 @@ package com.example.memories.service.implement;
 
 import com.example.memories.entity.FriendRequestEntity;
 import com.example.memories.entity.UsersEntity;
+import com.example.memories.exeption.FriendRequestsNotFoundException;
 import com.example.memories.model.FriendRequests;
 import com.example.memories.repository.repositoryJPA.FriendRequestRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,7 +32,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     public List<FriendRequests> getAllFriendRequests() {
         List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAll();
 
-        List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
+        return friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
                         data.getSendUser(),
@@ -41,7 +43,6 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                         data.getUpdateAt()
                         )
         ).collect(Collectors.toList());
-        return friendRequests;
     }
 
     @Override
@@ -57,10 +58,10 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
     @Override
     public List<FriendRequests> getFriendRequestsBySendUserId(long userId) {
-        UsersEntity user = usersRepository.findById(userId).get();
-        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllBySendUser(user).get();
-
-        List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
+        UsersEntity user = usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get() : null;
+        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllBySendUser(user).isPresent() ? friendRequestRepository.findAllBySendUser(user).get() : null;
+        assert friendRequestEntities != null;
+        return friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
                         data.getSendUser(),
@@ -71,14 +72,14 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                         data.getUpdateAt()
                 )
         ).collect(Collectors.toList());
-        return friendRequests;
     }
     @Override
     public List<FriendRequests> getFriendRequestsByReceiveUserId(long userId) {
-        UsersEntity user = usersRepository.findById(userId).get();
-        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllByReceiveUser(user).get();
+        UsersEntity user = usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get() : null;
+        List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAllByReceiveUser(user).isPresent() ? friendRequestRepository.findAllByReceiveUser(user).get() : null;
 
-        List<FriendRequests> friendRequests = friendRequestEntities.stream().map(
+        assert friendRequestEntities != null;
+        return friendRequestEntities.stream().map(
                 data -> new FriendRequests(
                         data.getReqId(),
                         data.getSendUser(),
@@ -89,55 +90,79 @@ public class FriendRequestServiceImpl implements FriendRequestService {
                         data.getUpdateAt()
                 )
         ).collect(Collectors.toList());
-        return friendRequests;
     }
 
     @Override
-    public FriendRequests createFriendRequest(long userId, FriendRequests request) {
-        FriendRequestEntity friendRequestEntity= new FriendRequestEntity();
-        request.setCreateAt(LocalDateTime.now());
-        request.setUpdateAt(LocalDateTime.now());
-        request.setReceiveUser(usersRepository.findById(userId).get());
-        BeanUtils.copyProperties(request, friendRequestEntity);
-        friendRequestRepository.save(friendRequestEntity);
-        return request;
+    public FriendRequests createFriendRequest(long userId, FriendRequests request) throws Exception {
+        try {
+            FriendRequestEntity friendRequestEntity = new FriendRequestEntity();
+            request.setCreateAt(LocalDateTime.now());
+            request.setUpdateAt(LocalDateTime.now());
+            request.setReceiveUser(usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get() : null);
+            BeanUtils.copyProperties(request, friendRequestEntity);
+            friendRequestRepository.save(friendRequestEntity);
+            return request;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
-    public FriendRequests updateFriendRequest(long id, FriendRequests request) {
-        FriendRequestEntity friendRequestEntity= friendRequestRepository.findById(id).get();
-        friendRequestEntity.setUpdateAt(LocalDateTime.now());
-        friendRequestEntity.setIsAccepted(request.getIsAccepted());
-        friendRequestRepository.save(friendRequestEntity);
+    public FriendRequests updateFriendRequest(long id, FriendRequests request) throws FriendRequestsNotFoundException {
+        try {
+            FriendRequestEntity friendRequestEntity = friendRequestRepository.findById(id).get();
+            friendRequestEntity.setUpdateAt(LocalDateTime.now());
+            friendRequestEntity.setIsAccepted(request.getIsAccepted());
+            friendRequestRepository.save(friendRequestEntity);
 
-        FriendRequests updateFriendRequestsResponse = new FriendRequests();
-        BeanUtils.copyProperties(friendRequestEntity, updateFriendRequestsResponse);
-        return updateFriendRequestsResponse;
+            FriendRequests updateFriendRequestsResponse = new FriendRequests();
+            BeanUtils.copyProperties(friendRequestEntity, updateFriendRequestsResponse);
+            return updateFriendRequestsResponse;
+        }
+        catch (NoSuchElementException e){
+            throw new FriendRequestsNotFoundException(String.format("Could not found any friend requests with Id %s", id));
+        }
     }
 
     @Override
-    public FriendRequests deleteFriendRequest(long id) {
-        FriendRequestEntity friendRequestEntity = friendRequestRepository.findById(id).get();
-        FriendRequests friendRequests = new FriendRequests();
-        BeanUtils.copyProperties(friendRequestEntity, friendRequests);
-        friendRequestRepository.deleteById(id);
-        return friendRequests;
+    public FriendRequests deleteFriendRequest(long id) throws FriendRequestsNotFoundException {
+        try {
+            FriendRequestEntity friendRequestEntity = friendRequestRepository.findById(id).get();
+            FriendRequests friendRequests = new FriendRequests();
+            BeanUtils.copyProperties(friendRequestEntity, friendRequests);
+            friendRequestRepository.deleteById(id);
+            return friendRequests;
+        }
+        catch (NoSuchElementException e){
+            throw new FriendRequestsNotFoundException(String.format("Could not found any friend requests with Id %s", id));
+        }
     }
 
     @Override
-    public boolean acceptFriendRequest(long id) {
-        FriendRequestEntity friendRequestEntity= friendRequestRepository.findById(id).get();
-        friendRequestEntity.setIsAccepted(1);
-        friendRequestEntity.setIsArchived(1);
-        friendRequestRepository.save(friendRequestEntity);
-        return true;
+    public boolean acceptFriendRequest(long id) throws FriendRequestsNotFoundException {
+        try {
+            FriendRequestEntity friendRequestEntity = friendRequestRepository.findById(id).get();
+            friendRequestEntity.setIsAccepted(1);
+            friendRequestEntity.setIsArchived(1);
+            friendRequestRepository.save(friendRequestEntity);
+            return true;
+        }
+        catch (NoSuchElementException e){
+            throw new FriendRequestsNotFoundException(String.format("Could not found any friend requests with Id %s", id));
+        }
     }
 
     @Override
-    public boolean cancelFriendRequest(long id) {
-        FriendRequestEntity friendRequestEntity= friendRequestRepository.findById(id).get();
-        friendRequestEntity.setIsAccepted(0);
-        friendRequestRepository.save(friendRequestEntity);
-        return true;
+    public boolean cancelFriendRequest(long id) throws FriendRequestsNotFoundException {
+        try {
+            FriendRequestEntity friendRequestEntity = friendRequestRepository.findById(id).get();
+            friendRequestEntity.setIsAccepted(0);
+            friendRequestRepository.save(friendRequestEntity);
+            return true;
+        }
+        catch (NoSuchElementException e){
+            throw new FriendRequestsNotFoundException(String.format("Could not found any friend requests with Id %s", id));
+        }
     }
 }

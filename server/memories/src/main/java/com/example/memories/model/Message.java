@@ -12,5 +12,13 @@ import java.time.LocalDateTime;
 public class Message {
     private Long id;
     private String content;
+    private String sender;
     private LocalDateTime createAt;
+    private MessageType type;
+
+    public enum MessageType{
+        CHAT,
+        JOIN,
+        LEAVE
+    }
 }

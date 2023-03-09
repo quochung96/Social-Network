@@ -1,8 +1,7 @@
-import { START_LOADING,FETCH_POST_USER, END_LOADING, FETCH_ALL, FETCH_POST, CREATE, COMMENT, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_BY_SEARCH,START_LOADING,FETCH_POST_USER, END_LOADING, FETCH_ALL, FETCH_POST, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 //OK
-//Get detail post by post_id
 export const getPost = (id) => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING });
@@ -15,6 +14,7 @@ export const getPost = (id) => async (dispatch) => {
       console.log(error);
     }
 };
+//OK
 export const getPostByUserId = (userId) => async(dispatch) => {
   try{
     dispatch({ type: START_LOADING });
@@ -27,11 +27,10 @@ export const getPostByUserId = (userId) => async(dispatch) => {
   }
 }
 //OK
-//List all posts when access in feed
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
     try {
       dispatch({ type: START_LOADING });
-      const { data } = await api.fetchPosts();
+      const { data} = await api.fetchPosts(page);
   
       dispatch({ type: FETCH_ALL, payload: {data}});
       dispatch({ type: END_LOADING });
@@ -39,18 +38,18 @@ export const getPosts = () => async (dispatch) => {
       console.log(error);
     }
 };
-// Do later
-// export const getPostsBySearch = (searchQuery) => async (dispatch) => {
-//     try {
-//       dispatch({ type: START_LOADING });
-//       const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+//OK
+export const getPostsBySearch = (keyword) => async (dispatch) => {
+    try {
+      dispatch({ type: START_LOADING });
+      const { data } = await api.fetchPostsBySearch(keyword);
   
-//       dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
-//       dispatch({ type: END_LOADING });
-//     } catch (error) {
-//       console.log(error);
-//     }
-// };
+      dispatch({ type: FETCH_BY_SEARCH, payload: { data } });
+      dispatch({ type: END_LOADING });
+    } catch (error) {
+      console.log(error);
+    }
+};
 
 //OK
 export const createPost = (user_id, post) => async (dispatch) => {
@@ -63,7 +62,7 @@ export const createPost = (user_id, post) => async (dispatch) => {
     console.log(error);
   }
 };
-//TO-DO: implement update post
+//OK
 export const updatePost = (id, post) => async (dispatch) => {
   try {
     const { data } = await api.updatePost(id, post);
@@ -73,7 +72,7 @@ export const updatePost = (id, post) => async (dispatch) => {
     console.log(error);
   }
 };
-
+//OK
 export const updateAudiencePost = (id,post) => async (dispatch) => {
   try{
     const {data} = await api.updateAudiencePost(id,post);
@@ -107,16 +106,3 @@ export const deletePost = (id) => async (dispatch) => {
     console.log(error);
   }
 };
-
-//To-do
-export const commentPost = (value, id) => async (dispatch) => {
-  try{
-    const {data} = await api.comment(value,id);
-    
-    dispatch({ type: COMMENT, payload: data });
-
-    return data.comments;
-  }catch(e){
-    console.log(e);
-  }
-}

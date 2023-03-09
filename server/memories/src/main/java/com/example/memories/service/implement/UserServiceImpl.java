@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.UsersEntity;
+import com.example.memories.exeption.UserNotFoundException;
 import com.example.memories.model.Users;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.UserService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /*
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
         // Select * from USERS;
         List<UsersEntity> usersEntities = usersRepository.findAll();
         //Get all the USERS
-        List<Users> users = usersEntities.
+        return usersEntities.
                 stream()
                 .map(us -> new Users(
                         us.getUser_id(),
@@ -57,58 +59,71 @@ public class UserServiceImpl implements UserService {
                         us.getCreateAt(),
                         us.getUpdateAt()
                 )).collect(Collectors.toList());
-        return users;
     }
 
     @Override
-    public boolean deleteUser(Long id) {
-        //SELECT * from USERS
-        //WHERE USER_ID = id;
-        UsersEntity user = usersRepository.findById(id).get();
-        //DELETE FROM USERS
-        //WHERE USER_ID = id;
-        usersRepository.delete(user);
-        return true;
+    public boolean deleteUser(Long id) throws UserNotFoundException{
+        try {
+            UsersEntity user = usersRepository.findById(id).isPresent() ? usersRepository.findById(id).get() : null;
+            //DELETE FROM USERS
+            assert user != null;
+            usersRepository.delete(user);
+            return true;
+        }
+        catch (NoSuchElementException e){
+            throw new UserNotFoundException("User is not found :%d" + id.toString());
+        }
     }
 
     @Override
-    public Users getUserById(Long id) {
-        //SELECT * from USERS
-        //WHERE USER_ID = id;
-        UsersEntity usersEntity = usersRepository.findById(id).get();
-        Users users = new Users();
-        // Assign all the properties USERProperties to users
-        BeanUtils.copyProperties(usersEntity, users);
-        return users;
+    public Users getUserById(Long id) throws UserNotFoundException {
+        try {
+            UsersEntity usersEntity = usersRepository.findById(id).isPresent() ? usersRepository.findById(id).get() : null;
+            Users users = new Users();
+            // Assign all the properties USERProperties to users
+            assert usersEntity != null;
+            BeanUtils.copyProperties(usersEntity, users);
+            return users;
+        }
+        catch (NoSuchElementException e){
+            throw new UserNotFoundException("User is not found :%d" + id.toString());
+        }
     }
 
     @Override
-    public Users updateUser(Long id, Users user) {
-        //SELECT * from USERS
-        //WHERE USER_ID = id;
-        UsersEntity usersEntity = usersRepository.findById(id).get();
-        //UPDATE USERS
-        //SET ROLE_NAME = role
-        //WHERE ROLE_ID = id;
-        usersEntity.setUserName(user.getUserName());
-        usersEntity.setBirth_day(user.getBirth_day());
-        usersEntity.setAddress(user.getAddress());
-        usersEntity.setRelationship(user.getRelationship());
-        usersEntity.setFollower(user.getFollower());
-        usersEntity.setGender(user.getGender());
-        usersEntity.setCover_url(user.getCover_url());
-        usersEntity.setAvatar_url(user.getAvatar_url());
-        usersEntity.setUpdateAt(LocalDateTime.now());
-        usersRepository.save(usersEntity);
-        return user;
+    public Users updateUser(Long id, Users user) throws UserNotFoundException {
+        try {
+            UsersEntity usersEntity = usersRepository.findById(id).isPresent() ? usersRepository.findById(id).get() : null;
+            assert usersEntity != null;
+            usersEntity.setUserName(user.getUserName());
+            usersEntity.setBirth_day(user.getBirth_day());
+            usersEntity.setAddress(user.getAddress());
+            usersEntity.setRelationship(user.getRelationship());
+            usersEntity.setFollower(user.getFollower());
+            usersEntity.setGender(user.getGender());
+            usersEntity.setCover_url(user.getCover_url());
+            usersEntity.setAvatar_url(user.getAvatar_url());
+            usersEntity.setUpdateAt(LocalDateTime.now());
+            usersRepository.save(usersEntity);
+            return user;
+        }
+        catch (NoSuchElementException e){
+            throw new UserNotFoundException("User is not found :%d" + id.toString());
+        }
     }
 
     @Override
-    public Users updateFollowerUser(Long id, Users user) {
-        UsersEntity usersEntity = usersRepository.findById(id).get();
-        usersEntity.setFollower(user.getFollower() + 1);
-        usersEntity.setUpdateAt(LocalDateTime.now());
-        usersRepository.save(usersEntity);
-        return user;
+    public Users updateFollowerUser(Long id, Users user) throws UserNotFoundException {
+        try {
+            UsersEntity usersEntity = usersRepository.findById(id).isPresent() ? usersRepository.findById(id).get() : null;
+            assert usersEntity != null;
+            usersEntity.setFollower(user.getFollower() + 1);
+            usersEntity.setUpdateAt(LocalDateTime.now());
+            usersRepository.save(usersEntity);
+            return user;
+        }
+        catch (NoSuchElementException e){
+            throw new UserNotFoundException("User is not found :%d" + id.toString());
+        }
     }
 }

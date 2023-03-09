@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -36,14 +37,15 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private PhotoInPostRepository photoInPostRepository;
     @Override
-    public PostResponse getAllPosts(int pageNo,int pageSize,String sortBy, String sortDir){
+    public PostResponse getAllPosts(int pageNo,int pageSize,String sortBy, String sortDir, String keyword){
             Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-            Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+            Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
             Page<PostsEntity> posts = postsRepository.findAll(pageable);
 
             List<PostsEntity> listOfPosts = posts.getContent();
 
-            List<Posts> content = listOfPosts.stream().map(post ->
+            List<Posts> content = listOfPosts.stream().
+                    map(post ->
                     new Posts(
                             post.getPostId(),
                             post.getContent(),
@@ -55,6 +57,11 @@ public class PostServiceImpl implements PostService {
                             post.getPhotoInPost()
                     )
             ).collect(Collectors.toList());
+            if(keyword != null) {
+                content = content.stream()
+                        .filter(subContent -> (subContent.getContent().contains(keyword) || subContent.getUser().getUserName().contains(keyword)))
+                        .collect(Collectors.toList());
+            }
             PostResponse postResponse = new PostResponse();
             postResponse.setContent(content);
             postResponse.setPageNo(posts.getNumber());
@@ -72,7 +79,7 @@ public class PostServiceImpl implements PostService {
         try {
             List<PostsEntity> postsEntity = postsRepository.findAll();
 
-            List<Posts> posts = postsEntity.stream().
+            return postsEntity.stream().
                     filter(post -> post.getUser().getUser_id() == userId).
                     map(
                             post -> new Posts(
@@ -86,7 +93,6 @@ public class PostServiceImpl implements PostService {
                                     post.getPhotoInPost()
                             )
                     ).collect(Collectors.toList());
-            return posts;
         }
         catch (NoSuchElementException e){
             throw new PostNotFoundException(String.format("Could not found any post with userId %s", userId));
@@ -97,6 +103,7 @@ public class PostServiceImpl implements PostService {
     public Posts createPost(long userID, Posts post) throws Exception {
         try {
             PostsEntity newPost = new PostsEntity();
+            assert post!=null;
             //When create a post have an image save to the database
             if (post.getPhotoInPost() != null || post.getPhotoInPost().getPhotoUrl().isEmpty()) {
                 PhotoInPostEntity photoInPostEntity = new PhotoInPostEntity(post.getPhotoInPost().getPhotoUrl());

@@ -21,7 +21,8 @@ public class MessageEntity {
     private Long id;
     @Column(name = "CONTENT",nullable = false)
     private String content;
-
+    @Column(name = "SENDER", nullable = false)
+    private String sender;
     @Column(name = "CREATE_AT",nullable = false)
     private LocalDateTime createAt;
 }

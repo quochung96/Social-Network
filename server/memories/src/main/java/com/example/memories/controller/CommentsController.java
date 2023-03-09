@@ -1,5 +1,6 @@
 package com.example.memories.controller;
 
+import com.example.memories.exeption.CommentNotFoundException;
 import com.example.memories.model.Comments;
 import com.example.memories.service.interfaces.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ public class CommentsController {
         return ResponseEntity.ok().body(commentService.getCommentById(id));
     }
     @PostMapping("/user/{userId}/comments/{postId}")
-    public ResponseEntity createComment(@PathVariable Long postId,@PathVariable Long userId, @RequestBody Comments comments){
+    public ResponseEntity createComment(@PathVariable Long postId,@PathVariable Long userId, @RequestBody Comments comments) throws Exception {
         return ResponseEntity.ok().body(commentService.createComment(postId,userId,comments));
     }
     @DeleteMapping("/comments/{id}")
-    public ResponseEntity deleteComment(@PathVariable Long id){
+    public ResponseEntity deleteComment(@PathVariable Long id) throws CommentNotFoundException {
         return ResponseEntity.ok().body(commentService.deleteComment(id));
     }
     @PutMapping("/comments/{id}")
-    public ResponseEntity  updateComment(@PathVariable Long id,@RequestBody Comments comments){
+    public ResponseEntity  updateComment(@PathVariable Long id,@RequestBody Comments comments) throws CommentNotFoundException {
         return ResponseEntity.ok().body(commentService.updateComment(id,comments));
     }
 }

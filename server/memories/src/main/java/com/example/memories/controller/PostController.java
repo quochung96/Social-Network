@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
@@ -19,12 +21,13 @@ public class PostController {
     PostService postService;
     @GetMapping("/posts")
     public ResponseEntity getAllPosts(
+            @RequestParam(value = "keyword",defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_KEYWORD,required = false) String keyword,
             @RequestParam(value = "pageNo", defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = SpringBootApplicationConstant.DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = SpringBootApplicationConstant.DEFAULT_SORT_DIRECTION, required = false) String sortDir
     ) {
-        return ResponseEntity.ok().body(postService.getAllPosts(pageNo, pageSize,sortBy, sortDir));
+        return ResponseEntity.ok().body(postService.getAllPosts(pageNo, pageSize,sortBy, sortDir,keyword));
     }
 
     @GetMapping("/{userId}/posts")

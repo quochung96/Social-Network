@@ -24,3 +24,21 @@ export const createCommentByUserId = (userId,postId,newComment) => async(dispatc
     console.log(e);
   }
 }
+export const updateComment = (id,updatedComment) => async(dispatch) => {
+  try{
+    const {data} = await api.updateComment(id,updatedComment);
+    
+    dispatch({type: UPDATE, payload: data});
+  }catch(error){
+    console.log(error);
+  }
+}
+export const deleteComment = (id) => async (dispatch) => {
+  try {
+    await api.deleteComment(id);
+
+    dispatch({ type: DELETE, payload: id });
+  } catch (error) {
+    console.log(error);
+  }
+};

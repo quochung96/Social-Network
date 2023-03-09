@@ -1,5 +1,6 @@
 package com.example.memories.controller;
 
+import com.example.memories.exeption.UserNotFoundException;
 import com.example.memories.model.Roles;
 import com.example.memories.model.Users;
 import com.example.memories.service.interfaces.RoleService;
@@ -33,26 +34,23 @@ public class UsersController {
         return userService.getAllUsers();
     }
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<Map<String,Boolean>> deleteUser(@PathVariable Long id){
-        boolean deleted = false;
-        deleted = userService.deleteUser(id);
+    public ResponseEntity<Map<String,Boolean>> deleteUser(@PathVariable Long id) throws UserNotFoundException {
+        boolean deleted = userService.deleteUser(id);
         Map<String,Boolean> response = new HashMap<>();
         response.put("deleted", deleted);
         return ResponseEntity.ok(response);
     }
     @GetMapping("/users/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable Long id){
+    public ResponseEntity<Users> getUserById(@PathVariable Long id) throws UserNotFoundException {
         Users user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
     @PutMapping("/users/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users user){
-        user = userService.updateUser(id, user);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users user) throws UserNotFoundException {
+        return ResponseEntity.ok(userService.updateUser(id, user));
     }
     @PutMapping("/users/{id}/follower")
-    public ResponseEntity<Users> updateFollowerUser(@PathVariable Long id, @RequestBody Users user){
-        user = userService.updateFollowerUser(id,user);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Users> updateFollowerUser(@PathVariable Long id, @RequestBody Users user) throws UserNotFoundException {
+        return ResponseEntity.ok(userService.updateFollowerUser(id,user));
     }
 }

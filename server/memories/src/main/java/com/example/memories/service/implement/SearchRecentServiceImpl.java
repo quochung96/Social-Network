@@ -1,6 +1,8 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.SearchRecentsEntity;
+import com.example.memories.exeption.PostNotFoundException;
+import com.example.memories.exeption.SearchRecentNotFoundException;
 import com.example.memories.model.SearchRecents;
 import com.example.memories.repository.repositoryJPA.SearchRecentsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +29,7 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     @Override
     public List<SearchRecents> getAllSearch() {
         List<SearchRecentsEntity> searchRecentsEntities = searchRecentsRepository.findAll();
-        List<SearchRecents> searchRecents = searchRecentsEntities.stream().map(
+        return searchRecentsEntities.stream().map(
                 searchRecent -> new SearchRecents(
                         searchRecent.getSearchId(),
                         searchRecent.getSearchType(),
@@ -37,30 +40,39 @@ public class SearchRecentServiceImpl implements SearchRecentService {
                         searchRecent.getUser()
                 )
         ).collect(Collectors.toList());
-        return searchRecents;
     }
 
     @Override
-    public SearchRecents createSearch(Long userId, SearchRecents searchRecents) {
-        SearchRecentsEntity newSearchRecent = new SearchRecentsEntity();
-        searchRecents.setCreateAt(LocalDateTime.now());
-        searchRecents.setUpdateAt(LocalDateTime.now());
-        searchRecents.setUser(usersRepository.findById(userId).get());
-        BeanUtils.copyProperties(searchRecents, newSearchRecent);
-        searchRecentsRepository.save(newSearchRecent);
-        return searchRecents;
+    public SearchRecents createSearch(Long userId, SearchRecents searchRecents) throws Exception {
+        try {
+            SearchRecentsEntity newSearchRecent = new SearchRecentsEntity();
+            searchRecents.setCreateAt(LocalDateTime.now());
+            searchRecents.setUpdateAt(LocalDateTime.now());
+            searchRecents.setUser(usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get() : null);
+            BeanUtils.copyProperties(searchRecents, newSearchRecent);
+            searchRecentsRepository.save(newSearchRecent);
+            return searchRecents;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
-    public SearchRecents updateSearch(Long id, SearchRecents searchRecents) {
-        SearchRecentsEntity newSearchRecents = searchRecentsRepository.findById(id).get();
-        newSearchRecents.setUpdateAt(LocalDateTime.now());
-        searchRecents.setSearchType(searchRecents.getSearchType());
-        searchRecentsRepository.save(newSearchRecents);
+    public SearchRecents updateSearch(Long id, SearchRecents searchRecents) throws SearchRecentNotFoundException {
+        try {
+            SearchRecentsEntity newSearchRecents = searchRecentsRepository.findById(id).isPresent() ? searchRecentsRepository.findById(id).get() : null;
+            assert newSearchRecents != null;
+            newSearchRecents.setUpdateAt(LocalDateTime.now());
+            searchRecents.setSearchType(searchRecents.getSearchType());
+            searchRecentsRepository.save(newSearchRecents);
 
-        SearchRecents updateSearchRecent = new SearchRecents();
-        BeanUtils.copyProperties(newSearchRecents, updateSearchRecent);
-        return updateSearchRecent;
+            SearchRecents updateSearchRecent = new SearchRecents();
+            BeanUtils.copyProperties(newSearchRecents, updateSearchRecent);
+            return updateSearchRecent;
+        }catch (NoSuchElementException e){
+            throw new SearchRecentNotFoundException(String.format("Could not found any search with Id %s", id));
+        }
     }
 
     @Override
@@ -72,8 +84,13 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     }
 
     @Override
-    public Boolean deleteSearchRecents(Long id) {
-        searchRecentsRepository.deleteById(id);
-        return true;
+    public Boolean deleteSearchRecents(Long id) throws SearchRecentNotFoundException {
+        try {
+            searchRecentsRepository.deleteById(id);
+            return true;
+        }
+        catch (NoSuchElementException e){
+            throw new SearchRecentNotFoundException(String.format("Could not found any search with Id %s", id));
+        }
     }
 }

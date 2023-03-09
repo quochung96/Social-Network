@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.PhotoInPostEntity;
+import com.example.memories.exeption.PhotoNotFoundException;
 import com.example.memories.model.PhotoInPosts;
 import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
 import com.example.memories.repository.repositoryJPA.PostsRepository;
@@ -20,6 +21,8 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,28 +38,26 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     @Override
     public List<PhotoInPosts> getAllPhoto() {
         List<PhotoInPostEntity> photoInPostEntities = photoInPostRepository.findAll();
-        List<PhotoInPosts> photoinposts = photoInPostEntities.stream().map(
-                photoinpost -> new PhotoInPosts(
-                        photoinpost.getPhotoId(),
-                        photoinpost.getIsHighlight(),
-                        photoinpost.getPhotoUrl(),
-                        photoinpost.getPosts(),
-                        photoinpost.getCreateAt(),
-                        photoinpost.getUpdateAt()
+        return photoInPostEntities.stream().map(
+                photo -> new PhotoInPosts(
+                        photo.getPhotoId(),
+                        photo.getIsHighlight(),
+                        photo.getPhotoUrl(),
+                        photo.getPosts(),
+                        photo.getCreateAt(),
+                        photo.getUpdateAt()
                 )
         ).collect(Collectors.toList());
-        return photoinposts;
     }
 
     @Override
     public PhotoInPosts createPhotoInPost(Long postId, PhotoInPosts photoInPosts, MultipartFile multipartFile) throws IOException{
         try {
             PhotoInPostEntity newPhotoInPost = new PhotoInPostEntity();
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             photoInPosts.setCreateAt(LocalDateTime.now());
             photoInPosts.setUpdateAt(LocalDateTime.now());
-            ;
-            photoInPosts.setPost(postsRepository.findById(postId).get());
+            photoInPosts.setPost(postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null);
             String uploadDir = Paths.get("server/memories/src/main/resources/static")
                     .resolve(Paths.get("post-img"))
                     .resolve(Paths.get(String.valueOf(postId))).toString();
@@ -75,28 +76,38 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
     }
 
     @Override
-    public PhotoInPosts updatePhoto(Long id, PhotoInPosts photoInPosts) {
-        PhotoInPostEntity newPhotoInPost = photoInPostRepository.findById(id).get();
-        newPhotoInPost.setUpdateAt(LocalDateTime.now());
-        newPhotoInPost.setPhotoUrl(photoInPosts.getPhotoUrl());
-        photoInPostRepository.save(newPhotoInPost);
+    public PhotoInPosts updatePhoto(Long id, PhotoInPosts photoInPosts) throws PhotoNotFoundException {
+        try {
+            PhotoInPostEntity newPhotoInPost = photoInPostRepository.findById(id).isPresent() ? photoInPostRepository.findById(id).get() : null;
+            assert newPhotoInPost != null;
+            newPhotoInPost.setUpdateAt(LocalDateTime.now());
+            newPhotoInPost.setPhotoUrl(photoInPosts.getPhotoUrl());
+            photoInPostRepository.save(newPhotoInPost);
 
-        PhotoInPosts updatePhoto = new PhotoInPosts();
-        BeanUtils.copyProperties(newPhotoInPost, updatePhoto);
-        return updatePhoto;
+            PhotoInPosts updatePhoto = new PhotoInPosts();
+            BeanUtils.copyProperties(newPhotoInPost, updatePhoto);
+            return updatePhoto;
+        }catch (NoSuchElementException e){
+            throw new PhotoNotFoundException(String.format("Could not found any photo with Id %s", id));
+        }
     }
 
     @Override
     public PhotoInPosts getPhotoById(Long id) {
-        PhotoInPostEntity photoInPostEntity = photoInPostRepository.findById(id).get();
+        PhotoInPostEntity photoInPostEntity = photoInPostRepository.findById(id).isPresent() ? photoInPostRepository.findById(id).get() : null;
         PhotoInPosts photoInPosts = new PhotoInPosts();
+        assert photoInPostEntity != null;
         BeanUtils.copyProperties(photoInPostEntity, photoInPosts);
         return photoInPosts;
     }
 
     @Override
-    public Boolean deletePhotoInPost(Long id) {
-        photoInPostRepository.deleteById(id);
-        return true;
+    public Boolean deletePhotoInPost(Long id) throws PhotoNotFoundException {
+        try {
+            photoInPostRepository.deleteById(id);
+            return true;
+        }catch (NoSuchElementException e){
+            throw new PhotoNotFoundException(String.format("Could not found any photo with Id %s", id));
+        }
     }
 }
