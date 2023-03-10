@@ -43,6 +43,12 @@ export const updateComment = (id,updatedComment) => API.get(`/comments/${id}`,up
 export const deleteComment = (id) => API.delete(`/comments/${id}`);
 //Chat
 
+//SearchRecents
+export const fetchSearchRecents = () => API.get(`/searchrecents`);
+export const fetchSearchRecentsByUserId = (userId) => API.get(`/user/${userId}/searchrecents`);
+export const createSearchRecent = (userId,newSearch) => API.post(`/user/${userId}/searchrecents`,newSearch);
+export const updateSearch = (userId,updatedSearch) => API.put(`/user/${userId}/searchrecents`,updatedSearch);
+export const deleteSearch = (id) => API.delete(`/searchrecents/${id}`);
 //Authentication
 export const signin = (formData) => API.post('accounts/signin',formData); // OK
 export const signup = (formData) => API.post('accounts/signup',formData); // OK

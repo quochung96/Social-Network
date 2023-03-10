@@ -31,18 +31,17 @@ const PostDetail = ({user,setUser,userProfile}) => {
       setComment('');
     }
   }
-  const post = useSelector((state) => state.posts.post);
-  const {comments} = useSelector((state) => state.comments);
   useEffect(() => {
     dispatch(getPost(id));
     dispatch(getUser(user?.user_id));
     dispatch(getCommentByPostId(id));
   },[dispatch,id,user?.user_id]);
+  const {post} = useSelector((state) => state.posts);
+  const {comments} = useSelector((state) => state.comments);
   useEffect(() => {
     console.log(post);
+    console.log(comments);
   });
-
-
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}
   return (
@@ -119,7 +118,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                     </Box>
                     <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap'}}>
                       {comments.map((comment) => (
-                        <Comment key = {comment.cmtId} comment = {comment}/>
+                        <Comment key = {comment.cmtId} user = {user} comment = {comment}/>
                       ))}
                     </Box>
                 </Box>

@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {deleteComment} from '../../../actions/comment';
 
-const Comment = ({comment}) => {
+const Comment = ({user,comment}) => {
   const dispatch = useDispatch();
   const [open,setOpen] = useState(false);
   const handleOpen = () => {
@@ -26,9 +26,9 @@ const Comment = ({comment}) => {
         <Box sx ={{flexDirection: 'column',display: 'flex',justifyContent: 'center', wordWrap: 'break-word',whiteSpace: 'pre-wrap'}}>
           <Stack direction = "row" justifyContent = "space-between">
             <Typography sx = {{marginLeft: 3,marginBottom: 0.5,fontWeight: '600',opacity: 0.8}}>{comment.users.userName}</Typography>
-            <IconButton onClick = {handleOpen}>
+            {user.user_id === comment.users.user_id && <IconButton onClick = {handleOpen}>
               <MoreHorizIcon />
-            </IconButton>
+            </IconButton>}
             <Dialog open = {open} onClose = {handleClose}>
               <Button onClick = {handleDelete}>Delete</Button>
               <Button onClick = {null}>Update</Button>

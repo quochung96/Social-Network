@@ -43,6 +43,24 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     }
 
     @Override
+    public List<SearchRecents> getAllSearchByUserId(Long userId) {
+        List<SearchRecentsEntity> searchRecentsEntities = searchRecentsRepository.findAll();
+        return searchRecentsEntities.stream()
+                .filter(search -> search.getUser().getUser_id() == userId)
+                .map(
+                searchRecent -> new SearchRecents(
+                        searchRecent.getSearchId(),
+                        searchRecent.getSearchType(),
+                        searchRecent.getKeyword(),
+                        searchRecent.getPageId(),
+                        searchRecent.getCreateAt(),
+                        searchRecent.getUpdateAt(),
+                        searchRecent.getUser()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    @Override
     public SearchRecents createSearch(Long userId, SearchRecents searchRecents) throws Exception {
         try {
             SearchRecentsEntity newSearchRecent = new SearchRecentsEntity();

@@ -17,7 +17,7 @@ const Rightbar = ({page}) => {
             navigate(`/posts/search?keyword=${search}`)
         }
         else{
-            navigate(`/`);
+            navigate(`/posts`);
         }
     }
     const handleKeyPress = (e) => {

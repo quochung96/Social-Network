@@ -16,15 +16,19 @@ public class SearchRecentsController {
     public ResponseEntity getAllSearchRecents(){
         return ResponseEntity.ok().body(searchRecentService.getAllSearch());
     }
+    @GetMapping("/user/{userId}/searchrecents")
+    public ResponseEntity getAllSearchRecentsByUserId(@PathVariable Long id){
+        return ResponseEntity.ok().body(searchRecentService.getAllSearchByUserId(id));
+    }
     @GetMapping("/searchrecents/{id}")
     public ResponseEntity getSearchRecentById(@PathVariable Long id){
         return ResponseEntity.ok().body(searchRecentService.getSearchById(id));
     }
-    @PostMapping("/{userId}/searchrecents")
+    @PostMapping("/user/{userId}/searchrecents")
     public ResponseEntity createSearch(@PathVariable Long userId, @RequestBody SearchRecents searchRecents) throws Exception {
         return ResponseEntity.ok().body(searchRecentService.createSearch(userId, searchRecents));
     }
-    @PutMapping("/{userId}/searchrecents")
+    @PutMapping("/user/{userId}/searchrecents")
     public ResponseEntity updateSearch(@PathVariable Long userId, @RequestBody SearchRecents searchRecents) throws SearchRecentNotFoundException{
         return ResponseEntity.ok().body(searchRecentService.updateSearch(userId,searchRecents));
     }

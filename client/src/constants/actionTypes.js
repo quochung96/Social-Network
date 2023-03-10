@@ -30,3 +30,6 @@ export const FETCH_COMMENT_POST = 'FETCH_COMMENT_POST';
 //Chat
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const SET_MESSAGES = 'SET_MESSAGES';
+
+//SEARCH
+export const FETCH_SEARCH_USER = 'FETCH_SEARCH_USER';
