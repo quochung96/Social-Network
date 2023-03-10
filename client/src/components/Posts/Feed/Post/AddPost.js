@@ -105,10 +105,10 @@ const AddPost = ({user,userProfile}) => {
             <IconButton onClick = {openProfile}>
               <Avatar alt = {user?.result.name} src = {user?.result.picture || userProfile?.avatar_url}/>
             </IconButton>
-            <Box marginTop = '10px' width = '100%' sx = {{borderRadius: '30px'}}>
+            <Box display = 'flex' justifyContent = 'center' marginTop = '10px' width = '100%' sx = {{border: '2px solid', borderRadius: '20px', borderStyle: 'groove', width: '100%', height: '40px', marginLeft: '10px'}}>
             <StyledInputBase
                 onClick = {() => handleClickOpen(1)}
-                sx = {{border: '2px solid', borderRadius: '20px', borderStyle: 'groove', width: '100%', height: '40px', marginLeft: '10px'}}
+                sx = {{width: '100%'}}   
             >
               <Typography variant='outlined'>Start a post</Typography> 
             </StyledInputBase>

@@ -4,8 +4,8 @@ import posts from './posts.js';
 import users from './users.js';
 import requests from './requests.js';
 import comments from './comments.js';
-import search from './search.js';
+import searches from './searches.js';
 
 export default combineReducers({
-    auth,posts,users,requests,comments,search
+    auth,posts,users,requests,comments,searches
 });

@@ -17,8 +17,8 @@ public class SearchRecentsController {
         return ResponseEntity.ok().body(searchRecentService.getAllSearch());
     }
     @GetMapping("/user/{userId}/searchrecents")
-    public ResponseEntity getAllSearchRecentsByUserId(@PathVariable Long id){
-        return ResponseEntity.ok().body(searchRecentService.getAllSearchByUserId(id));
+    public ResponseEntity getAllSearchRecentsByUserId(@PathVariable Long userId){
+        return ResponseEntity.ok().body(searchRecentService.getAllSearchByUserId(userId));
     }
     @GetMapping("/searchrecents/{id}")
     public ResponseEntity getSearchRecentById(@PathVariable Long id){

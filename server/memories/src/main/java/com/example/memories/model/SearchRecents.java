@@ -12,9 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class SearchRecents {
     private Long searchId;
-    private Long searchType;
     private String keyword;
-    private Long pageId;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
     private UsersEntity user;

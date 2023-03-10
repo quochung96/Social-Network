@@ -32,9 +32,7 @@ public class SearchRecentServiceImpl implements SearchRecentService {
         return searchRecentsEntities.stream().map(
                 searchRecent -> new SearchRecents(
                         searchRecent.getSearchId(),
-                        searchRecent.getSearchType(),
                         searchRecent.getKeyword(),
-                        searchRecent.getPageId(),
                         searchRecent.getCreateAt(),
                         searchRecent.getUpdateAt(),
                         searchRecent.getUser()
@@ -46,13 +44,11 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     public List<SearchRecents> getAllSearchByUserId(Long userId) {
         List<SearchRecentsEntity> searchRecentsEntities = searchRecentsRepository.findAll();
         return searchRecentsEntities.stream()
-                .filter(search -> search.getUser().getUser_id() == userId)
+                .filter(search -> search.getUser().getUser_id().equals(userId))
                 .map(
                 searchRecent -> new SearchRecents(
                         searchRecent.getSearchId(),
-                        searchRecent.getSearchType(),
                         searchRecent.getKeyword(),
-                        searchRecent.getPageId(),
                         searchRecent.getCreateAt(),
                         searchRecent.getUpdateAt(),
                         searchRecent.getUser()
@@ -82,7 +78,6 @@ public class SearchRecentServiceImpl implements SearchRecentService {
             SearchRecentsEntity newSearchRecents = searchRecentsRepository.findById(id).isPresent() ? searchRecentsRepository.findById(id).get() : null;
             assert newSearchRecents != null;
             newSearchRecents.setUpdateAt(LocalDateTime.now());
-            searchRecents.setSearchType(searchRecents.getSearchType());
             searchRecentsRepository.save(newSearchRecents);
 
             SearchRecents updateSearchRecent = new SearchRecents();

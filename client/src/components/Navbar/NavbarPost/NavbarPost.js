@@ -9,7 +9,8 @@ import {
   Tooltip,
   InputAdornment,
   Autocomplete,
-  TextField
+  TextField,
+  createFilterOptions
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Menu from "@mui/material/Menu";
@@ -31,6 +32,7 @@ import { useDispatch,useSelector } from "react-redux";
 import * as actionType from "../../../constants/actionTypes";
 import {getRequestByReceiveUserId} from '../../../actions/friendRequest';
 import {getPostsBySearch} from '../../../actions/posts';
+import {getSearchRecentsByUserId,createSearchRecent} from '../../../actions/search';
 
 const NavbarPost = ({ user, setUser, userProfile }) => {
   const navigate = useNavigate();
@@ -69,24 +71,32 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
     if(search.trim()){
         console.log(search);     
         dispatch(getPostsBySearch(String(search)));
-        navigate(`/posts/search?keyword=${search}`)
+        dispatch(createSearchRecent(user.user_id, {keyword: String(search)}))
+        navigate(`/posts/search?keyword=${search}`);
     }
     else{
         navigate(`/`);
     }
   }
-  const options = [
-    { title: 'Option 1' },
-    { title: 'Option 2' },
-    { title: 'Option 3' },
-    { title: 'Option 4' },
-    { title: 'Option 5' },
-  ];
-  const {request} = useSelector((state) => state.requests);
+  const options = [];
+  const OPTIONS_LIMIT = 5;
+  const defaultFilterOptions = createFilterOptions();
+  const filterOptions = (options, state) => {
+    return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
+  }
   useEffect(() => {
     dispatch(getRequestByReceiveUserId(user?.user_id));
+    dispatch(getSearchRecentsByUserId(user?.user_id));
   },[dispatch,user?.user_id]);
+  const {request} = useSelector((state) => state.requests);
+  const {searchUser} = useSelector((state) => state.searches);
+  useEffect(() => {
+    console.log(options);
+  })
   if(!request) {return "No requests";}
+  if(!searchUser) {return "No Search Recents";}
+  searchUser.forEach((sub) => options.push({title: sub.keyword}));
+  request.forEach((rq) => options.push({title: rq.sendUser.userName}));
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -101,6 +111,7 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
             <Autocomplete
               sx = {{width: '300px'}}
               options={options}
+              filterOptions = {filterOptions}
               getOptionLabel={(option) => option.title}
               renderInput={(params) => (
                 <TextField

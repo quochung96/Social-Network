@@ -1,6 +1,6 @@
-import { CREATE, UPDATE, DELETE, FETCH_ALL, FETCH_SEARCH_USER } from "../constants/actionTypes";
+import { CREATE, UPDATE, DELETE, FETCH_ALL_SEARCH, FETCH_SEARCH_USER } from "../constants/actionTypes";
 
-const searchReducer = (state = {isLoading: true, searchs: []}, action) => {
+const searchReducer = (state = {isLoading: true, searches: []}, action) => {
     switch(action.type){
         case 'START_LOADING':
             return {
@@ -10,10 +10,10 @@ const searchReducer = (state = {isLoading: true, searchs: []}, action) => {
             return {
                 ...state, isLoading: false
             };
-        case FETCH_ALL:
+        case FETCH_ALL_SEARCH:
             return {
                 ...state,
-                searchs: action.payload.data
+                searches: action.payload.data
             };
         case FETCH_SEARCH_USER:
             return {
@@ -23,20 +23,20 @@ const searchReducer = (state = {isLoading: true, searchs: []}, action) => {
         case CREATE:
             return {
                 ...state,
-                searchs: [
-                    ...state.searchs,
+                searches: [
+                    ...state.searches,
                     action.payload
                 ]
             };
         case UPDATE:
             return {
                 ...state,
-                searchs: state.searchs.map((search) => (search.id === action.payload.id ? action.payload : search))
+                searches: state.searches.map((search) => (search.id === action.payload.id ? action.payload : search))
             };
         case DELETE:
             return {
                 ...state,
-                searchs: state.searchs.filter((search) => search.id !== action.payload)
+                searches: state.searches.filter((search) => search.id !== action.payload)
             };
         default:
             return state;

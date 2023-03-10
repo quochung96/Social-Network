@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class CommentsController {
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
     @GetMapping("/post/{postId}/comments")
     public ResponseEntity getAllCommentsPost(@PathVariable Long postId){
         return ResponseEntity.ok().body(commentService.getAllCommentsPost(postId));

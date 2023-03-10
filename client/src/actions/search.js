@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING,CREATE, UPDATE, DELETE, FETCH_ALL, FETCH_SEARCH_USER } from "../constants/actionTypes";
+import { START_LOADING, END_LOADING,CREATE, UPDATE, DELETE, FETCH_ALL_SEARCH, FETCH_SEARCH_USER } from "../constants/actionTypes";
 import * as api from '../api/index.js';
 
 export const getSearchRecents = () => async(dispatch) => {
@@ -7,7 +7,7 @@ export const getSearchRecents = () => async(dispatch) => {
   
       const { data } = await api.fetchSearchRecents();
   
-      dispatch({ type: FETCH_ALL, payload: { data}});
+      dispatch({ type: FETCH_ALL_SEARCH, payload: { data}});
       dispatch({type: END_LOADING});
   
     }catch(e){
