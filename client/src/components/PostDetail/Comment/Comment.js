@@ -34,14 +34,14 @@ const Comment = ({user,comment}) => {
               <Button onClick = {null}>Update</Button>
             </Dialog>
           </Stack>
-          <Typography sx = {{marginLeft: 3}}>{comment.cmtContent}</Typography>
+          <Typography sx = {{marginLeft: 3, marginTop: -1}}>{comment.cmtContent}</Typography>
         </Box>
       </Box>
       <Box display = 'flex' flexDirection = 'row' justifyContent = 'space-between' width = '200px' marginLeft = '20px' marginTop = '5px'>
         <ButtonBase onClick = {console.log("Click Like")} sx = {{fontWeight: 'bold', opacity: 0.7, '&:hover': {textDecoration: 'underline'}}}>Like</ButtonBase>
         <ButtonBase onClick = {console.log("Reply")} sx = {{fontWeight: 'bold', opacity: 0.7, '&:hover': {textDecoration: 'underline'}}}>Reply</ButtonBase>
         <Tooltip title = {moment(comment.createAt).format('LLLL')}>
-          <Box sx = {{fontWeight: 'bold', opacity: 0.6,fontSize: 14,cursor: 'pointer','&:hover': {textDecoration: 'underline'}}}>{moment(comment.createAt, "YYYYMMDD").fromNow()}</Box>
+          <Box sx = {{fontWeight: 'bold', opacity: 0.6,fontSize: 14,cursor: 'pointer','&:hover': {textDecoration: 'underline'}}}>{moment(comment.createAt).format('Do MM YY, h:mm a')}</Box>
         </Tooltip>
       </Box>
       </Box>

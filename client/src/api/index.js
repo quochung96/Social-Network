@@ -30,12 +30,18 @@ export const fetchPost = (id) => API.get(`/posts/${id}`); // OK
 export const fetchPosts = (page) => API.get(`/posts?pageNo=${page}`); // OK
 export const fetchPostsBySearch = (keyword) => API.get(`/posts?keyword=${keyword}`); // OK
 export const createPost = (user_id, newPost) => API.post(`/${user_id}/posts`, newPost); // OK 
-export const likePost = (userId) => API.patch(`/user/${userId}/reactions`); // To-do
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`, {value}); // OK
 export const updatePost = (id, updatedPost) => API.put(`/posts/${id}`, updatedPost); // OK
 export const updateAudiencePost = (id,updatedPost) => API.put(`/posts/${id}/audience`,updatedPost); // OK
 export const deletePost = (id) => API.delete(`/posts/${id}`); // OK
 
+//Reactions
+export const createLike = (userId,newLike) => API.post(`/user/${userId}/reactions`,newLike); // To-do
+export const fetchAllLike = () => API.get(`/reactions`);
+export const fetchAllLikePost = (postId) => API.get(`/post/${postId}/reactions`);
+export const fetchAllLikeComment = (commentId) => API.get(`/comment/${commentId}/reactions`);
+export const updateLike = (id,updatedLike) => API.put(`/reactions/${id}`,updatedLike);
+export const deleteLike = (id) => API.delete(`/reactions/${id}`);
 //Comment
 export const fetchCommentByPostId = (postId) => API.get(`/post/${postId}/comments`); // OK
 export const createCommentByUserId = (userId,postId,newComment) => API.post(`/user/${userId}/comments/${postId}`,newComment); //OK

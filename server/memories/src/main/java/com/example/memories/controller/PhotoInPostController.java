@@ -18,12 +18,12 @@ import java.io.InputStream;
 public class PhotoInPostController {
     @Autowired
     PhotoInPostService photoInPostService;
-    @GetMapping("photoinposts")
-    public ResponseEntity getAllPhotos(){
-        return ResponseEntity.ok().body(photoInPostService.getAllPhotos());
+    @GetMapping("/user/{userId}photoinposts")
+    public ResponseEntity getAllPhotoByUserId(Long userId) throws PhotoNotFoundException{
+        return ResponseEntity.ok().body(photoInPostService.getAllPhotoByUserId(userId));
     }
     @GetMapping("/photoinposts/{id}")
-    public ResponseEntity getPhotoById(@PathVariable Long id){
+    public ResponseEntity getPhotoById(@PathVariable Long id) throws PhotoNotFoundException{
         return ResponseEntity.ok().body(photoInPostService.getPhotoById(id));
     }
     @PutMapping("/photoinposts/{id}")

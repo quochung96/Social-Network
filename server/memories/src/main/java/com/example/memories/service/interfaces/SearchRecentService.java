@@ -10,6 +10,6 @@ public interface SearchRecentService {
     List<SearchRecents> getAllSearchByUserId(Long userId);
     SearchRecents createSearch(Long userId, SearchRecents searchRecents) throws Exception;
     SearchRecents updateSearch(Long id, SearchRecents searchRecents) throws SearchRecentNotFoundException;
-    SearchRecents getSearchById(Long id);
+    SearchRecents getSearchById(Long id) throws SearchRecentNotFoundException;
     Boolean deleteSearchRecents(Long id) throws SearchRecentNotFoundException;
 }

@@ -36,18 +36,23 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
 
 
     @Override
-    public List<PhotoInPosts> getAllPhotos() {
-        List<PhotoInPostEntity> photoInPostEntities = photoInPostRepository.findAll();
-        return photoInPostEntities.stream()
-                .map(
-                photo -> new PhotoInPosts(
-                        photo.getPhotoId(),
-                        photo.getIsHighlight(),
-                        photo.getPhotoUrl(),
-                        photo.getCreateAt(),
-                        photo.getUpdateAt()
-                )
-        ).collect(Collectors.toList());
+    public List<PhotoInPosts> getAllPhotoByUserId(Long userId) throws PhotoNotFoundException {
+        try {
+            List<PhotoInPostEntity> photoInPostEntities = photoInPostRepository.findAll();
+            return photoInPostEntities.stream()
+                    .map(
+                            photo -> new PhotoInPosts(
+                                    photo.getPhotoId(),
+                                    photo.getIsHighlight(),
+                                    photo.getPhotoUrl(),
+                                    photo.getCreateAt(),
+                                    photo.getUpdateAt()
+                            )
+                    ).collect(Collectors.toList());
+        }
+        catch (NoSuchElementException e){
+            throw new PhotoNotFoundException(String.format("Could not found any post with userId %s", userId));
+        }
     }
 
     @Override
@@ -87,17 +92,22 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
             BeanUtils.copyProperties(newPhotoInPost, updatePhoto);
             return updatePhoto;
         }catch (NoSuchElementException e){
-            throw new PhotoNotFoundException(String.format("Could not found any photo with Id %s", id));
+            throw new PhotoNotFoundException(String.format("Could not found any photo with id %s", id));
         }
     }
 
     @Override
-    public PhotoInPosts getPhotoById(Long id) {
-        PhotoInPostEntity photoInPostEntity = photoInPostRepository.findById(id).isPresent() ? photoInPostRepository.findById(id).get() : null;
-        PhotoInPosts photoInPosts = new PhotoInPosts();
-        assert photoInPostEntity != null;
-        BeanUtils.copyProperties(photoInPostEntity, photoInPosts);
-        return photoInPosts;
+    public PhotoInPosts getPhotoById(Long id) throws PhotoNotFoundException {
+        try {
+            PhotoInPostEntity photoInPostEntity = photoInPostRepository.findById(id).isPresent() ? photoInPostRepository.findById(id).get() : null;
+            PhotoInPosts photoInPosts = new PhotoInPosts();
+            assert photoInPostEntity != null;
+            BeanUtils.copyProperties(photoInPostEntity, photoInPosts);
+            return photoInPosts;
+        }
+        catch (NoSuchElementException e){
+            throw new PhotoNotFoundException(String.format("Could not found any photo with Id %s", id));
+        }
     }
 
     @Override

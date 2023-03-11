@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.NotificationsEntity;
+import com.example.memories.exeption.NotificationNotFoundException;
 import com.example.memories.model.Notifications;
 import com.example.memories.repository.repositoryJPA.NotificationsRepository;
 import com.example.memories.repository.repositoryJPA.PostsRepository;
@@ -13,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -44,45 +45,85 @@ public class NotificationServiceImpl implements NotificationService {
                 )
         ).collect(Collectors.toList());
     }
-
     @Override
-    public Notifications createNotification(long userId, long postId, Notifications notification) {
-        NotificationsEntity newNotification = new NotificationsEntity();
-        notification.setCreateAt(LocalDateTime.now());
-        notification.setUpdateAt(LocalDateTime.now());
-        if(usersRepository.findById(userId).isPresent()) {
-            notification.setUser(usersRepository.findById(userId).get());
+    public List<Notifications> getAllNotiByUserId(long userId) throws NotificationNotFoundException {
+        try {
+            List<NotificationsEntity> notificationsEntities = notificationsRepository.findAll();
+            return notificationsEntities.stream().
+                    filter(notificationsEntity -> notificationsEntity.getUser().getUser_id() == userId).
+                    map(
+                            notificationsEntity -> new Notifications(
+                                    notificationsEntity.getNotiId(),
+                                    notificationsEntity.getIsSeen(),
+                                    notificationsEntity.getCreateAt(),
+                                    notificationsEntity.getUpdateAt(),
+                                    notificationsEntity.getNotiType(),
+                                    notificationsEntity.getIsPopular(),
+                                    notificationsEntity.getUser(),
+                                    notificationsEntity.getPost()
+                            )
+                    ).collect(Collectors.toList());
         }
-        if(postsRepository.findById(postId).isPresent()) {
-            notification.setPost(postsRepository.findById(postId).get());
+        catch (NoSuchElementException e){
+            throw new NotificationNotFoundException(String.format("Could not found any notification with userId %s", userId));
         }
-        BeanUtils.copyProperties(notification, newNotification);
-        notificationsRepository.save(newNotification);
-        return notification;
     }
 
     @Override
-    public Notifications updateNotification(long id, Notifications notification) {
-        NotificationsEntity newNotification = notificationsRepository.findById(id).get();
-        newNotification.setUpdateAt(LocalDateTime.now());
-        newNotification.setNotiId(notification.getNotiType());
-        notificationsRepository.save(newNotification);
-
-        Notifications updateNotification = new Notifications();
-        BeanUtils.copyProperties(newNotification, updateNotification);
-        return updateNotification;
+    public Notifications createNotification(long userId, long postId, Notifications notification) throws Exception {
+        try {
+            NotificationsEntity newNotification = new NotificationsEntity();
+            notification.setCreateAt(LocalDateTime.now());
+            notification.setUpdateAt(LocalDateTime.now());
+            if (usersRepository.findById(userId).isPresent()) {
+                notification.setUser(usersRepository.findById(userId).get());
+            }
+            if (postsRepository.findById(postId).isPresent()) {
+                notification.setPost(postsRepository.findById(postId).get());
+            }
+            BeanUtils.copyProperties(notification, newNotification);
+            notificationsRepository.save(newNotification);
+            return notification;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
-    public Notifications getNotificationById(long id) {
-        NotificationsEntity notificationsEntity = notificationsRepository.findById(id).get();
-        Notifications notification = new Notifications();
-        BeanUtils.copyProperties(notificationsEntity, notification);
-        return notification;
+    public Notifications updateNotification(long id, Notifications notification) throws NotificationNotFoundException{
+       if (notificationsRepository.findById(id).isPresent()){
+           NotificationsEntity newNotification = notificationsRepository.findById(id).get();
+           newNotification.setUpdateAt(LocalDateTime.now());
+           newNotification.setNotiId(notification.getNotiType());
+           notificationsRepository.save(newNotification);
+           Notifications updateNotification = new Notifications();
+           BeanUtils.copyProperties(newNotification, updateNotification);
+           return updateNotification;
+       }
+       else {
+           throw new NotificationNotFoundException(String.format("Could not found any notification with id %s", id));
+       }
     }
 
     @Override
-    public Boolean deleteNotificationById(long id) {
+    public Notifications getNotificationById(long id) throws NotificationNotFoundException{
+        try {
+            NotificationsEntity notificationsEntity = notificationsRepository.findById(id).get();
+            Notifications notification = new Notifications();
+            BeanUtils.copyProperties(notificationsEntity, notification);
+            return notification;
+        }
+        catch (NoSuchElementException e){
+            throw new NotificationNotFoundException(String.format("Could not found any notification with id %s", id));
+        }
+    }
+
+    @Override
+    public Boolean deleteNotificationById(long id) throws NotificationNotFoundException {
+        if (notificationsRepository.findById(id).isEmpty()){
+            throw new NotificationNotFoundException(String.format("Could not found any notification with id %s", id));
+        }
         notificationsRepository.deleteById(id);
         return true;
     }

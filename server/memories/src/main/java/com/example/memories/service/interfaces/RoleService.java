@@ -11,6 +11,6 @@ public interface RoleService {
     List<Roles> getAllRoles();
 
     boolean deleteRole(Long id) throws RoleNotFoundException;
-    Roles getRoleById(Long id);
+    Roles getRoleById(Long id) throws RoleNotFoundException;
     Roles updateRole(Long id, Roles role) throws RoleNotFoundException;
 }

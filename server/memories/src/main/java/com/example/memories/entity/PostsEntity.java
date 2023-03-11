@@ -2,6 +2,7 @@ package com.example.memories.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,10 +38,12 @@ public class PostsEntity {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT")
+    @PastOrPresent(message = "Create Date must be past or present")
     private LocalDateTime createAt;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_AT")
+    @PastOrPresent(message = "Update Date must be past or present")
     private LocalDateTime updateAt;
 
     @Column(name = "IS_ARCHIEVED")

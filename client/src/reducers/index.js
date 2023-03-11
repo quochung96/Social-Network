@@ -5,7 +5,8 @@ import users from './users.js';
 import requests from './requests.js';
 import comments from './comments.js';
 import searches from './searches.js';
+import reactions from './reactions.js';
 
 export default combineReducers({
-    auth,posts,users,requests,comments,searches
+    auth,posts,users,requests,comments,searches,reactions
 });

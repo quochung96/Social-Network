@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
 import CommentIcon from '@mui/icons-material/Comment';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
@@ -13,6 +13,7 @@ import FileBase from 'react-file-base64';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { updatePost,updateAudiencePost, deletePost } from '../../../../actions/posts';
+import {deleteLike, createLike} from '../../../../actions/reactions';
 
 import lineBreak from '../../../../assets/icons/Line 2.png';
 import EditAudience from './EditAudience';
@@ -21,7 +22,7 @@ import FriendsExcept from '../../../../assets/icons/friends_except.png';
 import Lock from '../../../../assets/icons/padlock.png';
 import PublicIcon from '@mui/icons-material/Public';
 
-const Post = ({post,user,userProfile}) => {
+const Post = ({post,reaction,user,userProfile}) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
   const [isShowImage, setIsShowImage] = useState(false);
@@ -31,15 +32,20 @@ const Post = ({post,user,userProfile}) => {
   const [openAudience, setOpenAudience] = useState(false);
   const [openRecycleBin, setOpenRecycleBin] = useState(false);
   
+  const [isLiked, setIsLiked] = useState(false);
   const [audienceValue, setAudienceValue] = useState(post.permission); //Permission post value
   const handleChangeAudience = (e) => {
     setAudienceValue(e.target.value);
     console.log({permission: audienceValue});
   }
   const handleChangeLike = (e) => {
-    console.log(e.target.checked);
     if(e.target.checked === true){
-      
+      setIsLiked(true);
+      dispatch(createLike(user.user_id,{post: {postId: Number(post.postId)}}))
+    }
+    else{
+      setIsLiked(false);
+      dispatch(deleteLike(Number(reaction.filter((react) => react.userId.user_id === user.user_id && react.post.postId === post.postId)[0].reactId)));
     }
   }
   const handleShowImage = () => setIsShowImage(true);
@@ -110,7 +116,15 @@ const Post = ({post,user,userProfile}) => {
     dispatch(deletePost(post.postId));
   }
   const openDetailPost = () => navigate(`/posts/${post.postId}`);
-  
+  useEffect(() => {
+    if(reaction.filter((react) => react.userId.user_id === user.user_id && react.post.postId === post.postId).length !== 0){
+      setIsLiked(true);
+    }
+    else{
+      setIsLiked(false);
+    }
+  }, [post.postId, reaction, user.user_id])
+
   return (
     <Card sx={{ margin: 4,width: '800px', borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
       <CardHeader
@@ -252,11 +266,19 @@ const Post = ({post,user,userProfile}) => {
       </ButtonBase>
       )
       }
-      <CardActions sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+      <CardActions sx = {{display: 'flex', flexDirection: 'column',alignItems: 'start', marginLeft: 2}}>
+        {reaction.length !== 0 &&
+          <Typography fontSize = '14px'>{reaction.length} likes</Typography>
+        }
+        <Box sx ={{ paddingLeft: 2, opacity: 0.3, paddingBottom: 2}}>
+          <img alt = 'icon' src = {lineBreak} width = '700px'/>
+        </Box>
+        <Box width = '100%' sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <IconButton aria-label="add to favorites">
           <Checkbox
             icon={<FavoriteBorder />}
             onChange = {handleChangeLike}
+            checked = {isLiked}
             checkedIcon={<Favorite sx={{ color: "red" }} />}
           />
         </IconButton>
@@ -266,6 +288,7 @@ const Post = ({post,user,userProfile}) => {
         <IconButton aria-label="share">
           <Share />
         </IconButton>
+        </Box>
       </CardActions>
     </Card>
   );

@@ -9,6 +9,7 @@ import {useLocation} from 'react-router-dom';
 import { getUser } from '../../actions/users';
 import { getPosts } from '../../actions/posts';
 import {getRequests} from '../../actions/friendRequest';
+import {getLikes} from '../../actions/reactions';
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -22,6 +23,7 @@ const Posts = ({user,setUser, userProfile}) => {
     dispatch(getPosts(Number(page) || 1));
     dispatch(getRequests());
     dispatch(getUser(user?.user_id));
+    dispatch(getLikes());
   }, [dispatch,user?.user_id,location,page]);
   const darkTheme = createTheme({
     palette: {

@@ -1,4 +1,4 @@
-import { FETCH_BY_SEARCH,START_LOADING,FETCH_POST_USER, END_LOADING, FETCH_ALL, FETCH_POST, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_BY_SEARCH,START_LOADING,FETCH_POST_USER, END_LOADING, FETCH_ALL, FETCH_POST, CREATE, UPDATE, DELETE } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 //OK
@@ -82,18 +82,6 @@ export const updateAudiencePost = (id,post) => async (dispatch) => {
     console.log(error);
   }
 }
-
-//To-do
-export const likePost = (userId) => async (dispatch) => {
-
-  try {
-    const { data } = await api.likePost(userId);
-
-    dispatch({ type: LIKE, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 //OK
 export const deletePost = (id) => async (dispatch) => {

@@ -1,10 +1,16 @@
 package com.example.memories.controller;
+import com.example.memories.exeption.InvalidRequestException;
 import com.example.memories.exeption.SearchRecentNotFoundException;
 import com.example.memories.model.SearchRecents;
 import com.example.memories.service.interfaces.SearchRecentService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -13,27 +19,42 @@ public class SearchRecentsController {
     @Autowired
     SearchRecentService searchRecentService;
     @GetMapping("/searchrecents")
-    public ResponseEntity getAllSearchRecents(){
-        return ResponseEntity.ok().body(searchRecentService.getAllSearch());
+    public ResponseEntity<List<SearchRecents>> getAllSearchRecents(BindingResult result){
+        if (result.hasErrors()){
+            throw new InvalidRequestException("Invalid Request Exception", result);
+        }
+        @Valid List<SearchRecents> searchRecentsList = searchRecentService.getAllSearch();
+        return ResponseEntity.ok().body(searchRecentsList);
     }
     @GetMapping("/user/{userId}/searchrecents")
-    public ResponseEntity getAllSearchRecentsByUserId(@PathVariable Long userId){
+    public ResponseEntity<List<SearchRecents>> getAllSearchRecentsByUserId(@PathVariable Long userId){
         return ResponseEntity.ok().body(searchRecentService.getAllSearchByUserId(userId));
     }
     @GetMapping("/searchrecents/{id}")
-    public ResponseEntity getSearchRecentById(@PathVariable Long id){
+    public ResponseEntity getSearchRecentById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws SearchRecentNotFoundException {
         return ResponseEntity.ok().body(searchRecentService.getSearchById(id));
     }
     @PostMapping("/user/{userId}/searchrecents")
-    public ResponseEntity createSearch(@PathVariable Long userId, @RequestBody SearchRecents searchRecents) throws Exception {
+    public ResponseEntity createSearch(@PathVariable Long userId, @Valid @RequestBody SearchRecents searchRecents, BindingResult result) throws Exception
+    {
+        if (result.hasErrors()){
+            return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
+        }
         return ResponseEntity.ok().body(searchRecentService.createSearch(userId, searchRecents));
     }
     @PutMapping("/user/{userId}/searchrecents")
-    public ResponseEntity updateSearch(@PathVariable Long userId, @RequestBody SearchRecents searchRecents) throws SearchRecentNotFoundException{
+    public ResponseEntity updateSearch(@PathVariable Long userId,@Valid @RequestBody SearchRecents searchRecents, BindingResult result) throws SearchRecentNotFoundException{
+        if (result.hasErrors()){
+            return ResponseEntity.badRequest().body("Validaion error: " + result.getAllErrors());
+        }
         return ResponseEntity.ok().body(searchRecentService.updateSearch(userId,searchRecents));
     }
     @DeleteMapping("/searchrecents/{id}")
-    public ResponseEntity deleteSearch(@PathVariable Long id) throws SearchRecentNotFoundException {
+    public ResponseEntity deleteSearch(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id, BindingResult result) throws SearchRecentNotFoundException
+    {
+        if (result.hasErrors()){
+            return ResponseEntity.badRequest().body("Validaion error: " + result.getAllErrors());
+        }
         return ResponseEntity.ok().body(searchRecentService.deleteSearchRecents(id));
     }
 }
