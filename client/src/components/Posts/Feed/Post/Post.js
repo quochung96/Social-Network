@@ -30,11 +30,17 @@ const Post = ({post,user,userProfile}) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openAudience, setOpenAudience] = useState(false);
   const [openRecycleBin, setOpenRecycleBin] = useState(false);
-
-  const [audienceValue, setAudienceValue] = useState(post.permission);
+  
+  const [audienceValue, setAudienceValue] = useState(post.permission); //Permission post value
   const handleChangeAudience = (e) => {
     setAudienceValue(e.target.value);
     console.log({permission: audienceValue});
+  }
+  const handleChangeLike = (e) => {
+    console.log(e.target.checked);
+    if(e.target.checked === true){
+      
+    }
   }
   const handleShowImage = () => setIsShowImage(true);
   const handleCloseImage = () => {
@@ -100,7 +106,7 @@ const Post = ({post,user,userProfile}) => {
     }
     window.location.reload(false);
   }
-  const handleSubmitDeletePost = () => {
+  const handleSubmitDeletePost = () => { // OK
     dispatch(deletePost(post.postId));
   }
   const openDetailPost = () => navigate(`/posts/${post.postId}`);
@@ -250,6 +256,7 @@ const Post = ({post,user,userProfile}) => {
         <IconButton aria-label="add to favorites">
           <Checkbox
             icon={<FavoriteBorder />}
+            onChange = {handleChangeLike}
             checkedIcon={<Favorite sx={{ color: "red" }} />}
           />
         </IconButton>

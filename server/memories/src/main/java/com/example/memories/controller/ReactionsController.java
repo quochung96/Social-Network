@@ -28,7 +28,7 @@ public class ReactionsController {
     public ResponseEntity getReactionByCommentId(@PathVariable Long commentId){
         return ResponseEntity.ok().body(reactionService.getAllReactionsByCommentId(commentId));
     }
-    @PostMapping("/{userId}/reactions")
+    @PostMapping("/user/{userId}/reactions")
     public ResponseEntity createReaction(@PathVariable Long userId, @RequestBody Reactions reactions){
         return ResponseEntity.ok().body(reactionService.createReaction(reactions));
     }

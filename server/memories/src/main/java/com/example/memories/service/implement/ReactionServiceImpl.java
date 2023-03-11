@@ -42,7 +42,7 @@ public class ReactionServiceImpl implements ReactionService {
                         react.getReactId(),
                         react.getCreateAt(),
                         react.getUpdateAt(),
-                        react.getPostId(),
+                        react.getPost(),
                         react.getUserId(),
                         react.getCmtId()
                 )
@@ -53,13 +53,13 @@ public class ReactionServiceImpl implements ReactionService {
     public List<Reactions> getAllReactionsByPostId(Long postId) {
         List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
         return reactionsEntities.stream()
-                .filter(react -> react.getPostId().getPostId().equals(postId))
+                .filter(react -> react.getPost().getPostId().equals(postId))
                 .map(
                 react -> new Reactions(
                         react.getReactId(),
                         react.getCreateAt(),
                         react.getUpdateAt(),
-                        react.getPostId(),
+                        react.getPost(),
                         react.getUserId(),
                         react.getCmtId()
                 )
@@ -76,7 +76,7 @@ public class ReactionServiceImpl implements ReactionService {
                                 react.getReactId(),
                                 react.getCreateAt(),
                                 react.getUpdateAt(),
-                                react.getPostId(),
+                                react.getPost(),
                                 react.getUserId(),
                                 react.getCmtId()
                         )

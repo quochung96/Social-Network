@@ -1,13 +1,10 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.builder.PostResponse;
-import com.example.memories.entity.PhotoInPostEntity;
-import com.example.memories.entity.PostsEntity;
+import com.example.memories.entity.*;
 import com.example.memories.exeption.PostNotFoundException;
 import com.example.memories.model.Posts;
-import com.example.memories.repository.repositoryJPA.PhotoInPostRepository;
-import com.example.memories.repository.repositoryJPA.PostsRepository;
-import com.example.memories.repository.repositoryJPA.UsersRepository;
+import com.example.memories.repository.repositoryJPA.*;
 import com.example.memories.service.interfaces.PostService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +31,13 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private UsersRepository userRepository;
 
+    @Autowired
+    private CommentsRepository commentsRepository;
+
+    @Autowired
+    private ReactionRepository reactionRepository;
+    @Autowired
+    private NotificationsRepository notificationsRepository;
     @Autowired
     private PhotoInPostRepository photoInPostRepository;
     @Override
@@ -163,8 +167,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Posts getPostById(long id) throws PostNotFoundException{
         try {
-            PostsEntity postsEntity = postsRepository.findById(id).get();
+            PostsEntity postsEntity = postsRepository.findById(id).isPresent() ? postsRepository.findById(id).get() : null;
             Posts post = new Posts();
+            assert postsEntity != null;
             BeanUtils.copyProperties(postsEntity, post);
             return post;
         }
@@ -175,10 +180,35 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Boolean deletePostById(long postId) throws PostNotFoundException{
-        if(postsRepository.findById(postId).isEmpty()) {
-            throw new PostNotFoundException(String.format(String.format("Could not found any post with Id %s", postId)));
+        try {
+            PostsEntity postsEntity = postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null;
+            assert postsEntity != null;
+            // If the post has List of comments -> need delete all -> release constraint
+            List<CommentsEntity> commentsEntity = commentsRepository.findAllByPost(postsEntity);
+            if(!commentsEntity.isEmpty()){
+                commentsRepository.deleteAll(commentsEntity);
+            }
+            // If contains photo --> Delete that image
+            PhotoInPostEntity photoInPostEntity = photoInPostRepository.findById(postsEntity.getPhotoInPost().getPhotoId()).isPresent() ? photoInPostRepository.findById(postsEntity.getPhotoInPost().getPhotoId()).get() : null;
+            if(photoInPostEntity != null){
+                photoInPostRepository.delete(photoInPostEntity);
+            }
+            //Delete all the notifications related to that post
+            List<NotificationsEntity> notificationsEntities = notificationsRepository.findAllByPost(postsEntity).isPresent() ? notificationsRepository.findAllByPost(postsEntity).stream().toList() : null;
+            if(notificationsEntities != null){
+                notificationsRepository.deleteAll(notificationsEntities);
+            }
+            //Delete all the reactions related to that post
+            List<ReactionsEntity> reactionsEntities = reactionRepository.findAllByPost(postsEntity).isPresent() ? reactionRepository.findAllByPost(postsEntity).stream().toList() : null;
+            if(reactionsEntities != null){
+                reactionRepository.deleteAll(reactionsEntities);
+            }
+            postsEntity.setUser(null);
+            postsRepository.delete(postsEntity);
+            return true;
         }
-        postsRepository.deleteById(postId);
-        return true;
+        catch (NoSuchElementException e){
+            throw new PostNotFoundException(String.format("Could not find any post within ID,%d", postId));
+        }
     }
 }

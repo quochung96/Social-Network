@@ -15,7 +15,7 @@ const Comment = ({user,comment}) => {
     setOpen(false);
   }
   const handleDelete = () => {
-    dispatch(deleteComment(comment.cmtId));
+    dispatch(deleteComment(comment.cmtId)); // OK
     window.location.reload(false);
   }
   return (

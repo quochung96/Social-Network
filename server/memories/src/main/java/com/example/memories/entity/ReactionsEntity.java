@@ -30,7 +30,7 @@ public class ReactionsEntity {
 
     @ManyToOne
     @JoinColumn(name = "POST_ID")
-    private PostsEntity postId;
+    private PostsEntity post;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")

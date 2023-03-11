@@ -26,7 +26,6 @@ const PostDetail = ({user,setUser,userProfile}) => {
   }
   const handleSubmit = (e) => {
     if(e.keyCode === 13 || e.key === 'Enter'){
-      e.preventDefault();
       dispatch(createCommentByUserId(user.user_id,id,formComment));
       setComment('');
     }

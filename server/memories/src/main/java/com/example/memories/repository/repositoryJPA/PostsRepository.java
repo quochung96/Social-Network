@@ -10,5 +10,5 @@ import java.util.Date;
 
 @Repository
 public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
-    Page<PostsEntity> findByCreateAt(Date createAt, Pageable pageable);
+
 }

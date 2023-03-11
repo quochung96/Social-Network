@@ -30,7 +30,7 @@ export const fetchPost = (id) => API.get(`/posts/${id}`); // OK
 export const fetchPosts = (page) => API.get(`/posts?pageNo=${page}`); // OK
 export const fetchPostsBySearch = (keyword) => API.get(`/posts?keyword=${keyword}`); // OK
 export const createPost = (user_id, newPost) => API.post(`/${user_id}/posts`, newPost); // OK 
-export const likePost = (id) => API.patch(`/posts/${id}/likePost`); // To-do
+export const likePost = (userId) => API.patch(`/user/${userId}/reactions`); // To-do
 export const comment = (value,id) => API.post(`/posts/${id}/commentPost`, {value}); // OK
 export const updatePost = (id, updatedPost) => API.put(`/posts/${id}`, updatedPost); // OK
 export const updateAudiencePost = (id,updatedPost) => API.put(`/posts/${id}/audience`,updatedPost); // OK
@@ -44,9 +44,9 @@ export const deleteComment = (id) => API.delete(`/comments/${id}`);
 //Chat
 
 //SearchRecents
-export const fetchSearchRecents = () => API.get(`/searchrecents`);
-export const fetchSearchRecentsByUserId = (userId) => API.get(`/user/${userId}/searchrecents`);
-export const createSearchRecent = (userId,newSearch) => API.post(`/user/${userId}/searchrecents`,newSearch);
+export const fetchSearchRecents = () => API.get(`/searchrecents`); // OK
+export const fetchSearchRecentsByUserId = (userId) => API.get(`/user/${userId}/searchrecents`); //OK
+export const createSearchRecent = (userId,newSearch) => API.post(`/user/${userId}/searchrecents`,newSearch);//OK
 export const updateSearch = (userId,updatedSearch) => API.put(`/user/${userId}/searchrecents`,updatedSearch);
 export const deleteSearch = (id) => API.delete(`/searchrecents/${id}`);
 //Authentication

@@ -15,7 +15,7 @@ public class Reactions {
     private Long reactId;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-    private PostsEntity postId;
+    private PostsEntity post;
     private UsersEntity userId;
     private CommentsEntity cmtId;
 }
