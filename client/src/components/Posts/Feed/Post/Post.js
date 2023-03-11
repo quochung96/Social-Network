@@ -12,7 +12,7 @@ import {useDispatch} from 'react-redux';
 import FileBase from 'react-file-base64';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { updatePost,updateAudiencePost } from '../../../../actions/posts';
+import { updatePost,updateAudiencePost, deletePost } from '../../../../actions/posts';
 
 import lineBreak from '../../../../assets/icons/Line 2.png';
 import EditAudience from './EditAudience';
@@ -99,6 +99,9 @@ const Post = ({post,user,userProfile}) => {
       dispatch(updateAudiencePost(post.postId, {permission: audienceValue}));
     }
     window.location.reload(false);
+  }
+  const handleSubmitDeletePost = () => {
+    dispatch(deletePost(post.postId));
   }
   const openDetailPost = () => navigate(`/posts/${post.postId}`);
   
@@ -203,6 +206,17 @@ const Post = ({post,user,userProfile}) => {
                     <CancelOutlinedIcon fontSize = "large"/>
                   </IconButton>
               </DialogTitle>
+              <DialogContent>
+              <Typography fontSize = "14px">Items in your recycle bin will be automatically deleted after 30 days. You can delete them from your recycle bin earlier by going to Activity log in your settings.</Typography>
+              </DialogContent>
+              <DialogActions>
+                <Button variant = "text" onClick = {() => handleClose(3)}>
+                  Cancel
+                </Button>
+                <Button variant = "contained" onClick = {handleSubmitDeletePost}>
+                  Move
+                </Button>
+              </DialogActions>
             </Dialog>
           </>
           )

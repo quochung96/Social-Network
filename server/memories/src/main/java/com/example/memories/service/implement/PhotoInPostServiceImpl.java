@@ -36,14 +36,17 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
 
 
     @Override
-    public List<PhotoInPosts> getAllPhoto() {
+    public List<PhotoInPosts> getAllPhotoByUserId(Long userId) {
         List<PhotoInPostEntity> photoInPostEntities = photoInPostRepository.findAll();
-        return photoInPostEntities.stream().map(
+        return photoInPostEntities.stream()
+                .filter((photo) -> photo.getUsers().getUser_id().equals(userId))
+                .map(
                 photo -> new PhotoInPosts(
                         photo.getPhotoId(),
                         photo.getIsHighlight(),
                         photo.getPhotoUrl(),
                         photo.getPosts(),
+                        photo.getUsers(),
                         photo.getCreateAt(),
                         photo.getUpdateAt()
                 )
@@ -57,7 +60,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             photoInPosts.setCreateAt(LocalDateTime.now());
             photoInPosts.setUpdateAt(LocalDateTime.now());
-            photoInPosts.setPost(postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null);
+            photoInPosts.setPosts(postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null);
             String uploadDir = Paths.get("server/memories/src/main/resources/static")
                     .resolve(Paths.get("post-img"))
                     .resolve(Paths.get(String.valueOf(postId))).toString();

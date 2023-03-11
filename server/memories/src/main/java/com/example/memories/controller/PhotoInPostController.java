@@ -18,9 +18,9 @@ import java.io.InputStream;
 public class PhotoInPostController {
     @Autowired
     PhotoInPostService photoInPostService;
-    @GetMapping("/photoinposts")
-    public ResponseEntity getAllPhoto(){
-        return ResponseEntity.ok().body(photoInPostService.getAllPhoto());
+    @GetMapping("/user/{userId}photoinposts")
+    public ResponseEntity getAllPhotoByUserId(Long userId){
+        return ResponseEntity.ok().body(photoInPostService.getAllPhotoByUserId(userId));
     }
     @GetMapping("/photoinposts/{id}")
     public ResponseEntity getPhotoById(@PathVariable Long id){

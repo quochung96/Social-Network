@@ -1,6 +1,7 @@
 package com.example.memories.model;
 
 import com.example.memories.entity.PostsEntity;
+import com.example.memories.entity.UsersEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,8 @@ public class PhotoInPosts {
     private Long photoId;
     private Integer isHighLight;
     private String photoUrl;
-    private PostsEntity post;
+    private PostsEntity posts;
+    private UsersEntity users;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 }

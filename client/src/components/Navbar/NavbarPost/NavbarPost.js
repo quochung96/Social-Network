@@ -90,9 +90,6 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
   },[dispatch,user?.user_id]);
   const {request} = useSelector((state) => state.requests);
   const {searchUser} = useSelector((state) => state.searches);
-  useEffect(() => {
-    console.log(options);
-  })
   if(!request) {return "No requests";}
   if(!searchUser) {return "No Search Recents";}
   searchUser.forEach((sub) => options.push({title: sub.keyword}));
