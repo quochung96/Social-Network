@@ -48,7 +48,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
     <Box>
         <NavbarPost user = {user} setUser = {setUser} userProfile = {userProfile}/>
         <Box width = '1300px'>
-          <Paper sx = {{height: '800px', display: 'flex', flexDirection: 'row'}}>
+          <Paper sx = {{height: '900px', display: 'flex', flexDirection: 'row'}}>
               <Card >
                 <Box flex = {2}>
                 {post.photoInPost.photoUrl &&  (
@@ -82,7 +82,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                           <Typography color = 'grey'>{moment(post?.createAt).format('LLLL')} .</Typography>
                       }
                     />
-                    <CardContent>
+                    <CardContent sx = {{height: '100px'}}>
                       <Typography variant="body2" color="text.secondary">
                           {post.content.length <= 255 ? post?.content : (<div>
                             {!readMore && post?.content.substring(0,255)} 
@@ -116,18 +116,18 @@ const PostDetail = ({user,setUser,userProfile}) => {
                     <Box sx ={{ paddingLeft: 2, opacity: 0.3}}>
                       <img alt = 'icon' src = {lineBreak} width = '450px'/>
                     </Box>
-                    <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap', marginTop: 5}}>
+                    <Box display = 'flex' flexDirection = 'row' sx = {{width: 480, background: 'white',borderRadius: '30px', boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+                      <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
+                      <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
+                      </ButtonBase>
+                    <TextField name = "cmtContent" variant = "filled" size = "small" value = {comment} onKeyPress={handleSubmit} onChange={handleChange} multiline label = "Write a comment..." fullWidth InputProps = {{ disableUnderline: true}} sx = {{marginLeft: 2,marginRight: 2}}/>
+                    </Box> 
+                    <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap', marginTop: 1}}>
                       {comments.map((comment) => (
                         <Comment key = {comment.cmtId} user = {user} comment = {comment}/>
                       ))}
                     </Box>
-                </Box>
-                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',top:400,width: 520, background: 'white',borderRadius: '30px', boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
-                  <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
-                  <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
-                  </ButtonBase>
-                  <TextField name = "cmtContent" value = {comment} onKeyPress={handleSubmit} onChange={handleChange} multiline label = "Write a comment..." fullWidth sx = {{marginLeft: 2,marginRight: 2}}/>
-                </Box>
+                </Box> 
               </Box>
           </Paper>
         </Box>

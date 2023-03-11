@@ -35,7 +35,7 @@ const Sidebar = ({ mode, setMode, user, setUser, userProfile }) => {
     setUser(null);
   };
   return (
-    <Box flex={1} p={2} sx={{display: {xs: 'none',md: 'block', marginLeft: '-20px'}}}>
+    <Box flex = {1} p={1} sx={{display: {xs: 'none',md: 'block', marginLeft: '-20px'}}}>
       <Box position = 'fixed' width = '220px'>
       <Box className = {classes.outside_container} backgroundColor = {mode === 'light' ? 'white' : 'rgba(0,0,0,0.6)'}>
         <div className = {classes.inner_container}>

@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "PHOTOINPOSTS")
 public class PhotoInPostEntity {
     public PhotoInPostEntity() {}
-    public PhotoInPostEntity(String photoUrl, UsersEntity users){
+    public PhotoInPostEntity(String photoUrl){
         this.photoUrl = photoUrl;
-        this.users = users;
         this.createAt = LocalDateTime.now();
         this.updateAt = LocalDateTime.now();
     }
@@ -38,14 +37,6 @@ public class PhotoInPostEntity {
     @Column(name = "PHOTO_URL")
     @NotBlank(message = "PhotoUrl must not be blank")
     private String photoUrl;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="POST_ID")
-    private PostsEntity posts;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="USER_ID")
-    private UsersEntity users;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT", nullable = true)
