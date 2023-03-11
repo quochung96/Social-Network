@@ -1,6 +1,7 @@
 package com.example.memories.service.implement;
 
 import com.example.memories.entity.ReactionsEntity;
+import com.example.memories.exeption.ReactionsNotFoundException;
 import com.example.memories.model.Reactions;
 import com.example.memories.repository.repositoryJPA.ReactionRepository;
 import com.example.memories.service.interfaces.ReactionService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,13 +27,18 @@ public class ReactionServiceImpl implements ReactionService {
         this.reactionRepository = reactionRepository;
     }
     @Override
-    public Reactions createReaction(Reactions reactions) {
-        ReactionsEntity reactionsEntity = new ReactionsEntity();
-        reactionsEntity.setCreateAt(LocalDateTime.now());
-        reactionsEntity.setUpdateAt(LocalDateTime.now());
-        BeanUtils.copyProperties(reactions,reactionsEntity);
-        reactionRepository.save(reactionsEntity);
-        return reactions;
+    public Reactions createReaction(Reactions reactions) throws Exception {
+        try {
+            ReactionsEntity reactionsEntity = new ReactionsEntity();
+            reactionsEntity.setCreateAt(LocalDateTime.now());
+            reactionsEntity.setUpdateAt(LocalDateTime.now());
+            BeanUtils.copyProperties(reactions,reactionsEntity);
+            reactionRepository.save(reactionsEntity);
+            return reactions;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
@@ -50,58 +57,84 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public List<Reactions> getAllReactionsByPostId(Long postId) {
-        List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
-        return reactionsEntities.stream()
-                .filter(react -> react.getPostId().getPostId().equals(postId))
-                .map(
-                react -> new Reactions(
-                        react.getReactId(),
-                        react.getCreateAt(),
-                        react.getUpdateAt(),
-                        react.getPostId(),
-                        react.getUserId(),
-                        react.getCmtId()
-                )
-        ).collect(Collectors.toList());
+    public List<Reactions> getAllReactionsByPostId(Long postId) throws ReactionsNotFoundException {
+        try {
+            List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
+            return reactionsEntities.stream()
+                    .filter(react -> react.getPostId().getPostId().equals(postId))
+                    .map(
+                            react -> new Reactions(
+                                    react.getReactId(),
+                                    react.getCreateAt(),
+                                    react.getUpdateAt(),
+                                    react.getPostId(),
+                                    react.getUserId(),
+                                    react.getCmtId()
+                            )
+                    ).collect(Collectors.toList());
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new ReactionsNotFoundException(String.format("Could not found any reaction with postId %s", postId));
+        }
     }
 
     @Override
-    public List<Reactions> getAllReactionsByCommentId(Long commentId) {
-        List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
-        return reactionsEntities.stream()
-                .filter(react -> react.getCmtId().getCmtId().equals(commentId))
-                .map(
-                        react -> new Reactions(
-                                react.getReactId(),
-                                react.getCreateAt(),
-                                react.getUpdateAt(),
-                                react.getPostId(),
-                                react.getUserId(),
-                                react.getCmtId()
-                        )
-                ).collect(Collectors.toList());
+    public List<Reactions> getAllReactionsByCommentId(Long commentId) throws ReactionsNotFoundException{
+        try {
+            List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
+            return reactionsEntities.stream()
+                    .filter(react -> react.getCmtId().getCmtId().equals(commentId))
+                    .map(
+                            react -> new Reactions(
+                                    react.getReactId(),
+                                    react.getCreateAt(),
+                                    react.getUpdateAt(),
+                                    react.getPostId(),
+                                    react.getUserId(),
+                                    react.getCmtId()
+                            )
+                    ).collect(Collectors.toList());
+        }
+        catch (NoSuchElementException e){
+            throw new ReactionsNotFoundException(String.format("Could not found any reaction with commentId %s", commentId));
+        }
     }
 
     @Override
-    public Reactions getReactionById(Long id) {
-        ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
-        Reactions reactions = new Reactions();
-        BeanUtils.copyProperties(reactionsEntity,reactions);
-        return reactions;
+    public Reactions getReactionById(Long id) throws ReactionsNotFoundException {
+        try {
+            ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
+            Reactions reactions = new Reactions();
+            BeanUtils.copyProperties(reactionsEntity,reactions);
+            return reactions;
+        }
+        catch (NoSuchElementException e){
+            throw new ReactionsNotFoundException(String.format("Could not found any reaction with id %s", id));
+        }
     }
 
     @Override
-    public Reactions updateReaction(Long id, Reactions reactions) {
-        ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
-        reactionsEntity.setUpdateAt(LocalDateTime.now());
-        reactionRepository.save(reactionsEntity);
-        return reactions;
+    public Reactions updateReaction(Long id, Reactions reactions) throws ReactionsNotFoundException {
+        try {
+            ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
+            reactionsEntity.setUpdateAt(LocalDateTime.now());
+            reactionRepository.save(reactionsEntity);
+            return reactions;
+        }
+        catch (NoSuchElementException e){
+            throw new ReactionsNotFoundException(String.format("Could not found any reaction with id %s", id));
+        }
     }
 
     @Override
-    public Boolean deleteReaction(Long id) {
-        reactionRepository.deleteById(id);
-        return true;
+    public Boolean deleteReaction(Long id) throws ReactionsNotFoundException {
+        if (reactionRepository.findById(id).isEmpty()){
+            throw new ReactionsNotFoundException(String.format("Could not found any reaction with id %s", id));
+        }
+        else {
+            reactionRepository.deleteById(id);
+            return true;
+        }
     }
 }

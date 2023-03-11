@@ -66,13 +66,19 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Roles getRoleById(Long id) {
-        RolesEntity rolesEntity = rolesRepository.findById(id).isPresent() ? rolesRepository.findById(id).get() : null;
-        Roles roles = new Roles();
-        // Assign all the properties roleEntity to roles
-        assert rolesEntity != null;
-        BeanUtils.copyProperties(rolesEntity, roles);
-        return roles;
+    public Roles getRoleById(Long id) throws RoleNotFoundException {
+        try {
+            RolesEntity rolesEntity = rolesRepository.findById(id).isPresent() ? rolesRepository.findById(id).get() : null;
+            Roles roles = new Roles();
+            // Assign all the properties roleEntity to roles
+            assert rolesEntity != null;
+            BeanUtils.copyProperties(rolesEntity, roles);
+            return roles;
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new RoleNotFoundException(String.format("Could not found any post with Id %s", id));
+        }
     }
 
     @Override

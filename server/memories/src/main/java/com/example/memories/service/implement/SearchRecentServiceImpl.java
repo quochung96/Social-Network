@@ -41,19 +41,24 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     }
 
     @Override
-    public List<SearchRecents> getAllSearchByUserId(Long userId) {
-        List<SearchRecentsEntity> searchRecentsEntities = searchRecentsRepository.findAll();
-        return searchRecentsEntities.stream()
-                .filter(search -> search.getUser().getUser_id().equals(userId))
-                .map(
-                searchRecent -> new SearchRecents(
-                        searchRecent.getSearchId(),
-                        searchRecent.getKeyword(),
-                        searchRecent.getCreateAt(),
-                        searchRecent.getUpdateAt(),
-                        searchRecent.getUser()
-                )
-        ).collect(Collectors.toList());
+    public List<SearchRecents> getAllSearchByUserId(Long userId) throws SearchRecentNotFoundException {
+        try {
+            List<SearchRecentsEntity> searchRecentsEntities = searchRecentsRepository.findAll();
+            return searchRecentsEntities.stream()
+                    .filter(search -> search.getUser().getUser_id().equals(userId))
+                    .map(
+                            searchRecent -> new SearchRecents(
+                                    searchRecent.getSearchId(),
+                                    searchRecent.getKeyword(),
+                                    searchRecent.getCreateAt(),
+                                    searchRecent.getUpdateAt(),
+                                    searchRecent.getUser()
+                            )
+                    ).collect(Collectors.toList());
+        }
+        catch (NoSuchElementException e){
+            throw new SearchRecentNotFoundException(String.format("Could not found any search with userId %s", userId));
+        }
     }
 
     @Override
@@ -89,11 +94,16 @@ public class SearchRecentServiceImpl implements SearchRecentService {
     }
 
     @Override
-    public SearchRecents getSearchById(Long id) {
-        SearchRecentsEntity searchRecentsEntity = searchRecentsRepository.findById(id).get();
-        SearchRecents searchRecents = new SearchRecents();
-        BeanUtils.copyProperties(searchRecentsEntity, searchRecents);
-        return searchRecents;
+    public SearchRecents getSearchById(Long id) throws SearchRecentNotFoundException {
+        try {
+            SearchRecentsEntity searchRecentsEntity = searchRecentsRepository.findById(id).get();
+            SearchRecents searchRecents = new SearchRecents();
+            BeanUtils.copyProperties(searchRecentsEntity, searchRecents);
+            return searchRecents;
+        }
+        catch (NoSuchElementException e){
+            throw new SearchRecentNotFoundException(String.format("Could not found any search with Id %s", id));
+        }
     }
 
     @Override

@@ -40,7 +40,7 @@ public class RolesController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/role/{id}")
-    public ResponseEntity<Roles> getRoleById(@PathVariable Long id){
+    public ResponseEntity<Roles> getRoleById(@PathVariable Long id) throws RoleNotFoundException{
         Roles role = roleService.getRoleById(id);
         return ResponseEntity.ok(role);
     }
