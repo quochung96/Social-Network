@@ -14,8 +14,6 @@ public class PhotoInPosts {
     private Long photoId;
     private Integer isHighLight;
     private String photoUrl;
-    private PostsEntity posts;
-    private UsersEntity users;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 }
