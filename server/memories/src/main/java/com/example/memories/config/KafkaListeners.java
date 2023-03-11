@@ -27,4 +27,11 @@ public class KafkaListeners {
         redisTemplate.convertAndSend("messages", data);
         System.out.println("Listener Message Receive: " + data);
     }
+    @KafkaListener(
+            topics = "comments",
+            groupId = "comments_groupId"
+    )
+    public void commentsListener(String data){
+        System.out.println("Listener Comments Receive: " + data);
+    }
 }
