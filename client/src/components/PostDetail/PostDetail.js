@@ -116,13 +116,13 @@ const PostDetail = ({user,setUser,userProfile}) => {
                     <Box sx ={{ paddingLeft: 2, opacity: 0.3}}>
                       <img alt = 'icon' src = {lineBreak} width = '450px'/>
                     </Box>
-                    <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap'}}>
+                    <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap', marginTop: 5}}>
                       {comments.map((comment) => (
                         <Comment key = {comment.cmtId} user = {user} comment = {comment}/>
                       ))}
                     </Box>
                 </Box>
-                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',bottom:-62,width: 520, background: 'white',borderRadius: '30px', boxShadow: 'rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px, rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px, rgba(240, 46, 170, 0.05) 0px 25px;'}}>
+                <Box display = 'flex' flexDirection = 'row' sx = {{position: 'absolute',top:400,width: 520, background: 'white',borderRadius: '30px', boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                   <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
                   <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
                   </ButtonBase>

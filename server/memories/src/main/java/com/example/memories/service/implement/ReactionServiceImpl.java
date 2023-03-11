@@ -50,6 +50,40 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
+    public List<Reactions> getAllReactionsByPostId(Long postId) {
+        List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
+        return reactionsEntities.stream()
+                .filter(react -> react.getPostId().getPostId().equals(postId))
+                .map(
+                react -> new Reactions(
+                        react.getReactId(),
+                        react.getCreateAt(),
+                        react.getUpdateAt(),
+                        react.getPostId(),
+                        react.getUserId(),
+                        react.getCmtId()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Reactions> getAllReactionsByCommentId(Long commentId) {
+        List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
+        return reactionsEntities.stream()
+                .filter(react -> react.getCmtId().getCmtId().equals(commentId))
+                .map(
+                        react -> new Reactions(
+                                react.getReactId(),
+                                react.getCreateAt(),
+                                react.getUpdateAt(),
+                                react.getPostId(),
+                                react.getUserId(),
+                                react.getCmtId()
+                        )
+                ).collect(Collectors.toList());
+    }
+
+    @Override
     public Reactions getReactionById(Long id) {
         ReactionsEntity reactionsEntity = reactionRepository.findById(id).get();
         Reactions reactions = new Reactions();

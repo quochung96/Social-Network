@@ -20,6 +20,14 @@ public class ReactionsController {
     public ResponseEntity getReactionById(@PathVariable Long id){
         return ResponseEntity.ok().body(reactionService.getReactionById(id));
     }
+    @GetMapping("/post/{postId}/reactions")
+    public ResponseEntity getReactionByPostId(@PathVariable Long postId){
+        return ResponseEntity.ok().body(reactionService.getAllReactionsByPostId(postId));
+    }
+    @GetMapping("/comment/{commentId}/reactions")
+    public ResponseEntity getReactionByCommentId(@PathVariable Long commentId){
+        return ResponseEntity.ok().body(reactionService.getAllReactionsByCommentId(commentId));
+    }
     @PostMapping("/{userId}/reactions")
     public ResponseEntity createReaction(@PathVariable Long userId, @RequestBody Reactions reactions){
         return ResponseEntity.ok().body(reactionService.createReaction(reactions));

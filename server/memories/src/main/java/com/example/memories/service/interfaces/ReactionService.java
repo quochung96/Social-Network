@@ -7,6 +7,8 @@ import java.util.List;
 public interface ReactionService {
     Reactions createReaction(Reactions reactions);
     List<Reactions> getAllReactions();
+    List<Reactions> getAllReactionsByPostId(Long postId);
+    List<Reactions> getAllReactionsByCommentId(Long commentId);
     Reactions getReactionById(Long id);
     Reactions updateReaction(Long id, Reactions reactions);
     Boolean deleteReaction(Long id);
