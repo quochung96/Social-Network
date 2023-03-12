@@ -19,10 +19,7 @@ public class SearchRecentsController {
     @Autowired
     SearchRecentService searchRecentService;
     @GetMapping("/searchrecents")
-    public ResponseEntity<List<SearchRecents>> getAllSearchRecents(BindingResult result){
-        if (result.hasErrors()){
-            throw new InvalidRequestException("Invalid Request Exception", result);
-        }
+    public ResponseEntity<List<SearchRecents>> getAllSearchRecents(){
         @Valid List<SearchRecents> searchRecentsList = searchRecentService.getAllSearch();
         return ResponseEntity.ok().body(searchRecentsList);
     }
@@ -50,11 +47,8 @@ public class SearchRecentsController {
         return ResponseEntity.ok().body(searchRecentService.updateSearch(userId,searchRecents));
     }
     @DeleteMapping("/searchrecents/{id}")
-    public ResponseEntity deleteSearch(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id, BindingResult result) throws SearchRecentNotFoundException
+    public ResponseEntity deleteSearch(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws SearchRecentNotFoundException
     {
-        if (result.hasErrors()){
-            return ResponseEntity.badRequest().body("Validaion error: " + result.getAllErrors());
-        }
         return ResponseEntity.ok().body(searchRecentService.deleteSearchRecents(id));
     }
 }

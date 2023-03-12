@@ -29,12 +29,12 @@ public class ReactionsController {
         return ResponseEntity.ok().body(reactionService.getReactionById(id));
     }
     @GetMapping("/post/{postId}/reactions")
-    public ResponseEntity<List<Reactions>> getReactionByPostId(@PathVariable Long postId ) throws ReactionsNotFoundException{
+    public ResponseEntity<List<Reactions>> getReactionByPostId(@PathVariable Long postId ){
         List<Reactions> reactionsList = reactionService.getAllReactionsByPostId(postId);
         return ResponseEntity.ok().body(reactionsList);
     }
     @GetMapping("/comment/{commentId}/reactions")
-    public ResponseEntity getReactionByCommentId(@PathVariable Long commentId) throws ReactionsNotFoundException{
+    public ResponseEntity getReactionByCommentId(@PathVariable Long commentId){
         return ResponseEntity.ok().body(reactionService.getAllReactionsByCommentId(commentId));
     }
     @PostMapping("/user/{userId}/reactions")

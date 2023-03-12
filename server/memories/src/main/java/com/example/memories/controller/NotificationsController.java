@@ -19,27 +19,18 @@ public class NotificationsController {
     @Autowired
     NotificationService notificationService;
     @GetMapping("/notifications")
-    public ResponseEntity<List<Notifications>>getAllNotification(BindingResult result){
-        if (result.hasErrors()){
-            throw new InvalidRequestException("Invalid Request Exception", result);
-        }
+    public ResponseEntity<List<Notifications>>getAllNotification(){
         @Valid List<Notifications> notificationsList = notificationService.getAllNotification();
         return ResponseEntity.ok().body(notificationsList);
     }
     @GetMapping("/notifications/{id}")
-    public ResponseEntity getNotificationById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id, BindingResult result) throws NotificationNotFoundException {
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
-        }
+    public ResponseEntity getNotificationById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws NotificationNotFoundException {
         Notifications notification = notificationService.getNotificationById(id);
         return ResponseEntity.ok().body(notification);
     }
     @GetMapping("{userId}/notifications")
-    public ResponseEntity<List<Notifications>> getNotificationByUserId(@PathVariable Long userId, BindingResult result) throws NotificationNotFoundException
+    public ResponseEntity<List<Notifications>> getNotificationByUserId(@PathVariable Long userId)
     {
-        if (result.hasErrors()){
-            throw new InvalidRequestException("Invalid Request Exception", result);
-        }
         @Valid List<Notifications> notificationsList = notificationService.getAllNotiByUserId(userId);
         return ResponseEntity.ok().body(notificationsList);
     }
@@ -60,10 +51,7 @@ public class NotificationsController {
         return ResponseEntity.ok().body(notificationService.createNotification(userId, postId, notification));
     }
     @DeleteMapping("/notifications/{id}")
-    public ResponseEntity deleteNotification(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id, BindingResult result) throws NotificationNotFoundException{
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validaion error: " + result.getAllErrors());
-        }
+    public ResponseEntity deleteNotification(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws NotificationNotFoundException{
         return ResponseEntity.ok().body(notificationService.deleteNotificationById(id));
     }
 }

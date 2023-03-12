@@ -56,7 +56,7 @@ public class PostController {
     }
 
     @GetMapping("/{userId}/posts")
-    public ResponseEntity<List<Posts>> getPostByUserId(@PathVariable Long userId) throws PostNotFoundException {
+    public ResponseEntity<List<Posts>> getPostByUserId(@PathVariable Long userId){
         @Valid List<Posts> postsList = postService.getPostByUserId(userId);
         return ResponseEntity.ok().body(postsList);
     }
@@ -86,10 +86,7 @@ public class PostController {
         return ResponseEntity.ok().body(postService.updateAudiencePost(id,post));
     }
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity deletePost(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id, BindingResult result) throws PostNotFoundException {
-        if (result.hasErrors()){
-            return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
-        }
+    public ResponseEntity deletePost(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.deletePostById(id));
     }
 

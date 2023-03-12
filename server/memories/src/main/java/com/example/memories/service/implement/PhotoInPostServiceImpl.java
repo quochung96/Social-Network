@@ -36,8 +36,7 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
 
 
     @Override
-    public List<PhotoInPosts> getAllPhotoByUserId(Long userId) throws PhotoNotFoundException {
-        try {
+    public List<PhotoInPosts> getAllPhotoByUserId(Long userId){
             List<PhotoInPostEntity> photoInPostEntities = photoInPostRepository.findAll();
             return photoInPostEntities.stream()
                     .map(
@@ -49,10 +48,6 @@ public class PhotoInPostServiceImpl implements PhotoInPostService {
                                     photo.getUpdateAt()
                             )
                     ).collect(Collectors.toList());
-        }
-        catch (NoSuchElementException e){
-            throw new PhotoNotFoundException(String.format("Could not found any post with userId %s", userId));
-        }
     }
 
     @Override

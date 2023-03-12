@@ -79,8 +79,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public List<Posts> getPostByUserId(long userId) throws PostNotFoundException {
-        try {
+    public List<Posts> getPostByUserId(long userId){
             List<PostsEntity> postsEntity = postsRepository.findAll();
 
             return postsEntity.stream().
@@ -97,10 +96,6 @@ public class PostServiceImpl implements PostService {
                                     post.getPhotoInPost()
                             )
                     ).collect(Collectors.toList());
-        }
-        catch (NoSuchElementException e){
-            throw new PostNotFoundException(String.format("Could not found any post with userId %s", userId));
-        }
     }
 
     @Override

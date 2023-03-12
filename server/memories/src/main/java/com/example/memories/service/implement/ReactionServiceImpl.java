@@ -63,8 +63,7 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public List<Reactions> getAllReactionsByPostId(Long postId) throws ReactionsNotFoundException {
-        try {
+    public List<Reactions> getAllReactionsByPostId(Long postId) {
             List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
             return reactionsEntities.stream()
                     .filter(react -> react.getPost().getPostId().equals(postId))
@@ -78,16 +77,10 @@ public class ReactionServiceImpl implements ReactionService {
                                     react.getCmtId()
                             )
                     ).collect(Collectors.toList());
-        }
-        catch (NoSuchElementException e)
-        {
-            throw new ReactionsNotFoundException(String.format("Could not found any reaction with postId %s", postId));
-        }
     }
 
     @Override
-    public List<Reactions> getAllReactionsByCommentId(Long commentId) throws ReactionsNotFoundException{
-        try {
+    public List<Reactions> getAllReactionsByCommentId(Long commentId){
             List<ReactionsEntity> reactionsEntities = reactionRepository.findAll();
             return reactionsEntities.stream()
                     .filter(react -> react.getCmtId().getCmtId().equals(commentId))
@@ -101,10 +94,6 @@ public class ReactionServiceImpl implements ReactionService {
                                     react.getCmtId()
                             )
                     ).collect(Collectors.toList());
-        }
-        catch (NoSuchElementException e){
-            throw new ReactionsNotFoundException(String.format("Could not found any reaction with commentId %s", commentId));
-        }
     }
 
     @Override

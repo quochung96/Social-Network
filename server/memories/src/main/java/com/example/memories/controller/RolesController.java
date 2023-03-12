@@ -3,6 +3,7 @@ package com.example.memories.controller;
 import com.example.memories.exeption.RoleNotFoundException;
 import com.example.memories.model.Roles;
 import com.example.memories.service.interfaces.RoleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class RolesController {
         return ResponseEntity.ok(role);
     }
     @PutMapping("/role/{id}")
-    public ResponseEntity<Roles> updateRole(@PathVariable Long id, @RequestBody Roles role) throws RoleNotFoundException {
+    public ResponseEntity<Roles> updateRole(@PathVariable Long id, @Valid @RequestBody Roles role) throws RoleNotFoundException {
         return ResponseEntity.ok(roleService.updateRole(id, role));
     }
 }

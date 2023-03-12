@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
     PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir, String keyword);
-    List<Posts> getPostByUserId(long user_id) throws PostNotFoundException;
+    List<Posts> getPostByUserId(long user_id);
     Posts createPost(long userId, Posts post) throws Exception;
     Posts updatePost(long id, Posts post) throws PostNotFoundException;
     Posts updateAudiencePost(long id, Posts post) throws PostNotFoundException;

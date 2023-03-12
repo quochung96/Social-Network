@@ -11,6 +11,6 @@ public interface NotificationService {
     Notifications updateNotification(long id, Notifications notification) throws NotificationNotFoundException;
     Notifications getNotificationById(long id) throws NotificationNotFoundException;
     Boolean deleteNotificationById(long id) throws NotificationNotFoundException;
-    public List<Notifications> getAllNotiByUserId(long userId) throws NotificationNotFoundException;
+    public List<Notifications> getAllNotiByUserId(long userId);
 
 }

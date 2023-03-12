@@ -46,8 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
         ).collect(Collectors.toList());
     }
     @Override
-    public List<Notifications> getAllNotiByUserId(long userId) throws NotificationNotFoundException {
-        try {
+    public List<Notifications> getAllNotiByUserId(long userId){
             List<NotificationsEntity> notificationsEntities = notificationsRepository.findAll();
             return notificationsEntities.stream().
                     filter(notificationsEntity -> notificationsEntity.getUser().getUser_id() == userId).
@@ -63,10 +62,6 @@ public class NotificationServiceImpl implements NotificationService {
                                     notificationsEntity.getPost()
                             )
                     ).collect(Collectors.toList());
-        }
-        catch (NoSuchElementException e){
-            throw new NotificationNotFoundException(String.format("Could not found any notification with userId %s", userId));
-        }
     }
 
     @Override
