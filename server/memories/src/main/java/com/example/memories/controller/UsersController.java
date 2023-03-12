@@ -26,12 +26,12 @@ public class UsersController {
         this.userService = userService;
     }
     @PostMapping("/users")
-    public Users createUser(@RequestBody Users user){
-        return userService.createUser(user);
+    public ResponseEntity<Users> createUser(@RequestBody Users user){
+        return ResponseEntity.ok(userService.createUser(user));
     }
     @GetMapping("/users")
-    public List<Users> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<Users>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteUser(@PathVariable Long id) throws UserNotFoundException {

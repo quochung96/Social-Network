@@ -26,12 +26,12 @@ public class RolesController {
         this.roleService = roleService;
     }
     @PostMapping("/role")
-    public Roles createRole(@RequestBody Roles role) throws Exception {
-        return roleService.createRole(role);
+    public ResponseEntity<Roles> createRole(@RequestBody Roles role) throws Exception {
+        return ResponseEntity.ok(roleService.createRole(role));
     }
     @GetMapping("/role")
-    public List<Roles> getAllRoles() {
-        return roleService.getAllRoles();
+    public ResponseEntity<List<Roles>> getAllRoles() {
+        return ResponseEntity.ok(roleService.getAllRoles());
     }
     @DeleteMapping("/role/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteRole(@PathVariable Long id) throws RoleNotFoundException {

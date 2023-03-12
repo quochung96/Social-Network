@@ -28,7 +28,7 @@ public class PostController {
     @Autowired
     PostService postService;
     @GetMapping("/posts")
-    public ResponseEntity getAllPosts(
+    public ResponseEntity<Object> getAllPosts(
             @RequestParam(value = "keyword",defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_KEYWORD,required = false) String keyword,
             @RequestParam(value = "pageNo", defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize,
@@ -61,32 +61,32 @@ public class PostController {
         return ResponseEntity.ok().body(postsList);
     }
     @GetMapping("/posts/{id}")
-    public ResponseEntity getPostById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws PostNotFoundException {
+    public ResponseEntity<Posts> getPostById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.getPostById(id));
     }
     @PostMapping("/{userId}/posts")
-    public ResponseEntity createPost(@PathVariable Long userId,@Valid @RequestBody Posts post, BindingResult result) throws Exception{
+    public ResponseEntity<Object> createPost(@PathVariable Long userId,@Valid @RequestBody Posts post, BindingResult result) throws Exception{
         if  (result.hasErrors()){
             return ResponseEntity.badRequest().body("Validation error: "+result.getAllErrors());
         }
         return ResponseEntity.ok().body(postService.createPost(userId, post));
     }
     @PutMapping("/posts/{id}")
-    public ResponseEntity updatePost(@PathVariable Long id, @Valid @RequestBody Posts post, BindingResult result) throws PostNotFoundException {
+    public ResponseEntity<Object> updatePost(@PathVariable Long id, @Valid @RequestBody Posts post, BindingResult result) throws PostNotFoundException {
         if (result.hasErrors()){
             return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
         }
         return ResponseEntity.ok().body(postService.updatePost(id, post));
     }
     @PutMapping("/posts/{id}/audience")
-    public ResponseEntity updateAudiencePost(@PathVariable Long id, @Valid @RequestBody Posts post, BindingResult result) throws PostNotFoundException{
+    public ResponseEntity<Object> updateAudiencePost(@PathVariable Long id, @Valid @RequestBody Posts post, BindingResult result) throws PostNotFoundException{
         if (result.hasErrors()){
             return ResponseEntity.badRequest().body("Validtion error: "+result.getAllErrors());
         }
         return ResponseEntity.ok().body(postService.updateAudiencePost(id,post));
     }
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity deletePost(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws PostNotFoundException {
+    public ResponseEntity<Boolean> deletePost(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws PostNotFoundException {
         return ResponseEntity.ok().body(postService.deletePostById(id));
     }
 

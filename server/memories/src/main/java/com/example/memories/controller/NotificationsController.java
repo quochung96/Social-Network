@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -24,7 +25,7 @@ public class NotificationsController {
         return ResponseEntity.ok().body(notificationsList);
     }
     @GetMapping("/notifications/{id}")
-    public ResponseEntity getNotificationById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws NotificationNotFoundException {
+    public ResponseEntity<Notifications> getNotificationById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws NotificationNotFoundException {
         Notifications notification = notificationService.getNotificationById(id);
         return ResponseEntity.ok().body(notification);
     }
@@ -35,7 +36,7 @@ public class NotificationsController {
         return ResponseEntity.ok().body(notificationsList);
     }
     @PutMapping("/notifications/{id}")
-    public ResponseEntity updateNotification(@PathVariable Long id, @Valid @RequestBody Notifications notification, BindingResult result) throws NotificationNotFoundException{
+    public ResponseEntity<Object> updateNotification(@PathVariable Long id, @Valid @RequestBody Notifications notification, BindingResult result) throws NotificationNotFoundException{
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
         }
@@ -43,7 +44,7 @@ public class NotificationsController {
         return ResponseEntity.ok(updatedNotification);
     }
     @PostMapping("/{userId}/{postId}/notifications")
-    public ResponseEntity createNotification(@PathVariable Long userId, Long postId, @Valid @RequestBody Notifications notification, BindingResult result) throws Exception
+    public ResponseEntity<Object> createNotification(@PathVariable Long userId, Long postId, @Valid @RequestBody Notifications notification, BindingResult result) throws Exception
     {
         if (result.hasErrors()){
             return ResponseEntity.badRequest().body("Validaion error: " + result.getAllErrors());
@@ -51,7 +52,7 @@ public class NotificationsController {
         return ResponseEntity.ok().body(notificationService.createNotification(userId, postId, notification));
     }
     @DeleteMapping("/notifications/{id}")
-    public ResponseEntity deleteNotification(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws NotificationNotFoundException{
+    public ResponseEntity<Boolean> deleteNotification(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws NotificationNotFoundException{
         return ResponseEntity.ok().body(notificationService.deleteNotificationById(id));
     }
 }

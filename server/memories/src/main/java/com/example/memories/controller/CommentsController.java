@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
@@ -14,23 +16,23 @@ public class CommentsController {
     @Autowired
     private CommentService commentService;
     @GetMapping("/post/{postId}/comments")
-    public ResponseEntity getAllCommentsPost(@PathVariable Long postId){
+    public ResponseEntity<List<Comments>> getAllCommentsPost(@PathVariable Long postId){
         return ResponseEntity.ok().body(commentService.getAllCommentsPost(postId));
     }
     @GetMapping("/comments/{id}")
-    public ResponseEntity getCommentById(@PathVariable Long id){
+    public ResponseEntity<Comments> getCommentById(@PathVariable Long id){
         return ResponseEntity.ok().body(commentService.getCommentById(id));
     }
     @PostMapping("/user/{userId}/comments/{postId}")
-    public ResponseEntity createComment(@PathVariable Long postId,@PathVariable Long userId, @RequestBody Comments comments) throws Exception {
+    public ResponseEntity<Comments> createComment(@PathVariable Long postId,@PathVariable Long userId, @RequestBody Comments comments) throws Exception {
         return ResponseEntity.ok().body(commentService.createComment(postId,userId,comments));
     }
     @DeleteMapping("/comments/{id}")
-    public ResponseEntity deleteComment(@PathVariable Long id) throws CommentNotFoundException {
+    public ResponseEntity<Boolean> deleteComment(@PathVariable Long id) throws CommentNotFoundException {
         return ResponseEntity.ok().body(commentService.deleteComment(id));
     }
     @PutMapping("/comments/{id}")
-    public ResponseEntity  updateComment(@PathVariable Long id,@RequestBody Comments comments) throws CommentNotFoundException {
+    public ResponseEntity<Comments> updateComment(@PathVariable Long id,@RequestBody Comments comments) throws CommentNotFoundException {
         return ResponseEntity.ok().body(commentService.updateComment(id,comments));
     }
 }

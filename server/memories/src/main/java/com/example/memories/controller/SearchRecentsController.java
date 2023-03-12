@@ -28,11 +28,11 @@ public class SearchRecentsController {
         return ResponseEntity.ok().body(searchRecentService.getAllSearchByUserId(userId));
     }
     @GetMapping("/searchrecents/{id}")
-    public ResponseEntity getSearchRecentById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws SearchRecentNotFoundException {
+    public ResponseEntity<SearchRecents> getSearchRecentById(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws SearchRecentNotFoundException {
         return ResponseEntity.ok().body(searchRecentService.getSearchById(id));
     }
     @PostMapping("/user/{userId}/searchrecents")
-    public ResponseEntity createSearch(@PathVariable Long userId, @Valid @RequestBody SearchRecents searchRecents, BindingResult result) throws Exception
+    public ResponseEntity<Object> createSearch(@PathVariable Long userId, @Valid @RequestBody SearchRecents searchRecents, BindingResult result) throws Exception
     {
         if (result.hasErrors()){
             return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
@@ -40,14 +40,14 @@ public class SearchRecentsController {
         return ResponseEntity.ok().body(searchRecentService.createSearch(userId, searchRecents));
     }
     @PutMapping("/user/{userId}/searchrecents")
-    public ResponseEntity updateSearch(@PathVariable Long userId,@Valid @RequestBody SearchRecents searchRecents, BindingResult result) throws SearchRecentNotFoundException{
+    public ResponseEntity<Object> updateSearch(@PathVariable Long userId,@Valid @RequestBody SearchRecents searchRecents, BindingResult result) throws SearchRecentNotFoundException{
         if (result.hasErrors()){
             return ResponseEntity.badRequest().body("Validaion error: " + result.getAllErrors());
         }
         return ResponseEntity.ok().body(searchRecentService.updateSearch(userId,searchRecents));
     }
     @DeleteMapping("/searchrecents/{id}")
-    public ResponseEntity deleteSearch(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws SearchRecentNotFoundException
+    public ResponseEntity<Boolean> deleteSearch(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws SearchRecentNotFoundException
     {
         return ResponseEntity.ok().body(searchRecentService.deleteSearchRecents(id));
     }
