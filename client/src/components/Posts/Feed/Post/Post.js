@@ -4,7 +4,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import {Checkbox,Paper,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
+import {Checkbox,Paper,Stack,Collapse,ButtonBase,TextField,Box,Avatar,Card,CardActions,CardContent,CardHeader,CardMedia,IconButton,Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button} from "@mui/material";
 import {useNavigate} from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import moment from 'moment';
@@ -21,6 +21,7 @@ import Friends from '../../../../assets/icons/friends.png';
 import FriendsExcept from '../../../../assets/icons/friends_except.png';
 import Lock from '../../../../assets/icons/padlock.png';
 import PublicIcon from '@mui/icons-material/Public';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
 const Post = ({post,reaction,user,userProfile}) => {
   const dispatch = useDispatch();
@@ -124,7 +125,7 @@ const Post = ({post,reaction,user,userProfile}) => {
       setIsLiked(false);
     }
   }, [post.postId, reaction, user.user_id])
-
+  console.log("isLiked",isLiked);
   return (
     <Card sx={{ margin: 4,width: '800px', borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
       <CardHeader
@@ -268,7 +269,23 @@ const Post = ({post,reaction,user,userProfile}) => {
       }
       <CardActions sx = {{display: 'flex', flexDirection: 'column',alignItems: 'start', marginLeft: 2}}>
         {reaction.length !== 0 &&
-          <Typography fontSize = '14px'>{reaction.length} likes</Typography>
+          <>
+          {isLiked === true ? 
+          <Stack direction = 'row' justifyContent = 'center' alignItems = 'center'>
+            <div style = {{borderRadius: 60, width: 30,height: 30, background: 'linear-gradient(180deg,rgba(66,103,178) 0%,rgba(33, 92, 255) 80%, rgba(54,90,189) 100%)',opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center',cursor: 'pointer'}}>
+              <ThumbUpAltIcon fontSize = "small" sx = {{color: 'white'}}/>
+            </div>
+            <Typography variant = 'subtitle1' color = 'textSecondary' fontSize = '14px'>&nbsp;{reaction.length >= 2 ? `You and ${reaction.length - 1} others` : `${reaction.length} like${reaction.length > 1 ? 's' : ''}`}</Typography>
+          </Stack>
+          :
+          <Stack direction = 'row' justifyContent = 'center' alignItems = 'center'>
+            <div style = {{borderRadius: 60, width: 30,height: 30, background: 'linear-gradient(180deg,rgba(66,103,178) 0%,rgba(33, 92, 255) 80%, rgba(54,90,189) 100%)',opacity: 0.9, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <ThumbUpAltIcon fontSize = "small" sx = {{color: 'white'}}/>
+            </div> 
+          <Typography variant = 'subtitle1' color = 'textSecondary' fontSize = '14px'>&nbsp;{reaction.length} {reaction.length === 1 ? 'Like' : 'Likes'}</Typography>
+          </Stack>
+          }
+          </> 
         }
         <Box sx ={{ paddingLeft: 2, opacity: 0.3, paddingBottom: 2}}>
           <img alt = 'icon' src = {lineBreak} width = '700px'/>

@@ -4,7 +4,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import moment from 'moment';
 import React,{useEffect,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { getPost } from '../../actions/posts';
 import { getCommentByPostId,createCommentByUserId } from '../../actions/comment';
 import { getUser } from '../../actions/users';
@@ -15,11 +15,14 @@ import Comment from './Comment/Comment';
 const PostDetail = ({user,setUser,userProfile}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const {id} = useParams();
   const [comment,setComment] = useState('');
   const [formComment, setFormComment] = useState({cmtContent: ''});
   const [readMore,setReadMore] = useState(false);
   const linkName = readMore ? 'See less' : 'See More';
+  const {post} = useSelector((state) => state.posts);
+  const {comments} = useSelector((state) => state.comments);
   const handleChange = (e) => {
     setComment(e.target.value);
     setFormComment({...formComment,[e.target.name]: e.target.value});
@@ -34,15 +37,11 @@ const PostDetail = ({user,setUser,userProfile}) => {
     dispatch(getPost(id));
     dispatch(getUser(user?.user_id));
     dispatch(getCommentByPostId(id));
-  },[dispatch,id,user?.user_id]);
-  const {post} = useSelector((state) => state.posts);
-  const {comments} = useSelector((state) => state.comments);
-  useEffect(() => {
-    console.log(post);
-    console.log(comments);
-  });
+  },[dispatch,id,location,user?.user_id]);
+
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}
+  if(!userProfile) return 'No user';
   return (
     <Box>
         <NavbarPost user = {user} setUser = {setUser} userProfile = {userProfile}/>
@@ -67,6 +66,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
               <Box width = '500px' marginLeft = '20px'>
                     <CardHeader
                       avatar={
+                        post !== null && 
                           <Avatar sx = {{width: '60px',height:'60px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 2px 8px'}} alt = 'avatar-test' src = {post?.user.avatar_url}/>
                       }
                       action={
@@ -117,7 +117,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                     </Box>
                     <Box display = 'flex' flexDirection = 'row' sx = {{width: 480, background: 'white',borderRadius: '30px', boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
                       <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
-                      <Avatar alt = "avatar" src = {userProfile.avatar_url}/>
+                      {userProfile.avatar_url !== null && <Avatar alt = "avatar" src = {userProfile.avatar_url}/>}
                       </ButtonBase>
                     <TextField name = "cmtContent" variant = "filled" size = "small" value = {comment} onKeyPress={handleSubmit} onChange={handleChange} multiline label = "Write a comment..." fullWidth InputProps = {{ disableUnderline: true}} sx = {{marginLeft: 2,marginRight: 2}}/>
                     </Box> 

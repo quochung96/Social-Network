@@ -20,7 +20,6 @@ import useStyles from './styles.js';
 import Input from '../widgets/Input';
 import CardMem from '../widgets/CardMem';
 import NavBarHome from '../Navbar/NavbarHome/NavbarHome';
-// import jwt from 'jsonwebtoken';
 import {signin} from '../../actions/auth';
 
 const initialState = { 
@@ -36,7 +35,6 @@ const Home = () => {
   const navigate = useNavigate();
   // Using dispatch redux the set Log in
   const handleSubmit = (e) => {
-    e.preventDefault();
     console.log(formData);
     dispatch(signin(formData,navigate));
     window.location.reload(false);

@@ -168,15 +168,15 @@ const AddPost = ({user,userProfile}) => {
             </div>
         </Box>
         <Box display = 'flex' flexDirection = 'row' justifyContent = 'space-evenly' alignItems = 'center'>
-                <IconButton onClick = {handleClickOpen}>
+                <IconButton onClick = {() => handleClickOpen(1)}>
                     <img alt = 'icon' src = {InsertPicture} height = '30px' width = '30px'/>
                     <Typography sx = {{margin: '20px 20px'}}>Image</Typography>
                 </IconButton>
-                <IconButton onClick = {handleClickOpen}>
+                <IconButton onClick = {() => handleClickOpen(1)}>
                     <img alt = 'icon' src = {Player} height = '30px' width = '30px'/>
                     <Typography sx = {{margin: '20px 20px'}}>Video</Typography>
                 </IconButton>
-                <IconButton onClick = {handleClickOpen}>
+                <IconButton onClick = {() => handleClickOpen(1)}>
                     <img alt = 'icon' src = {Calendar} height = '30px' width = '30px'/>
                     <Typography sx = {{margin: '20px 20px'}}>Event</Typography>
                 </IconButton> 

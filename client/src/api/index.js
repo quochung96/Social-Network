@@ -45,7 +45,7 @@ export const deleteLike = (id) => API.delete(`/reactions/${id}`);
 //Comment
 export const fetchCommentByPostId = (postId) => API.get(`/post/${postId}/comments`); // OK
 export const createCommentByUserId = (userId,postId,newComment) => API.post(`/user/${userId}/comments/${postId}`,newComment); //OK
-export const updateComment = (id,updatedComment) => API.get(`/comments/${id}`,updatedComment);
+export const updateComment = (id,updatedComment) => API.put(`/comments/${id}`,updatedComment);
 export const deleteComment = (id) => API.delete(`/comments/${id}`);
 //Chat
 

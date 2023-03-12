@@ -109,7 +109,9 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
               sx = {{width: '300px'}}
               options={options}
               filterOptions = {filterOptions}
+              onChange= {(event,value) => console.log(setSearch(value.title))}
               getOptionLabel={(option) => option.title}
+              isOptionEqualToValue = {(option,value) => option.value === value.value}
               renderInput={(params) => (
                 <TextField
                   {...params}
