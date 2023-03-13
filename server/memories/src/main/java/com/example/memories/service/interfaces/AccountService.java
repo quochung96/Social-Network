@@ -13,4 +13,8 @@ public interface AccountService {
     boolean deleteAccount(Long id) throws AccountNotFoundException;
     Accounts getAccountById(Long id);
     Accounts updateAccount(Long id, Accounts account) throws AccountNotFoundException;
+    boolean softDeleteAccount(Long id);
+    boolean recoverAccount(Long id);
+    List<Accounts> getAllAccountsByRoleId(Long roleId);
+    List<Accounts> getRecentAccountRegister();
 }

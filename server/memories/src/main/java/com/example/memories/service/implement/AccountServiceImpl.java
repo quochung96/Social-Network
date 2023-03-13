@@ -177,4 +177,60 @@ public class AccountServiceImpl implements AccountService{
             throw new AccountNotFoundException(String.format("Could not found any account with Id %s", id));
         }
     }
+    @Override
+    public boolean softDeleteAccount(Long id) {
+        AccountsEntity account = accountsRepository.findById(id).get();
+        account.setIsArchieved(1);
+        accountsRepository.save(account);
+        return true;
+    }
+
+    @Override
+    public boolean recoverAccount(Long id) {
+        AccountsEntity account = accountsRepository.findById(id).get();
+        account.setIsArchieved(0);
+        accountsRepository.save(account);
+        return true;
+    }
+    @Override
+    public List<Accounts> getAllAccountsByRoleId(Long roleId) {
+        RolesEntity role = rolesRepository.findById(roleId).get();
+
+        List<AccountsEntity> accountsEntities = accountsRepository.findAllByRoles(role);
+
+        return accountsEntities.
+                stream()
+                .map(acc -> new Accounts(
+                        acc.getAcc_id(),
+                        acc.getUserName(),
+                        acc.getHashPassword(),
+                        acc.getPhone_number(),
+                        acc.getEmail(),
+                        acc.getIsArchieved(),
+                        acc.getRoles(),
+                        acc.getUsers(),
+                        acc.getCreateAt(),
+                        acc.getUpdateAt()
+                )).collect(Collectors.toList());
+
+    }
+    @Override
+    public List<Accounts> getRecentAccountRegister() {
+        List<AccountsEntity> accountsEntities = accountsRepository.findTop10ByOrderByCreateAtDesc();
+        //Get all the accounts
+        return accountsEntities.
+                stream()
+                .map(acc -> new Accounts(
+                        acc.getAcc_id(),
+                        acc.getUserName(),
+                        acc.getHashPassword(),
+                        acc.getPhone_number(),
+                        acc.getEmail(),
+                        acc.getIsArchieved(),
+                        acc.getRoles(),
+                        acc.getUsers(),
+                        acc.getCreateAt(),
+                        acc.getUpdateAt()
+                )).collect(Collectors.toList());
+    }
 }
