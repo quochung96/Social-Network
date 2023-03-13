@@ -19,8 +19,8 @@ public class PostTableController {
 
     @GetMapping( "/PostTable")
     public ModelMap mmPostTable(Model model) {
-        List<Posts> listPosts =  postService.getAllPosts();
-        model.addAttribute("listPosts", listPosts);
+        //List<Posts> listPosts =  postService.getAllPosts();
+        //model.addAttribute("listPosts", listPosts);
         return new ModelMap();
     }
 }
