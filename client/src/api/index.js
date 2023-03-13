@@ -49,6 +49,13 @@ export const updateComment = (id,updatedComment) => API.put(`/comments/${id}`,up
 export const deleteComment = (id) => API.delete(`/comments/${id}`);
 //Chat
 
+//Notifications
+export const fetchNotifications = () => API.get(`/notifications`);
+export const fetchNotificationsByUserId = (userId) => API.get(`/user/${userId}/notifications`);
+export const fetchNotificationById = (id) => API.get(`/notifications/${id}`);
+export const createNotification = (userId,newNotification) => API.post(`/user/${userId}/notifications`,newNotification);
+export const deleteNotification = (id) => API.delete(`/notifications/${id}`);
+
 //SearchRecents
 export const fetchSearchRecents = () => API.get(`/searchrecents`); // OK
 export const fetchSearchRecentsByUserId = (userId) => API.get(`/user/${userId}/searchrecents`); //OK

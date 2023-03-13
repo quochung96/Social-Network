@@ -33,6 +33,7 @@ import * as actionType from "../../../constants/actionTypes";
 import {getRequestByReceiveUserId} from '../../../actions/friendRequest';
 import {getPostsBySearch} from '../../../actions/posts';
 import {getSearchRecentsByUserId,createSearchRecent} from '../../../actions/search';
+import {getNotifications} from '../../../actions/notifications';
 
 const NavbarPost = ({ user, setUser, userProfile }) => {
   const navigate = useNavigate();
@@ -160,7 +161,7 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
         <div className={classes.header_right}>
           <div className={classes.header_info}>
             <IconButton onClick = {() => navigate(`/notification`)}>
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={null} color="error">
                 <NotificationsNoneIcon fontSize="medium" />
               </Badge>
             </IconButton>

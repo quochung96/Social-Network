@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { updatePost,updateAudiencePost, deletePost } from '../../../../actions/posts';
 import {deleteLike, createLike} from '../../../../actions/reactions';
+// import {createNotification} from '../../../../actions/notifications';
 
 import lineBreak from '../../../../assets/icons/Line 2.png';
 import EditAudience from './EditAudience';
@@ -42,7 +43,7 @@ const Post = ({post,reaction,user,userProfile}) => {
   const handleChangeLike = (e) => {
     if(e.target.checked === true){
       setIsLiked(true);
-      dispatch(createLike(user.user_id,{post: {postId: Number(post.postId)}}))
+      dispatch(createLike(user.user_id,{post: {postId: Number(post.postId)}}));      
     }
     else{
       setIsLiked(false);

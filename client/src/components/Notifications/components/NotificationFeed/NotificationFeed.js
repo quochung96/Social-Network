@@ -1,13 +1,37 @@
-import React from 'react'
-import {Box} from '@mui/material';
+import React,{useEffect} from 'react';
+import {Box,Container,Skeleton} from '@mui/material';
 import NotificationCard from './NotificationCard';
-const NotificationFeed = () => {
+import {useSelector} from 'react-redux';
+
+const NotificationFeed = ({user}) => {
+  const {isLoading,notifications} = useSelector((state) => state.notifications);
+  useEffect(() => {
+    console.log(isLoading, notifications);
+  })
+  if(isLoading && !notifications) {return "No notifications found";}
   return (
-    <Box width = "800px" backgroundColor = "white" borderRadius = "5px">
-      <NotificationCard onClick = {null}/>
-      <NotificationCard onClick = {null}/>
-      <NotificationCard onClick = {null}/>
+    isLoading ? 
+    <Container >
+    <Box height = 'auto' width = "100%" sx={{justifyContent: 'center', display: 'flex', flexDirection: 'column', marginLeft: '40px'}}>
+        <Skeleton />
+        <Skeleton animation="wave" />
+        <Skeleton animation={false} />
+        <Skeleton />
+        <Skeleton animation="wave" />
+        <Skeleton animation={false} />
+        <Skeleton />
     </Box>
+    </Container>
+    :
+    <>
+     { (!isLoading && notifications) &&
+      <Box width = "800px" backgroundColor = "white" borderRadius = "5px">
+        {notifications.map((notification) => (
+            <NotificationCard key = {notification.notificationId} notification = {notification} user = {user}/>
+        ))}
+      </Box>
+    }
+    </>
   )
 }
 
