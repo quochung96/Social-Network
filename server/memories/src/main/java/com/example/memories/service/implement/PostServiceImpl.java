@@ -206,4 +206,8 @@ public class PostServiceImpl implements PostService {
             throw new PostNotFoundException(String.format("Could not find any post within ID,%d", postId));
         }
     }
+    @Override
+    public Long countPost() {
+        return postsRepository.countAllPosts();
+    }
 }
