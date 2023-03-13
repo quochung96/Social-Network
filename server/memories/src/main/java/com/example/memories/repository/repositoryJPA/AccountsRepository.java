@@ -15,4 +15,5 @@ import java.util.Optional;
 public interface AccountsRepository extends JpaRepository<AccountsEntity,Long> {
     Optional<AccountsEntity> findByEmail(String email);
     List<AccountsEntity> findAllByRoles(RolesEntity roles);
+    List<AccountsEntity> findTop10ByOrderByCreateAtDesc();
 }

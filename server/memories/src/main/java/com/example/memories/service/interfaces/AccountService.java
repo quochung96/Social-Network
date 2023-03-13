@@ -16,4 +16,5 @@ public interface AccountService {
     boolean softDeleteAccount(Long id);
     boolean recoverAccount(Long id);
     List<Accounts> getAllAccountsByRoleId(Long roleId);
+    List<Accounts> getRecentAccountRegister();
 }
