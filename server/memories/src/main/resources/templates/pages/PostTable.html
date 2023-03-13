@@ -13,7 +13,7 @@
         <div class="card-body">
           <h4 class="card-title">Accounts table</h4>
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="text-center table table-striped">
               <thead>
               <tr>
                 <th>
@@ -46,12 +46,18 @@
                 <td th:utext="${post.content}"></td>
                 <td th:utext="${post.createAt}"></td>
                 <td th:utext="${post.updateAt}"></td>
-                <td>
+                <td th:if="${post.isArchieved == 0}">
                   <label class="badge badge-danger">Banned</label>
                 </td>
+                <td th:if="${post.isArchieved}">
+                  <label class="badge badge-success">Active</label>
+                </td>
 <!--                <td th:utext="${post.isArchieved}"></td>-->
-                <td>
-                  <a class="menu-icon mdi mdi-delete-forever icon-lg"></a>
+                <td th:if="${post.isArchieved}"}>
+                  <a class="menu-icon mdi mdi-delete-forever icon-md user-select-auto" href="#"></a>
+                </td>
+                <td th:if="${post.isArchieved == 0}"}>
+                  <a class="menu-icon mdi mdi-backup-restore icon-md user-select-auto" href="#"></a>
                 </td>
               </tr>
               </tbody>

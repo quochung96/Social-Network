@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,8 @@ public class AccountServiceImpl implements AccountService{
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
+
 
     //Constructor
     @Override
@@ -109,7 +112,7 @@ public class AccountServiceImpl implements AccountService{
         Long user_id = accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id();
         //Gen token ra
         var jwtToken = jwtService.generateToken(user);
-
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return AuthenticationResponse.builder().token(jwtToken).
                 result(user).
                 user_id(user_id).
@@ -149,6 +152,22 @@ public class AccountServiceImpl implements AccountService{
         //DELETE FROM ACCOUNTS
         //WHERE ACC_ID = id;
         accountsRepository.delete(account);
+        return true;
+    }
+
+    @Override
+    public boolean softDeleteAccount(Long id) {
+        AccountsEntity account = accountsRepository.findById(id).get();
+        account.setIsArchieved(1);
+        accountsRepository.save(account);
+        return true;
+    }
+
+    @Override
+    public boolean recoverAccount(Long id) {
+        AccountsEntity account = accountsRepository.findById(id).get();
+        account.setIsArchieved(0);
+        accountsRepository.save(account);
         return true;
     }
 
@@ -196,5 +215,27 @@ public class AccountServiceImpl implements AccountService{
                         acc.getCreateAt(),
                         acc.getUpdateAt()
                 )).collect(Collectors.toList());
+    }
+    @Override
+    public List<Accounts> getAllAccountsByRoleId(Long roleId) {
+        RolesEntity role = rolesRepository.findById(roleId).get();
+
+        List<AccountsEntity> accountsEntities = accountsRepository.findAllByRoles(role);
+
+        return accountsEntities.
+                stream()
+                .map(acc -> new Accounts(
+                        acc.getAcc_id(),
+                        acc.getUserName(),
+                        acc.getHashPassword(),
+                        acc.getPhone_number(),
+                        acc.getEmail(),
+                        acc.getIsArchieved(),
+                        acc.getRoles(),
+                        acc.getUsers(),
+                        acc.getCreateAt(),
+                        acc.getUpdateAt()
+                )).collect(Collectors.toList());
+
     }
 }

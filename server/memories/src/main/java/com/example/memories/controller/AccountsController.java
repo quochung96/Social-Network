@@ -66,4 +66,14 @@ public class AccountsController {
         account = accountService.updateAccount(id, account);
         return ResponseEntity.ok(account);
     }
+
+    @PutMapping ("/accounts/remove/{id}")
+    public ResponseEntity<Map<String,Boolean>> softDeleteAccount(@PathVariable Long id){
+        //Delete specific account based on id (Implement only in Admin Service)
+        boolean deleted = false;
+        deleted = accountService.softDeleteAccount(id);
+        Map<String,Boolean> response = new HashMap<>();
+        response.put("deleted", deleted);
+        return ResponseEntity.ok(response);
+    }
 }

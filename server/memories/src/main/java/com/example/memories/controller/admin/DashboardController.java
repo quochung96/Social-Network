@@ -1,4 +1,4 @@
-package com.example.memories.controller;
+package com.example.memories.controller.admin;
 
 import com.example.memories.model.Accounts;
 import com.example.memories.service.interfaces.AccountService;
@@ -34,6 +34,11 @@ public class DashboardController {
 
     @GetMapping( "/table-elements")
     public ModelMap mmTableElements() {
+        return new ModelMap();
+    }
+
+    @GetMapping( "/form-elements")
+    public ModelMap mmFormElements() {
         return new ModelMap();
     }
 

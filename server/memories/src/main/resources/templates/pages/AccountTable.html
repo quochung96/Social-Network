@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h4 class="card-title">Accounts table</h4>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="text-center table table-bordered">
                             <thead>
                             <tr>
                                 <th>
@@ -32,6 +32,9 @@
                                     Updated Date
                                 </th>
                                 <th>
+                                    Status
+                                </th>
+                                <th>
                                     Action
                                 </th>
                             </tr>
@@ -43,9 +46,24 @@
                                 <td th:utext="${account.email}"></td>
                                 <td th:utext="${account.createAt}"></td>
                                 <td th:utext="${account.updateAt}"></td>
-                                <td>
-                                    <a class="menu-icon mdi mdi-delete-forever icon-lg"></a>
+                                <td th:if="${account.isArchieved}">
+                                    <label class="badge badge-danger">Banned</label>
                                 </td>
+                                <td th:if="${account.isArchieved == 0}">
+                                    <label class="badge badge-success">Active</label>
+                                </td>
+
+                                <td th:if="${account.isArchieved == 0}">
+                                    <form action="#" th:action="@{/pages/accounts/{id}/remove(id = ${account.acc_id})}" th:method="put" >
+                                        <button class=" btn menu-icon mdi mdi-account-remove icon-mdi"></button>
+                                    </form>
+                                </td>
+                                <td th:if="${account.isArchieved}">
+                                    <form action="#" th:action="@{/pages/accounts/{id}/recover(id = ${account.acc_id})}" th:method="put" >
+                                        <button type="submit" class="btn menu-icon mdi mdi-backup-restore icon-mdi"></button>
+                                    </form>
+                                </td>
+
                             </tr>
                             </tbody>
                         </table>
@@ -54,8 +72,6 @@
             </div>
         </div>
     </div>
-
-
 </section>
 </body>
 </html>
