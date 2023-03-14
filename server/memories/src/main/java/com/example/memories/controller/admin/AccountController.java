@@ -26,17 +26,17 @@ public class AccountController {
         return new ModelMap();
     }
 
-    @PutMapping("/accounts/{id}/remove")
-    public String softDeleteAccount(@PathVariable Long id){
+    @PutMapping("/accounts/{id}/remove/{direct}")
+    public String softDeleteAccount(@PathVariable Long id, @PathVariable String direct){
         //Delete specific account based on id (Implement only in Admin Service)
         accountService.softDeleteAccount(id);
-        return"redirect:/pages/dashboard";
+        return"redirect:/pages/"+direct;
     }
 
-    @PutMapping("/accounts/{id}/recover")
-    public String recoverAccount(@PathVariable Long id){
+    @PutMapping("/accounts/{id}/recover/{direct}")
+    public String recoverAccount(@PathVariable Long id, @PathVariable String direct){
         //Delete specific account based on id (Implement only in Admin Service)
         accountService.recoverAccount(id);
-        return"redirect:/pages/dashboard";
+        return"redirect:/pages/"+direct;
     }
 }

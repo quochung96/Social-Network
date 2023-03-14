@@ -54,12 +54,12 @@
                                 </td>
 
                                 <td th:if="${account.isArchieved == 0}">
-                                    <form action="#" th:action="@{/pages/accounts/{id}/remove(id = ${account.acc_id})}" th:method="put" >
+                                    <form action="#" th:action="@{/pages/accounts/{id}/remove/AccountTable(id = ${account.acc_id})}" th:method="put" >
                                         <button class=" btn menu-icon mdi mdi-account-remove icon-mdi"></button>
                                     </form>
                                 </td>
                                 <td th:if="${account.isArchieved}">
-                                    <form action="#" th:action="@{/pages/accounts/{id}/recover(id = ${account.acc_id})}" th:method="put" >
+                                    <form action="#" th:action="@{/pages/accounts/{id}/recover/AccountTable(id = ${account.acc_id})}" th:method="put" >
                                         <button type="submit" class="btn menu-icon mdi mdi-backup-restore icon-mdi"></button>
                                     </form>
                                 </td>

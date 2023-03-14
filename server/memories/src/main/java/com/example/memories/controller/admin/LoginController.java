@@ -1,12 +1,14 @@
 package com.example.memories.controller.admin;
 
 import com.example.memories.builder.AuthenticationResponse;
+import com.example.memories.exeption.AccountNotFoundException;
 import com.example.memories.model.Accounts;
 import com.example.memories.service.interfaces.AccountService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class LoginController {
     AccountService accountService;
 
     @Autowired
+    private HttpServletResponse response;
+    @Autowired
     private AuthenticationManager authenticationManager;
     @GetMapping("/login")
     public String showLoginPage(Model model){
@@ -37,7 +41,7 @@ public class LoginController {
         return "redirect:/pages/dashboard";
     }
     @PostMapping("/doLogin")
-    public String doLogin(Model model, @ModelAttribute Accounts account, BindingResult bindingResult) {
+    public String doLogin(Model model, @ModelAttribute Accounts account, BindingResult bindingResult) throws AccountNotFoundException {
         System.out.println("login");
         if(bindingResult.hasErrors()){
             System.out.println("There was a error "+bindingResult);
@@ -45,16 +49,10 @@ public class LoginController {
             return "pages/login";
         }
         model.addAttribute("account",account);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        account.getEmail(),
-                        account.getHashPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(authentication);
         AuthenticationResponse authenticationResponse = accountService.authenticate(account);
+        Cookie cookie = new Cookie("Authorization", authenticationResponse.getToken());
+        response.addCookie(cookie);
+
         System.out.println(authenticationResponse);
         return "redirect:/pages/dashboard";
     }
