@@ -1,6 +1,7 @@
 package com.example.memories.service.interfaces;
 
 import com.example.memories.builder.AuthenticationResponse;
+import com.example.memories.entity.RolesEntity;
 import com.example.memories.exeption.AccountNotFoundException;
 import com.example.memories.model.Accounts;
 
@@ -17,4 +18,5 @@ public interface AccountService {
     boolean recoverAccount(Long id);
     List<Accounts> getAllAccountsByRoleId(Long roleId);
     List<Accounts> getRecentAccountRegister();
+    Long countAllByRoles(Long roleId);
 }

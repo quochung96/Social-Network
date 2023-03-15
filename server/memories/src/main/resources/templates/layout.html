@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
     <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.addons.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+    <link rel="shortcut icon" th:href="@{/images/memories-Logo.png}" />
 </head>
 
 <body>
@@ -18,11 +18,11 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-            <a class="navbar-brand brand-logo" href="index.html">
-                <img th:src="@{/images/logo.svg}" alt="logo" />
+            <a class="navbar-brand brand-logo" href="dashboard">
+                <img th:src="@{/images/logo.png}" alt="logo" />
             </a>
-            <a class="navbar-brand brand-logo-mini" href="index.html">
-                <img th:src="@{/images/logo-mini.svg}" alt="logo" />
+            <a class="navbar-brand brand-logo-mini" href="dashboard">
+                <img th:src="@{/images/memories-Logo.png}" alt="logo" />
             </a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
@@ -125,10 +125,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{RoleTable}">
-                        <i class="menu-icon mdi mdi-table"></i>
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
+                        <i class="menu-icon mdi mdi-account-key"></i>
                         <span class="menu-title">Roles</span>
+                        <i class="menu-arrow"></i>
                     </a>
+                    <div class="collapse" id="ui-basic1">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{RoleTable}">Roles List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{NewRole}">Add New Role</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </nav>

@@ -3,6 +3,7 @@ package com.example.memories.controller.admin;
 import com.example.memories.model.Accounts;
 import com.example.memories.service.interfaces.AccountService;
 import com.example.memories.service.interfaces.PostService;
+import com.example.memories.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,8 @@ public class DashboardController {
     PostService postService;
     @Autowired
     AccountService accountService;
-
+    @Autowired
+    UserService userService;
     private static final Random RANDOM = new Random(System.currentTimeMillis());
 
     private final String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
@@ -35,10 +37,12 @@ public class DashboardController {
     public ModelMap mmDashboard(Model model) {
 
         Long countPost = postService.countPost();
+        Long totalAdminUser = accountService.countAllByRoles(2L);
+        Long totalUser = totalAdminUser + accountService.countAllByRoles(1L);
         model.addAttribute("countPost", countPost);
-
         model.addAttribute("chartData", getChartData());
-
+        model.addAttribute("totalUser", totalUser);
+        model.addAttribute("totalAdminUser", totalAdminUser);
 
         List<Accounts> listAccounts= accountService.getRecentAccountRegister();
         model.addAttribute("listAccounts", listAccounts);

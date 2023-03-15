@@ -19,7 +19,7 @@ public class AdminTableController {
 
     @GetMapping( "/AdminTable")
     public ModelMap mmAdminTable(Model model) {
-        List<Accounts> listAccounts=  accountService.getAllAccountsByRoleId(1L);
+        List<Accounts> listAccounts=  accountService.getAllAccountsByRoleId(2L);
         model.addAttribute("listAccounts", listAccounts);
         return new ModelMap();
     }

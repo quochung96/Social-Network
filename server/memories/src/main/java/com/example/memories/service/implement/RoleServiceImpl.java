@@ -32,6 +32,8 @@ public class RoleServiceImpl implements RoleService {
     public Roles createRole(Roles role) throws Exception {
         try {
             RolesEntity roleEntity = new RolesEntity();
+            role.setCreateAt(LocalDateTime.now());
+            role.setUpdatedAt(LocalDateTime.now());
             //Copy all the properties RoleEntity assigned to Role model
             BeanUtils.copyProperties(role, roleEntity);
             rolesRepository.save(roleEntity);
