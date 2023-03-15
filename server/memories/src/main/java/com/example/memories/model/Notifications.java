@@ -13,6 +13,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Notifications {
+    public Notifications(Long notiType, PostsEntity post, UsersEntity user){
+        this.notiType = notiType;
+        this.post = post;
+        this.user = user;
+        this.isSeen = 0;
+        this.isPopular = 0;
+        this.createAt = LocalDateTime.now();
+        this.updateAt = LocalDateTime.now();
+    }
     private Long notificationId;
     private Integer isSeen;
     private LocalDateTime createAt;

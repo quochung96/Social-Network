@@ -18,7 +18,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
   const location = useLocation();
   const {id} = useParams();
   const [comment,setComment] = useState('');
-  const [formComment, setFormComment] = useState({cmtContent: ''});
+  const [formComment, setFormComment] = useState({cmtContent: comment.cmtContent});
   const [readMore,setReadMore] = useState(false);
   const linkName = readMore ? 'See less' : 'See More';
   const {post} = useSelector((state) => state.posts);
@@ -31,6 +31,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
     if(e.keyCode === 13 || e.key === 'Enter'){
       dispatch(createCommentByUserId(user.user_id,id,formComment));
       setComment('');
+      setFormComment({cmtContent: ''});
     }
   }
   useEffect(() => {

@@ -13,6 +13,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comments {
+    public Comments(String cmtContent, UsersEntity user, Long replyTo, PostsEntity post){
+        this.cmtContent = cmtContent;
+        this.users = user;
+        this.replyTo = replyTo;
+        this.post = post;
+        this.isArchieved = 0;
+        this.createAt = LocalDateTime.now();
+        this.updateAt = LocalDateTime.now();
+    }
     private Long cmtId;
     private String cmtContent;
     private UsersEntity users;

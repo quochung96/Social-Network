@@ -11,12 +11,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,16 +31,17 @@ public class CommentServiceImpl implements CommentService {
     private UsersRepository usersRepository;
     @Autowired
     private PostsRepository postsRepository;
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
     @Override
     public Comments createComment(long postId,long userId,Comments comments){
-        CommentsEntity commentsEntity = new CommentsEntity();
-        comments.setIsArchieved(0);
-        comments.setUsers(usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get(): null);
+        comments.setReplyTo(comments.getReplyTo() != null ? comments.getReplyTo() : 0);
+        comments.setUsers(usersRepository.findById(userId).isPresent() ? usersRepository.findById(userId).get() : null);
         comments.setPost(postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null);
-        comments.setCreateAt(LocalDateTime.now());
-        comments.setUpdateAt(LocalDateTime.now());
-        BeanUtils.copyProperties(comments,commentsEntity);
-        commentsRepository.save(commentsEntity);
+        kafkaTemplate.send("comments",comments.getCmtContent()+ ","+userId+","+comments.getReplyTo()+","+postId);
+        if(userId != (Objects.requireNonNull(postsRepository.findById(postId).isPresent() ? postsRepository.findById(postId).get() : null)).getUser().getUser_id()){ // If the user comment in the post is their own --> not display notification
+            kafkaTemplate.send("notifications","5"+","+userId+"," + postId); // Send notifications of post
+        }
         return comments;
     }
 

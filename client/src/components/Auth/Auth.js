@@ -30,7 +30,7 @@ const Auth = () => {
     e.preventDefault(); // prevent load again
     console.log(formData);
     
-    if(isSignUp){
+    if(isSignUp && (formData.hashPassword === formData.confirmPassword)){
       dispatch(signup(formData,navigate));
     }
     else{

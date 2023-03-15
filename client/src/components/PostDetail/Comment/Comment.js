@@ -64,13 +64,13 @@ const Comment = ({user,comment}) => {
   }
   return (
     <Box display = 'flex' flexDirection = 'row' marginLeft = '10px' marginTop = '20px' gap = '10px'>
-      <Avatar alt = "avatar" src = {comment.users.avatar_url} />
+      <Avatar alt = "avatar" src = {comment?.users?.avatar_url} />
       <Box flexDirection = 'column'>
       <Box sx = {{background: 'whitesmoke',display: 'flex', flexDirection: 'row', borderRadius: 5, minHeight: 70,width: 400}}>
         <Box sx ={{flexDirection: 'column',display: 'flex',justifyContent: 'center', wordWrap: 'break-word',whiteSpace: 'pre-wrap'}}>
           <Stack direction = "row" justifyContent = "space-between">
-            <Typography sx = {{marginLeft: 3,marginBottom: 0.5,fontWeight: '600',opacity: 0.8}}>{comment.users.userName}</Typography>
-            {user.user_id === comment.users.user_id && <IconButton onClick = {() => handleOpen(1)}>
+            <Typography sx = {{marginLeft: 3,marginBottom: 0.5,fontWeight: '600',opacity: 0.8}}>{comment?.users?.userName}</Typography>
+            {user?.user_id === comment?.users?.user_id && <IconButton onClick = {() => handleOpen(1)}>
               <MoreHorizIcon />
             </IconButton>}
             <Dialog open = {open} onClose = {() => handleClose(1)}>
