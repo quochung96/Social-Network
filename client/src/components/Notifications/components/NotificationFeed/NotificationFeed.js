@@ -8,7 +8,7 @@ const NotificationFeed = ({user}) => {
   useEffect(() => {
     console.log(isLoading, notifications);
   })
-  if(isLoading && !notifications) {return "No notifications found";}
+  if(!notifications) {return "No notifications found";}
   return (
     isLoading ? 
     <Container >

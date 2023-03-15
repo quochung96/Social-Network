@@ -5,6 +5,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {deleteNotification} from '../../../../actions/notifications';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
+
 const NotificationCard = ({notification,user}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const NotificationCard = ({notification,user}) => {
   }
   return (
     <>
-    {user.user_id !== notification.user.user_id && 
+    {notification.user !== null && (user.user_id !== notification.user.user_id) && 
       <Box width = "750px" height = "100px" margin = "15px 20px" sx = {{background: 'whitesmoke',border :"1px solid whitesmoke", borderRadius: '10px'}}>
             <Stack direction = "row" gap = "20px" marginTop = '20px' marginLeft = '10px'>
             <ButtonBase onClick = {() => navigate(`/posts/${notification.post.postId}`)}>
