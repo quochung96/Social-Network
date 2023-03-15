@@ -16,4 +16,6 @@ public interface AccountsRepository extends JpaRepository<AccountsEntity,Long> {
     Optional<AccountsEntity> findByEmail(String email);
     List<AccountsEntity> findAllByRoles(RolesEntity roles);
     List<AccountsEntity> findTop10ByOrderByCreateAtDesc();
+
+    Long countAllByRoles(RolesEntity roles);
 }

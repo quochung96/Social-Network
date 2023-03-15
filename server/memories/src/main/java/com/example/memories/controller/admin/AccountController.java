@@ -21,7 +21,7 @@ public class AccountController {
 
     @GetMapping( "/AccountTable")
     public ModelMap mmAccountTable(Model model) {
-        List<Accounts> listAccounts=  accountService.getAllAccountsByRoleId(2L);
+        List<Accounts> listAccounts=  accountService.getAllAccountsByRoleId(1L);
         model.addAttribute("listAccounts", listAccounts);
         return new ModelMap();
     }

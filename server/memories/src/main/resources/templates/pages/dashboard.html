@@ -50,7 +50,7 @@
                         <div class="float-right">
                             <p class="mb-0 text-right">Total User</p>
                             <div class="fluid-container">
-                                <h3 class="font-weight-medium text-right mb-0">1402</h3>
+                                <h3 class="font-weight-medium text-right mb-0" th:utext="${totalUser}"></h3>
                             </div>
                         </div>
                     </div>
@@ -65,9 +65,9 @@
                             <i class="mdi mdi-account text-warning icon-lg"></i>
                         </div>
                         <div class="float-right">
-                            <p class="mb-0 text-right">Customer Account</p>
+                            <p class="mb-0 text-right">Admin User</p>
                             <div class="fluid-container">
-                                <h3 class="font-weight-medium text-right mb-0">1490</h3>
+                                <h3 class="font-weight-medium text-right mb-0"th:utext="${totalAdminUser}"></h3>
                             </div>
                         </div>
                     </div>
@@ -133,6 +133,9 @@
                                     Email
                                 </th>
                                 <th>
+                                    Role
+                                </th>
+                                <th>
                                     Created Date
                                 </th>
                                 <th>
@@ -151,6 +154,12 @@
                                 <td th:utext="${account.acc_id}"></td>
                                 <td th:utext="${account.userName}"></td>
                                 <td th:utext="${account.email}"></td>
+                                <td th:if="${account.roles.role_id == 1}" >
+                                    <label th:utext="${account.roles.roleName}" class="badge badge-info"></label>
+                                </td>
+                                <td th:if="${account.roles.role_id == 2}">
+                                    <label th:utext="${account.roles.roleName}" class="badge badge-warning"></label>
+                                </td>
                                 <td th:utext="${account.createAt}"></td>
                                 <td th:utext="${account.updateAt}"></td>
                                 <td th:if="${account.isArchieved}">

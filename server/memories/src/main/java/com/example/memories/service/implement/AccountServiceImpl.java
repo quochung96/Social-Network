@@ -233,4 +233,11 @@ public class AccountServiceImpl implements AccountService{
                         acc.getUpdateAt()
                 )).collect(Collectors.toList());
     }
+
+    @Override
+    public Long countAllByRoles(Long roleId) {
+        RolesEntity role = rolesRepository.findById(roleId).get();
+
+        return accountsRepository.countAllByRoles(role);
+    }
 }
