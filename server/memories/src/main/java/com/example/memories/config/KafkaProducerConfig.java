@@ -26,12 +26,12 @@ public class KafkaProducerConfig {
     }
     // ProducerFactory responsible for creating instances
     @Bean
-    public ProducerFactory<Object, Object> producerFactory() {
+    public ProducerFactory<String, Object> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfig());
     }
     // KafkaTemplate allows us to create kafka producers we need a way for us to send messages
     @Bean
-    public KafkaTemplate<Object, Object> kafkaTemplate(ProducerFactory<Object, Object> producerFactory){
-        return new KafkaTemplate<Object, Object>(producerFactory);
+    public KafkaTemplate<String, Object> kafkaTemplate(ProducerFactory<String, Object> producerFactory){
+        return new KafkaTemplate<String, Object>(producerFactory);
     }
 }

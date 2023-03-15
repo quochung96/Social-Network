@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface NotificationService {
     public List<Notifications> getAllNotification();
-    Notifications createNotification(long userId, long postId, Notifications notification) throws Exception;
+    Notifications createNotification(long userId, Notifications notification) throws Exception;
     Notifications updateNotification(long id, Notifications notification) throws NotificationNotFoundException;
     Notifications getNotificationById(long id) throws NotificationNotFoundException;
     Boolean deleteNotificationById(long id) throws NotificationNotFoundException;

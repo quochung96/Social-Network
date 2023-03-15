@@ -65,16 +65,16 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notifications createNotification(long userId, long postId, Notifications notification) throws Exception {
+    public Notifications createNotification(long userId, Notifications notification) throws Exception {
         try {
             NotificationsEntity newNotification = new NotificationsEntity();
+            if(notificationsRepository.findByPost(notification.getPost().getPostId()).isPresent() && notificationsRepository.findByUser(notification.getUser()).isPresent()){
+                throw new Exception("Cannot create notification twice");
+            }
             notification.setCreateAt(LocalDateTime.now());
             notification.setUpdateAt(LocalDateTime.now());
             if (usersRepository.findById(userId).isPresent()) {
                 notification.setUser(usersRepository.findById(userId).get());
-            }
-            if (postsRepository.findById(postId).isPresent()) {
-                notification.setPost(postsRepository.findById(postId).get());
             }
             BeanUtils.copyProperties(notification, newNotification);
             notificationsRepository.save(newNotification);
@@ -116,10 +116,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Boolean deleteNotificationById(long id) throws NotificationNotFoundException {
-        if (notificationsRepository.findById(id).isEmpty()){
-            throw new NotificationNotFoundException(String.format("Could not found any notification with id %s", id));
+        try {
+            notificationsRepository.deleteById(id);
+            return true;
         }
-        notificationsRepository.deleteById(id);
-        return true;
+        catch(NoSuchElementException e){
+            throw new NotificationNotFoundException(String.format("Notification is not found with id %s", id));
+        }
     }
 }

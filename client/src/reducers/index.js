@@ -6,7 +6,8 @@ import requests from './requests.js';
 import comments from './comments.js';
 import searches from './searches.js';
 import reactions from './reactions.js';
+import notifications from './notifications.js';
 
 export default combineReducers({
-    auth,posts,users,requests,comments,searches,reactions
+    auth,posts,users,requests,comments,searches,reactions,notifications
 });

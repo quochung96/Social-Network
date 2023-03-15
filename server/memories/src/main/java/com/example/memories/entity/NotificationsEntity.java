@@ -34,15 +34,12 @@ public class NotificationsEntity {
     @Column(name = "CREATE_AT" )
     @PastOrPresent(message = "Create Date must be past or present")
     private LocalDateTime createAt;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_AT")
     @PastOrPresent(message = "Update Date must be past or present")
     private LocalDateTime updateAt;
-
     @Column(name = "NOTI_TYPE")
     private Long notiType;
-
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private UsersEntity user;

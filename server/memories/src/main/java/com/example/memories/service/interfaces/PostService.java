@@ -14,4 +14,5 @@ public interface PostService {
     Posts updateAudiencePost(long id, Posts post) throws PostNotFoundException;
     Posts getPostById(long id) throws PostNotFoundException;
     Boolean deletePostById(long id) throws PostNotFoundException;
+    Long countPost();
 }

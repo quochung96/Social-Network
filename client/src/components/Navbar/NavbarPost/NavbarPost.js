@@ -160,7 +160,7 @@ const NavbarPost = ({ user, setUser, userProfile }) => {
         <div className={classes.header_right}>
           <div className={classes.header_info}>
             <IconButton onClick = {() => navigate(`/notification`)}>
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={null} color="error">
                 <NotificationsNoneIcon fontSize="medium" />
               </Badge>
             </IconButton>
