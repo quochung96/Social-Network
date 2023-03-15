@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -209,5 +210,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public Long countPost() {
         return postsRepository.countAllPosts();
+    }
+
+    @Override
+    public Long countPostByMonth(String startDate, String endDate) {
+        return postsRepository.countPostsByMonth(startDate, endDate);
     }
 }
