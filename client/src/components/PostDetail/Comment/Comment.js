@@ -55,7 +55,7 @@ const Comment = ({user,comment}) => {
     if(moment().diff(moment(comment.createAt), 'days') < 1){
       return moment(comment.createAt).locale('vi').fromNow();
     }
-    else if(moment.diff(moment(comment.createAt), 'days' < 7)){
+    else if(moment().diff(moment(comment.createAt), 'days' < 7)){
       return moment(comment.createAt).locale('vi').format('dddd');
     }
     else{
