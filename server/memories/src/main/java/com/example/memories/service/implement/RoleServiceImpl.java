@@ -8,6 +8,7 @@ import com.example.memories.service.interfaces.RoleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     //Constructor
+    @Autowired
     private RolesRepository rolesRepository;
     @Override
     public Roles createRole(Roles role) throws Exception {

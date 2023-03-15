@@ -20,19 +20,14 @@
                                     Id
                                 </th>
                                 <th>
-                                    User Name
+                                    Role Name
                                 </th>
-                                <th>
-                                    Content
-                                </th>
+
                                 <th>
                                     Created Date
                                 </th>
                                 <th>
                                     Updated Date
-                                </th>
-                                <th>
-                                    Status
                                 </th>
                                 <th>
                                     Action
@@ -42,9 +37,9 @@
                             <tbody>
                             <tr th:each="role : ${listRoles}">
                                 <td th:utext="${role.role_id}"></td>
-                                <td>
-                                    <label class="badge badge-danger">Banned</label>
-                                </td>
+                                <td th:utext="${role.roleName}"></td>
+                                <td th:utext="${role.createAt}"></td>
+                                <td th:utext="${role.updatedAt}"></td>
                                 <!--                <td th:utext="${post.isArchieved}"></td>-->
                                 <td>
                                     <a class="menu-icon mdi mdi-delete-forever icon-lg"></a>
