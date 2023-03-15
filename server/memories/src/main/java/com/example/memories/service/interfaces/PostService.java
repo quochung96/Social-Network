@@ -4,6 +4,7 @@ import com.example.memories.builder.PostResponse;
 import com.example.memories.exeption.PostNotFoundException;
 import com.example.memories.model.Posts;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PostService {
@@ -15,4 +16,5 @@ public interface PostService {
     Posts getPostById(long id) throws PostNotFoundException;
     Boolean deletePostById(long id) throws PostNotFoundException;
     Long countPost();
+    Long countPostByMonth(String startDate, String endDate);
 }
