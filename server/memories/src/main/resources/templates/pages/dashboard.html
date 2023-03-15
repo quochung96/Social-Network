@@ -3,6 +3,38 @@
       layout:decorate="~{layout}">
 <head>
     <title>Home</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript" >
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Posts');
+            data.addRows([[${chartData}]]);
+
+            // Set chart options
+            var options = {'title':'Posts per month',
+                // 'width':1000,
+                 'height':500
+                };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+    </script>
 </head>
 <body>
 <section layout:fragment="content">
@@ -77,142 +109,9 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-7 grid-margin stretch-card">
-            <!--weather card-->
-            <div class="card card-weather">
-                <div class="card-body">
-                    <div class="weather-date-location">
-                        <h3>Monday</h3>
-                        <p class="text-gray">
-                            <span class="weather-date">25 October, 2016</span>
-                            <span class="weather-location">London, UK</span>
-                        </p>
-                    </div>
-                    <div class="weather-data d-flex">
-                        <div class="mr-auto">
-                            <h4 class="display-3">21
-                                <span class="symbol">&deg;</span>C</h4>
-                            <p>
-                                Mostly Cloudy
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    <div class="d-flex weakly-weather">
-                        <div class="weakly-weather-item">
-                            <p class="mb-0">
-                                Sun
-                            </p>
-                            <i class="mdi mdi-weather-cloudy"></i>
-                            <p class="mb-0">
-                                30°
-                            </p>
-                        </div>
-                        <div class="weakly-weather-item">
-                            <p class="mb-1">
-                                Mon
-                            </p>
-                            <i class="mdi mdi-weather-hail"></i>
-                            <p class="mb-0">
-                                31°
-                            </p>
-                        </div>
-                        <div class="weakly-weather-item">
-                            <p class="mb-1">
-                                Tue
-                            </p>
-                            <i class="mdi mdi-weather-partlycloudy"></i>
-                            <p class="mb-0">
-                                28°
-                            </p>
-                        </div>
-                        <div class="weakly-weather-item">
-                            <p class="mb-1">
-                                Wed
-                            </p>
-                            <i class="mdi mdi-weather-pouring"></i>
-                            <p class="mb-0">
-                                30°
-                            </p>
-                        </div>
-                        <div class="weakly-weather-item">
-                            <p class="mb-1">
-                                Thu
-                            </p>
-                            <i class="mdi mdi-weather-pouring"></i>
-                            <p class="mb-0">
-                                29°
-                            </p>
-                        </div>
-                        <div class="weakly-weather-item">
-                            <p class="mb-1">
-                                Fri
-                            </p>
-                            <i class="mdi mdi-weather-snowy-rainy"></i>
-                            <p class="mb-0">
-                                31°
-                            </p>
-                        </div>
-                        <div class="weakly-weather-item">
-                            <p class="mb-1">
-                                Sat
-                            </p>
-                            <i class="mdi mdi-weather-snowy"></i>
-                            <p class="mb-0">
-                                32°
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--weather card ends-->
-        </div>
-        <div class="col-lg-5 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title text-primary mb-5">Performance History</h2>
-                    <div class="wrapper d-flex justify-content-between">
-                        <div class="side-left">
-                            <p class="mb-2">The best performance</p>
-                            <p class="display-3 mb-4 font-weight-light">+45.2%</p>
-                        </div>
-                        <div class="side-right">
-                            <small class="text-muted">2017</small>
-                        </div>
-                    </div>
-                    <div class="wrapper d-flex justify-content-between">
-                        <div class="side-left">
-                            <p class="mb-2">Worst performance</p>
-                            <p class="display-3 mb-5 font-weight-light">-35.3%</p>
-                        </div>
-                        <div class="side-right">
-                            <small class="text-muted">2015</small>
-                        </div>
-                    </div>
-                    <div class="wrapper">
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-2">Sales</p>
-                            <p class="mb-2 text-primary">88%</p>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 88%" aria-valuenow="88"
-                                 aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div class="wrapper mt-4">
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-2">Visits</p>
-                            <p class="mb-2 text-success">56%</p>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 56%" aria-valuenow="56"
-                                 aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div  class="row">
+        <div class="col-lg-12 grid-margin">
+            <div id="chart_div"></div>
         </div>
     </div>
     <div class="row">
