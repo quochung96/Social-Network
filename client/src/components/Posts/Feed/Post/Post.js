@@ -126,7 +126,6 @@ const Post = ({post,reaction,user,userProfile}) => {
       setIsLiked(false);
     }
   }, [post.postId, reaction, user.user_id])
-  console.log("isLiked",isLiked);
   return (
     <Card sx={{ margin: 4,width: '800px', borderRadius: '30px',boxShadow: 'rgba(0, 0, 0, 0.35) 0px 10px 15px' }} raised elevation = {6}>
       <CardHeader

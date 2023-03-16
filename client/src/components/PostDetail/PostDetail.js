@@ -34,11 +34,11 @@ const PostDetail = ({user,setUser,userProfile}) => {
       setFormComment({cmtContent: ''});
     }
   }
-  useEffect(() => {
-    dispatch(getPost(id));
-    dispatch(getUser(user?.user_id));
-    dispatch(getCommentByPostId(id));
-  },[dispatch,id,location,user?.user_id]);
+  useEffect(() =>{
+      dispatch(getPost(id));
+      dispatch(getUser(user?.user_id));
+      dispatch(getCommentByPostId(id));
+    },[dispatch,id,location,user?.user_id]);
 
   if(!post) { return "No post found";}
   if(!comments) {return "No Comments";}

@@ -66,12 +66,12 @@ const AddPost = ({user,userProfile}) => {
   const handleFriendExcept = () => {
     setOpenFriendExcept(true);
   }
-  const handleSubmit = () => {
+  const handleSubmit = () => Promise.resolve().then(() =>  {
     console.log(formPost);
-
     dispatch(createPost(user?.user_id,formPost)); //OK
-    window.location.reload(false);
-  }
+    }
+    ,[window.location.reload(false)]
+  );
   const handleClickOpen = (key) => {
     switch (key) {
       case 1:

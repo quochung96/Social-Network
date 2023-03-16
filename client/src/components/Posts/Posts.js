@@ -20,7 +20,7 @@ const Posts = ({user,setUser, userProfile}) => {
   const dispatch = useDispatch();
   let page = query.get('pageNo');
   useEffect(() => {
-    dispatch(getPosts(Number(page) || 1));
+    dispatch(getPosts(Number(page) || Number(1)));
     dispatch(getRequests());
     dispatch(getUser(user?.user_id));
     dispatch(getLikes());

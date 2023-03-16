@@ -104,7 +104,7 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
                 <>
                 {userRequest.length !== 0 ? 
                 <>
-                {(uRequest[0].isAccepted === 0) ?
+                {(uRequest[0]?.isAccepted === 0) ?
                     <>
                         {uRequest[0].receiveUser.user_id === user?.user_id ? <>
                             <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
@@ -144,7 +144,7 @@ const ProfileDetails = ({handleCoverImage,user, userProfile,userRequest,userResp
                 </>
                 :
                 <>
-                {(uResponse[0].isAccepted === 0) ?
+                {(uResponse[0]?.isAccepted === 0) ?
                     <>
                         {uResponse[0].receiveUser.user_id === user?.user_id ? <>
                             <ButtonBase onClick = {handleClickOpen} sx = {{display: 'flex',background: '#1B74E4', borderRadius: 2, width: 130, height: 40, color: 'white'}}>
