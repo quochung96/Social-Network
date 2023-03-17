@@ -43,11 +43,11 @@ const Post = ({post,reaction,user,userProfile}) => {
   const handleChangeLike = (e) => {
     if(e.target.checked === true){
       setIsLiked(true);
-      dispatch(createLike(user.user_id,{post: {postId: Number(post.postId)}}));      
+      dispatch(createLike(user.user_id,{post: {postId: Number(post.postId)}}));
     }
     else{
       setIsLiked(false);
-      dispatch(deleteLike(Number(reaction.filter((react) => react.userId.user_id === user.user_id && react.post.postId === post.postId)[0].reactId)));
+      dispatch(deleteLike(Number(post.postId), user.user_id));
     }
   }
   const handleShowImage = () => setIsShowImage(true);
@@ -292,12 +292,11 @@ const Post = ({post,reaction,user,userProfile}) => {
         </Box>
         <Box width = '100%' sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <IconButton aria-label="add to favorites">
-          <Checkbox
-            icon={<FavoriteBorder />}
-            onChange = {handleChangeLike}
-            checked = {isLiked}
-            checkedIcon={<Favorite sx={{ color: "red" }} />}
-          />
+            <Checkbox
+              icon={<FavoriteBorder />}
+              onChange = {handleChangeLike}
+              checked={isLiked}
+              checkedIcon={<Favorite sx={{ color: "red" }} />}/>
         </IconButton>
         <IconButton onClick = {() => navigate(`/posts/${post.postId}`)}>
           <CommentIcon />

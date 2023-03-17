@@ -7,7 +7,7 @@ const FriendFeeds = () => {
   useEffect(() => {
     console.log(request);
   });
-  if(isLoading && !request) return 'No friends request found';
+  if((isLoading && !request) || !request) return 'No friends request found';
   return (
     isLoading ? (
       <Container >

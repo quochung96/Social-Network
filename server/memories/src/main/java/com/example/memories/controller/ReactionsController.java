@@ -52,8 +52,9 @@ public class ReactionsController {
         }
         return ResponseEntity.ok().body(reactionService.updateReaction(id,reactions));
     }
-    @DeleteMapping("/reactions/{id}")
-    public ResponseEntity<Boolean> deleteReaction(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long id) throws ReactionsNotFoundException{
-        return ResponseEntity.ok().body(reactionService.deleteReaction(id));
+    @DeleteMapping("/reactions/post/{postId}/user/{userId}")
+    public ResponseEntity<Boolean> deleteReaction(@PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long postId,
+                                                  @PathVariable @Min(value = 1, message = "Id must be greater than or equal to 1") Long userId) throws ReactionsNotFoundException{
+        return ResponseEntity.ok().body(reactionService.deleteReaction(postId, userId));
     }
 }

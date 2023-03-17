@@ -41,7 +41,7 @@ export const fetchAllLike = () => API.get(`/reactions`);
 export const fetchAllLikePost = (postId) => API.get(`/post/${postId}/reactions`);
 export const fetchAllLikeComment = (commentId) => API.get(`/comment/${commentId}/reactions`);
 export const updateLike = (id,updatedLike) => API.put(`/reactions/${id}`,updatedLike);
-export const deleteLike = (id) => API.delete(`/reactions/${id}`);
+export const deleteLike = (postId, userId) => API.delete(`/reactions/post/${postId}/user/${userId}`);
 //Comment
 export const fetchCommentByPostId = (postId) => API.get(`/post/${postId}/comments`); // OK
 export const createCommentByUserId = (userId,postId,newComment) => API.post(`/user/${userId}/comments/${postId}`,newComment); //OK

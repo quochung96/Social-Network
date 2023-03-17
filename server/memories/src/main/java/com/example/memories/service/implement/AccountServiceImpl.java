@@ -111,6 +111,9 @@ public class AccountServiceImpl implements AccountService{
             AccountBuilder user = accountBuilderRepository.findByEmail(account.getEmail())
                     .orElseThrow();
             Long user_id = accountsRepository.findByEmail(account.getEmail()).isPresent() ? accountsRepository.findByEmail(account.getEmail()).get().getUsers().getUser_id() : null;
+            if(accountsRepository.findByEmail(account.getEmail()).get().getIsArchieved() == 0){
+                throw new AccountNotFoundException("Account is banned");
+            }
             var jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder().token(jwtToken).
                     result(user).

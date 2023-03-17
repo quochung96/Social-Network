@@ -50,7 +50,7 @@ public class PostServiceImpl implements PostService {
             List<PostsEntity> listOfPosts = posts.getContent();
 
             List<Posts> content = listOfPosts.stream().
-                    filter(post -> !post.getPermission().equals("Only me"))
+                    filter(post -> !(post.getPermission().equals("Only me")) || !(post.getIsArchieved() == 0))
                     .map(post ->
                     new Posts(
                             post.getPostId(),

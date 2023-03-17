@@ -54,11 +54,11 @@ export const updateLike = (id, updatedLike) => async (dispatch) => {
       console.log(error);
     }
 };
-export const deleteLike = (id) => async (dispatch) => {
+export const deleteLike = (postId, userId) => async (dispatch) => {
     try {
-      await api.deleteLike(id);
+      await api.deleteLike(postId, userId);
   
-      dispatch({ type: DELETE_LIKE, payload: id });
+      dispatch({ type: DELETE_LIKE, payload: {postId,userId} });
     } catch (error) {
       console.log(error);
     }

@@ -41,7 +41,7 @@ const reactionReducer = (state = {isLoading: true, reactions: []}, action)=>{
         case DELETE_LIKE:
             return {
                 ...state,
-                reactions: state.reactions.filter((reaction) => reaction.id !== action.payload)
+                reactions: state.reactions.filter((reaction) => (reaction.userId !== action.payload.userId && reaction.postId !== action.payload.postId ))
             };
         default:
             return state;
