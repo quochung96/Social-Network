@@ -236,7 +236,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Long countAllByRoles(Long roleId) {
-        RolesEntity role = rolesRepository.findById(roleId).get();
+            RolesEntity role = rolesRepository.findById(roleId).get();
 
         return accountsRepository.countAllByRoles(role);
     }
