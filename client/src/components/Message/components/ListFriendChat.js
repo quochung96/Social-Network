@@ -6,17 +6,22 @@ import AddIcon from '@mui/icons-material/Add';
 import FriendMessageCard from './FriendMessageCard';
 
 const ListFriendChat = () => {
-    const [search,setSearch] = useState('');
+    const [search,setSearch] = useState({search: ''});
     const handleChange = (e) => {
       setSearch({...search,[e.target.name]: e.target.value});
-    }  
+    }
+    const handleSubmit = (e) => {
+      if(e.keyCode === 13 || e.key === 'Enter'){
+        console.log(search);
+      }
+    }
   return (
     <Box flex = {1} p = {1} sx = {{background: '#535151'}}>
         <Stack direction = 'column' justifyContent = 'space-between'>
           {/*Search*/}
           <Box p = {1} display = 'flex' flexDirection = 'row' sx = {{background: '#6D6767', width: '90%',height: '60px',borderRadius: '5px',color: 'white'}}>
             <TextField name = "search" label = {<Typography variant = 'body1' fontSize = '16px'>Search</Typography>} onChange = {handleChange} />
-            <IconButton onClick = {() => console.log("clicked")}><SearchIcon color = 'primary' fontSize = 'large'/></IconButton>
+            <IconButton onClick = {handleSubmit}><SearchIcon color = 'primary' fontSize = 'large'/></IconButton>
           </Box>
           {/*Friends */}
           <Box display = 'flex' flexDirection = 'row' justifyContent = 'start' alignItems = 'center' marginTop = '10px' sx = {{background: '#B5B5B5', width: '90%', borderRadius: '10px', height: '60px',gap: 3, boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
@@ -29,6 +34,9 @@ const ListFriendChat = () => {
               <AddIcon />
             </Button>
           </Stack>
+          {/**Friend Message Card*/}
+          <FriendMessageCard />
+          <FriendMessageCard />
           <FriendMessageCard />
         </Stack>
     </Box>

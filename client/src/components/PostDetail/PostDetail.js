@@ -50,7 +50,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
           <Paper sx = {{height: '900px', display: 'flex', flexDirection: 'row'}}>
               <Card >
                 <Box flex = {2}>
-                {post.photoInPost.photoUrl &&  (
+                {post.photoInPost &&  (
                   <Box sx = {{overflow: 'scroll', whiteSpace: 'nowrap',height: 'auto',width:'800px' ,background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                   <CardMedia
                         sx = {{width: '100%', height: 'auto', objectFit: 'cover'}}
@@ -120,7 +120,7 @@ const PostDetail = ({user,setUser,userProfile}) => {
                       <ButtonBase onClick = {() => navigate(`/profile/${user?.user_id}`)}>
                       {userProfile.avatar_url !== null && <Avatar alt = "avatar" src = {userProfile.avatar_url}/>}
                       </ButtonBase>
-                    <TextField name = "cmtContent" variant = "filled" size = "small" value = {comment} onKeyPress={handleSubmit} onChange={handleChange} multiline label = "Write a comment..." fullWidth InputProps = {{ disableUnderline: true}} sx = {{marginLeft: 2,marginRight: 2}}/>
+                      <TextField name = "cmtContent" variant = "filled" size = "small" value = {comment} onKeyPress={handleSubmit} onChange={handleChange} multiline label = "Write a comment..." fullWidth InputProps = {{ disableUnderline: true}} sx = {{marginLeft: 2,marginRight: 2}}/>
                     </Box> 
                     <Box display = 'flex' flexDirection = 'column' height = "500px" sx = {{overflow: 'scroll', whiteSpace: 'nowrap', marginTop: 1}}>
                       {comments.map((comment) => (

@@ -254,7 +254,7 @@ const Post = ({post,reaction,user,userProfile}) => {
             {post?.content}
         </Typography>
       </CardContent>
-      {post.photoInPost.photoUrl && (
+      {post.photoInPost && (
         <ButtonBase sx = {{display: 'flex',flexDirection: 'column'}} onClick = {openDetailPost}>  
         <Box sx = {{height: 'auto',width:'800px' ,background: 'black',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <CardMedia
