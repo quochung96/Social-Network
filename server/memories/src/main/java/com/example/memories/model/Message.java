@@ -16,6 +16,9 @@ public class Message {
     private LocalDateTime createAt;
     private MessageType type;
 
+    public Message(Long id, String content, String sender, LocalDateTime createAt) {
+    }
+
     public enum MessageType{
         CHAT,
         JOIN,
