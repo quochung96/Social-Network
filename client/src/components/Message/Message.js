@@ -1,14 +1,17 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {Box,TextField,ButtonBase,Avatar} from '@mui/material';
 import SidebarChat from './components/SidebarChat';
 import ListFriendChat from './components/ListFriendChat';
 import HeaderChat from './components/HeaderChat';
 import MessageCard from './components/MessageCard';
-import {useNavigate} from 'react-router-dom';
-
+import {useNavigate,useLocation} from 'react-router-dom';
+import {getRequests} from '../../actions/friendRequest';
+import {useDispatch} from 'react-redux';
 
 const Message = ({user,userProfile}) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
   const [message,setMessage] = useState('');
   const [formMessage, setFormMessage] = useState({chatContent: ''});
   const handleSubmit = (e) => {
@@ -20,10 +23,13 @@ const Message = ({user,userProfile}) => {
     setMessage(e.target.value);
     setFormMessage({...formMessage,[e.target.name]: e.target.value});
   }
+  useEffect(() => {
+    dispatch(getRequests());
+  }, [dispatch,location]);
   return (
     <Box display = 'flex' flexDirection = "row" justifyContent = 'space-between' sx = {{height: 'auto',marginTop: '-10px', marginLeft: "-11.2rem"}}>
       <SidebarChat />
-      <ListFriendChat />
+      <ListFriendChat user = {user} />
       <Box flex = {4} p={1} sx = {{width: '100%', height: 'auto'}}>
         <HeaderChat />
         <Box sx = {{display: 'flex', flexDirection: 'column',marginTop: 5, height: '800px',overflow: 'scroll', whiteSpace: 'nowrap'}}>

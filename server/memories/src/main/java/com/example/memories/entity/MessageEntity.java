@@ -21,8 +21,9 @@ public class MessageEntity {
     private Long id;
     @Column(name = "CONTENT",nullable = false)
     private String content;
-    @Column(name = "SENDER", nullable = false)
-    private String sender;
-    @Column(name = "CREATE_AT",nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SENDER_ID", nullable = false)
+    private UsersEntity sender;
+    @Column(name = "CREATE_AT")
     private LocalDateTime createAt;
 }

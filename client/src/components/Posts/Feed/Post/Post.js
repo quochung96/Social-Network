@@ -14,8 +14,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { updatePost,updateAudiencePost, deletePost } from '../../../../actions/posts';
 import {deleteLike, createLike} from '../../../../actions/reactions';
-// import {createNotification} from '../../../../actions/notifications';
-
 import lineBreak from '../../../../assets/icons/Line 2.png';
 import EditAudience from './EditAudience';
 import Friends from '../../../../assets/icons/friends.png';

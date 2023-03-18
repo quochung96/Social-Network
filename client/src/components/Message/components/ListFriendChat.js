@@ -4,8 +4,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import FriendMessageCard from './FriendMessageCard';
+import {useSelector} from 'react-redux';
 
-const ListFriendChat = () => {
+
+const ListFriendChat = ({user}) => {
+    const {isLoading, requests} = useSelector((state) => state.requests);
     const [search,setSearch] = useState({search: ''});
     const handleChange = (e) => {
       setSearch({...search,[e.target.name]: e.target.value});
@@ -15,6 +18,9 @@ const ListFriendChat = () => {
         console.log(search);
       }
     }
+    if(isLoading && !requests) return 'No friends found';
+    const listFriends = requests.filter(item => (item.receiveUser.user_id === user.user_id || item.sendUser.user_id === user.user_id)) 
+    console.log(listFriends);
   return (
     <Box flex = {1} p = {1} sx = {{background: '#535151'}}>
         <Stack direction = 'column' justifyContent = 'space-between'>
@@ -35,9 +41,9 @@ const ListFriendChat = () => {
             </Button>
           </Stack>
           {/**Friend Message Card*/}
-          <FriendMessageCard />
-          <FriendMessageCard />
-          <FriendMessageCard />
+          {listFriends.map((friend) => (
+            <FriendMessageCard key = {friend.reqId} friend = {friend}/>
+          ))}
         </Stack>
     </Box>
   )

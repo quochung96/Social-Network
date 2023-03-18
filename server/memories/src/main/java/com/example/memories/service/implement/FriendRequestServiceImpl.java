@@ -29,10 +29,12 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Autowired
     UsersRepository usersRepository;
     @Override
-    public List<FriendRequests> getAllFriendRequests() {
+    public List<FriendRequests> getAllFriendRequests(String keyword) {
         List<FriendRequestEntity> friendRequestEntities = friendRequestRepository.findAll();
 
-        return friendRequestEntities.stream().map(
+        return friendRequestEntities.stream()
+                .filter((friend) -> friend.getSendUser().getUserName().contains(keyword) || friend.getReceiveUser().getUserName().contains(keyword))
+                .map(
                 data -> new FriendRequests(
                         data.getReqId(),
                         data.getSendUser(),
@@ -126,13 +128,13 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     @Override
-    public FriendRequests deleteFriendRequest(long id) throws FriendRequestsNotFoundException {
+    public Boolean deleteFriendRequest(long id) throws FriendRequestsNotFoundException {
         try {
             FriendRequestEntity friendRequestEntity = friendRequestRepository.findById(id).get();
             FriendRequests friendRequests = new FriendRequests();
             BeanUtils.copyProperties(friendRequestEntity, friendRequests);
             friendRequestRepository.deleteById(id);
-            return friendRequests;
+            return true;
         }
         catch (NoSuchElementException e){
             throw new FriendRequestsNotFoundException(String.format("Could not found any friend requests with Id %s", id));

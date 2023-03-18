@@ -1,4 +1,5 @@
 package com.example.memories.controller;
+import com.example.memories.constant.SpringBootApplicationConstant;
 import com.example.memories.exeption.FriendRequestsNotFoundException;
 import com.example.memories.model.FriendRequests;
 import com.example.memories.service.interfaces.FriendRequestService;
@@ -15,8 +16,10 @@ public class FriendRequestController {
     @Autowired
     FriendRequestService friendRequestService;
     @GetMapping("/friendrequests")
-    public ResponseEntity<List<FriendRequests>> getAllFriendRequest(){
-        return ResponseEntity.ok().body(friendRequestService.getAllFriendRequests());
+    public ResponseEntity<List<FriendRequests>> getAllFriendRequest(
+            @RequestParam(value = "keyword",defaultValue = SpringBootApplicationConstant.DEFAULT_PAGE_KEYWORD,required = false) String keyword
+    ){
+        return ResponseEntity.ok().body(friendRequestService.getAllFriendRequests(keyword));
     }
 
     @GetMapping("/friendrequests/{id}")
@@ -43,7 +46,7 @@ public class FriendRequestController {
     }
 
     @DeleteMapping("/friendrequest/{id}")
-    public ResponseEntity<FriendRequests> deleteFriendRequest(@PathVariable long id) throws FriendRequestsNotFoundException {
+    public ResponseEntity<Boolean> deleteFriendRequest(@PathVariable long id) throws FriendRequestsNotFoundException {
         return ResponseEntity.ok().body(friendRequestService.deleteFriendRequest(id));
     }
 
