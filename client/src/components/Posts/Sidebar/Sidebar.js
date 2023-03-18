@@ -27,10 +27,11 @@ const Sidebar = ({ mode, setMode, user, setUser, userProfile }) => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const logout = () => Promise.resolve().then(() => {
+  const logout = () => {
     dispatch({type: actionType.LOGOUT});
-  },[navigate("/auth"),setUser(null)]
-  );
+    navigate("/auth");
+    setUser(null);
+  };
   return (
     <Box flex = {1} p={1} sx={{display: {xs: 'none',md: 'block', marginLeft: '-20px'}}}>
       <Box position = 'fixed' width = '220px'>
