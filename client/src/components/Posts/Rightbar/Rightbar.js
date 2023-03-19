@@ -29,7 +29,7 @@ const Rightbar = ({page}) => {
     const classes = useStyles();
     return (
         <>
-            <AppBar className = {classes.appBarSearch} position = "static" color = "inherit" sx = {{width :"300px"}}>
+            <AppBar className = {classes.appBarSearch} position = "fixed" color = "inherit" sx = {{width :"300px", height: "200px", right: 80,top: 120}}>
             <TextField 
                 name = "search" 
                 variant = "outlined" 

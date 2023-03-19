@@ -35,7 +35,7 @@ const Home = () => {
   const navigate = useNavigate();
   // Using dispatch redux the set Log in
   const handleSubmit = (e) => {
-    console.log(formData);
+    e.preventDefault();
     dispatch(signin(formData,navigate));
     window.location.reload(false);
   }

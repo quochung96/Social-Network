@@ -33,6 +33,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Messages> getAllRoomMessage(long roomId) {
         List<MessageEntity> messageEntities = messageRepository.findAllByCreateAt().isPresent() ? messageRepository.findAllByCreateAt().get() : null;
+        assert messageEntities != null;
         return messageEntities.stream()
                 .filter(message -> message.getConversation().getConvID() == roomId)
                 .map(

@@ -11,7 +11,7 @@ const PhotoProfile = ({post}) => {
         </Box>
         <Grid container spacing = {0.2} marginLeft = '10px'>
             {post.map((subPost) => (
-                <PhotoCard key = {subPost.photoInPost.photoId} post = {subPost}/>
+                <PhotoCard key = {subPost?.photoInPost?.photoId} post = {subPost}/>
             ))    
             }
         </Grid>

@@ -27,9 +27,7 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevent load again
-    console.log(formData);
-    
+    e.preventDefault();
     if(isSignUp && (formData.hashPassword === formData.confirmPassword)){
       dispatch(signup(formData,navigate));
     }

@@ -36,7 +36,7 @@ const FriendMessage = ({user}) => {
                 <ListFriendChat user = {user} />
                 <Box flex = {4} p={1} sx = {{width: '100%', height: 'auto'}}>
                     { rooms.map((room) => (
-                        <FriendFeed key = {room.convId} room = {room} />
+                        <FriendFeed key = {room.convId} user = {user} room = {room} />
                     ))
                     }
                 </Box>

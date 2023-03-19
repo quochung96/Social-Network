@@ -41,7 +41,7 @@ const ListFriendChat = ({user}) => {
           </Stack>
           {/**Friend Message Card*/}
           {rooms.map((room) => (
-            <FriendMessageCard key = {room.convId} room = {room}/>
+            <FriendMessageCard key = {room.convId} user = {user} room = {room}/>
           ))}
         </Stack>
     </Box>
