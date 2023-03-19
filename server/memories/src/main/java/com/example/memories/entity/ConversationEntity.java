@@ -2,13 +2,12 @@ package com.example.memories.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,13 +27,12 @@ public class ConversationEntity implements Serializable {
             allocationSize = 1
     )
     private Long convID;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "SEND_USER_ID")
+    private UsersEntity sendUser;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RECEIVE_USER_ID")
     private UsersEntity receiveUser;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MESS_ID")
-    private MessageEntity messages;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_AT",nullable = true)
     private LocalDateTime createAt;

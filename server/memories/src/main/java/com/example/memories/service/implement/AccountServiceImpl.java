@@ -14,6 +14,7 @@ import com.example.memories.repository.repositoryJPA.AccountsRepository;
 import com.example.memories.repository.repositoryJPA.RolesRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.AccountService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
     @author Anh Dung
  */
 @Service
+@Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService{
     private final AccountsRepository accountsRepository;

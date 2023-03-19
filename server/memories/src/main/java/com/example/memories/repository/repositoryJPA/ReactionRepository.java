@@ -13,10 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ReactionRepository extends JpaRepository<ReactionsEntity,Long>{
     Optional<ReactionsEntity> findAllByPost(PostsEntity posts);
-
     @Query("SELECT r from ReactionsEntity r WHERE r.post.postId = :postId AND r.userId.user_id = :userId ")
     Optional<ReactionsEntity> findByPostIdAndUserId(@Param("postId") Long postId, @Param("userId")Long userId);
-
-    Optional<ReactionsEntity> findByCmtId(CommentsEntity cmtId);
 }
 

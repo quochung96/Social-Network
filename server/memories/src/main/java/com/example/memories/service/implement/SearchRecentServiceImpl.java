@@ -6,6 +6,7 @@ import com.example.memories.model.SearchRecents;
 import com.example.memories.repository.repositoryJPA.SearchRecentsRepository;
 import com.example.memories.repository.repositoryJPA.UsersRepository;
 import com.example.memories.service.interfaces.SearchRecentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
-
 public class SearchRecentServiceImpl implements SearchRecentService {
     @Autowired
     private final SearchRecentsRepository searchRecentsRepository;

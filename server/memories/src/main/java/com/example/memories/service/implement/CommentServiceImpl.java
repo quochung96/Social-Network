@@ -21,9 +21,10 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+
 @Service
-@RequiredArgsConstructor
 @Transactional(rollbackOn = Exception.class)
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentsRepository commentsRepository;
@@ -65,8 +66,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comments getCommentById(Long id) {
-        CommentsEntity commentsEntity = commentsRepository.findById(id).get();
+        CommentsEntity commentsEntity = commentsRepository.findById(id).isPresent() ? commentsRepository.findById(id).get() : null;
         Comments comments = new Comments();
+        assert commentsEntity != null;
         BeanUtils.copyProperties(commentsEntity,comments);
         return comments;
     }
@@ -74,7 +76,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comments updateComment(Long id, Comments comments) throws CommentNotFoundException {
         try {
-            CommentsEntity commentsEntity = commentsRepository.findById(id).get();
+            CommentsEntity commentsEntity = commentsRepository.findById(id).isPresent() ? commentsRepository.findById(id).get() : null;
+            assert commentsEntity != null;
             commentsEntity.setUpdateAt(LocalDateTime.now());
             commentsEntity.setCmtContent(comments.getCmtContent());
             commentsEntity.setReplyTo(comments.getReplyTo());

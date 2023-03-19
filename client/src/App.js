@@ -8,6 +8,7 @@ import Auth from './components/Auth/Auth';
 import Posts from './components/Posts/Posts';
 import Profile from './components/Profile/Profile';
 import Message from './components/Message/Message';
+import FriendMessage from './components/Message/FriendMessage';
 import Friends from './components/Friends/Friends';
 import FriendRequests from './components/Friends/FriendRequests';
 import ForgotPassword from './components/Auth/ForgotPassword';
@@ -28,7 +29,8 @@ const App = () => {
               <Route path = "/" element = {!user ? <Home /> : <Navigate to = "/posts"/>} />
               <Route path = "/profile/:id" element = {<Profile user = {user} userProfile = {userProfile} />}/>
               <Route path = "/forgotPassword" element = {<ForgotPassword />}/>
-              <Route path = "/message" element = {<Message user = {user} userProfile = {userProfile}/>}/>
+              <Route path = "/message" element = {<FriendMessage user = {user}/>}/>
+              <Route path = "/message/:id" element = {<Message user = {user} userProfile = {userProfile}/>}/>
               <Route path = "/posts/:id" element = {<PostDetail user = {user} setUser = {setUser} userProfile = {userProfile}/>}/>
               <Route path = "/friends" element = {<Friends user = {user} setUser = {setUser} userProfile = {userProfile} />}/>
               <Route path = "/friendRequest" element = {<FriendRequests user = {user} setUser = {setUser} userProfile = {userProfile} />}/>

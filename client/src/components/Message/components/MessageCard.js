@@ -4,20 +4,20 @@ import Emotion from '../../../assets/icons/emotion_message.png';
 import Reply from '../../../assets/icons/reply_message.png';
 import More from '../../../assets/icons/expand_message.png';
 
-const MessageCard = ({isSender}) => {
+const MessageCard = ({message,user}) => {
 
   return (
     <Paper sx = {{display: 'flex',justifyContent: 'space-between', flexDirection: 'row', height: 80, alignItems: 'center', marginTop: 1}}>
-        {isSender ?
+        {message?.sender?.user_id === user?.user_id ?
         <>
         <Box sx = {{display: 'flex', flexDirection: 'row', gap: 2, marginTop: 2, marginBottom: 2}}>
-            <Avatar alt = "avt_img" src = "https://i.pinimg.com/564x/59/0a/10/590a10d14672b41fa9e148a06b6c97ed.jpg" sx = {{marginLeft: 4}}/>
+            <Avatar alt = "avt_img" src = {message?.sender?.avatar_url} sx = {{marginLeft: 4}}/>
             <div>
-                <Typography variant = "body2" fontSize = "18px">Lưu Châu Ánh Thắm</Typography>
-                <Typography variant = "body2">Đâu cho chị xem nào, ảnh hôm qua mình chụp đúng khum.</Typography>
+                <Typography variant = "body2" fontSize = "18px">{message?.sender?.userName}</Typography>
+                <Typography variant = "body2">{message?.message}</Typography>
             </div>
         </Box>
-        <Box height = '32px' width = '150px' sx = {{display: 'flex',justifyContent: 'center', alignItems: 'center',background: '#D9D9D9',borderRadius: 30, gap: 1, position: 'static', marginTop: -4, marginRight: 2}}>
+        <Box height = '32px' width = '120px' sx = {{display: 'flex',justifyContent: 'center', alignItems: 'center',background: '#D9D9D9',borderRadius: 30, gap: 1, position: 'static', marginTop: -4, marginRight: 2}}>
             <IconButton onClick = {null}>
                 <img alt = "icon" src = {Emotion} height = '20px'/>
             </IconButton>
@@ -31,7 +31,7 @@ const MessageCard = ({isSender}) => {
         </>
         :
         <>     
-        <Box height = '32px' width = '150px' sx = {{display: 'flex',justifyContent: 'center', alignItems: 'center',background: '#D9D9D9',borderRadius: 30, gap: 1, position: 'static', marginTop: -4, marginLeft: 2}}>
+        <Box height = '32px' width = '120px' sx = {{display: 'flex',justifyContent: 'center', alignItems: 'center',background: '#D9D9D9',borderRadius: 30, gap: 1, position: 'static', marginTop: -4, marginLeft: 2}}>
             <IconButton onClick = {null}>
                 <img alt = "icon" src = {Emotion} height = '20px'/>
             </IconButton>
@@ -44,10 +44,10 @@ const MessageCard = ({isSender}) => {
         </Box>
         <Box sx = {{display: 'flex', flexDirection: 'row', gap: 2,marginTop: 2, marginBottom: 2}}>
             <div>
-                <Typography variant = "body2" fontSize = "18px" sx = {{display: 'flex', justifyContent: 'end'}}>Lưu Châu Ánh Thắm</Typography>
-                <Typography variant = "body2">Đâu cho chị xem nào, ảnh hôm qua mình chụp đúng khum.</Typography>
+                <Typography variant = "body2" fontSize = "18px" sx = {{display: 'flex', justifyContent: 'end'}}>{message?.sender?.userName}</Typography>
+                <Typography variant = "body2">{message?.message}</Typography>
             </div>
-            <Avatar alt = "avt_img" src = "https://i.pinimg.com/564x/59/0a/10/590a10d14672b41fa9e148a06b6c97ed.jpg" sx = {{marginRight: 4}}/>
+            <Avatar alt = "avt_img" src = {message?.sender?.avatar_url} sx = {{marginRight: 4}}/>
         </Box>
         </>
         }

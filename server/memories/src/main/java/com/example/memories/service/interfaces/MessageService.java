@@ -6,8 +6,8 @@ import com.example.memories.model.Messages;
 import java.util.List;
 
 public interface MessageService {
-    List<Messages> getAllMessage();
-    Messages createMessage(long userId);
-    Messages updateMessage(long messageId) throws MessageNotFoundException;
+    List<Messages> getAllRoomMessage(long roomId);
+    Messages createMessage(long userId,long roomId,Messages messages) throws Exception;
+    Messages updateMessage(long messageId, Messages messages) throws MessageNotFoundException;
     Boolean deleteMessage(long messageId) throws MessageNotFoundException;
 }

@@ -9,7 +9,7 @@ const HeaderChat = () => {
         <Paper sx = {{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <Box sx = {{display: 'flex', flexDirection: 'row',justifyContent: 'center', alignItems: 'center',margin: '5px 15px', gap: 2}}>
                 <Typography variant = 'body1' fontSize = '24px' fontWeight = 'bold'>
-                    Lưu Châu Ánh Thắm
+                    Conversation
                 </Typography>
                 <IconButton onClick = {null}><img alt = "img_icon" src = {InfoIcon} width = '30px' height = '30px'/></IconButton>
             </Box>

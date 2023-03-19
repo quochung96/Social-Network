@@ -8,7 +8,7 @@ import {useSelector} from 'react-redux';
 
 
 const ListFriendChat = ({user}) => {
-    const {isLoading, requests} = useSelector((state) => state.requests);
+    const {rooms} = useSelector((state) => state.rooms);
     const [search,setSearch] = useState({search: ''});
     const handleChange = (e) => {
       setSearch({...search,[e.target.name]: e.target.value});
@@ -18,11 +18,10 @@ const ListFriendChat = ({user}) => {
         console.log(search);
       }
     }
-    if(isLoading && !requests) return 'No friends found';
-    const listFriends = requests.filter(item => (item.receiveUser.user_id === user.user_id || item.sendUser.user_id === user.user_id)) 
-    console.log(listFriends);
+    if(!rooms) return "No room found";
+    console.log(rooms);
   return (
-    <Box flex = {1} p = {1} sx = {{background: '#535151'}}>
+    <Box flex = {1} p = {1} sx = {{background: '#535151', height: 1000}}>
         <Stack direction = 'column' justifyContent = 'space-between'>
           {/*Search*/}
           <Box p = {1} display = 'flex' flexDirection = 'row' sx = {{background: '#6D6767', width: '90%',height: '60px',borderRadius: '5px',color: 'white'}}>
@@ -41,8 +40,8 @@ const ListFriendChat = ({user}) => {
             </Button>
           </Stack>
           {/**Friend Message Card*/}
-          {listFriends.map((friend) => (
-            <FriendMessageCard key = {friend.reqId} friend = {friend}/>
+          {rooms.map((room) => (
+            <FriendMessageCard key = {room.convId} room = {room}/>
           ))}
         </Stack>
     </Box>

@@ -104,8 +104,9 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notifications getNotificationById(long id) throws NotificationNotFoundException{
         try {
-            NotificationsEntity notificationsEntity = notificationsRepository.findById(id).get();
+            NotificationsEntity notificationsEntity = notificationsRepository.findById(id).isPresent() ? notificationsRepository.findById(id).get() : null;
             Notifications notification = new Notifications();
+            assert notificationsEntity != null;
             BeanUtils.copyProperties(notificationsEntity, notification);
             return notification;
         }
